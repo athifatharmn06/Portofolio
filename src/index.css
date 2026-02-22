@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent: #2dd4bf;
+  --color-dark: #0f172a;
+  --animate-bounce: float 3s infinite ease-in-out;
+  --animate-blob: blob 10s infinite;
+  --font-handwriting: 'Caveat', cursive;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(var(--tw-rotate, 0deg));
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(var(--tw-rotate, 0deg));
+  }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@layer base {
+  body {
+    scroll-behavior: smooth;
+  }
+}
