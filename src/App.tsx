@@ -676,10 +676,29 @@ const App = () => {
                     <FaChevronLeft className="w-5 h-5" />
                   </button>
 
-                  <img
+                  {/* Swipeable Draggable Image */}
+                  <motion.img
+                    key={currentPhotoIndex}
                     src={activeGalleryProject.photos[currentPhotoIndex].url}
                     alt="Gallery View"
-                    className="max-w-full max-h-full object-contain"
+                    className="max-w-full max-h-full object-contain cursor-grab active:cursor-grabbing"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.8}
+                    onDragEnd={(_, { offset }) => {
+                      const swipeThreshold = 50;
+                      if (offset.x < -swipeThreshold) {
+                        // Swipe left -> Next
+                        setCurrentPhotoIndex((prev: number) => prev < activeGalleryProject.photos.length - 1 ? prev + 1 : 0);
+                      } else if (offset.x > swipeThreshold) {
+                        // Swipe right -> Prev
+                        setCurrentPhotoIndex((prev: number) => prev > 0 ? prev - 1 : activeGalleryProject.photos.length - 1);
+                      }
+                    }}
                   />
 
                   <button
@@ -733,7 +752,7 @@ export const projectsData = [
     id: "p0",
     title: "Agentic Workflow - AIGents",
     category: "Agentic AI",
-    thumbnail: "/projects/Agentic Workflow - AIGents/workflow_demo_recording.webp",
+    thumbnail: "/projects/Agentic Workflow - AIGents/AIGents.png",
     shortDesc: "The ultimate modular AI agent build powered by LangGraph, FastAPI, and SQLite. A state machine architecture that loops through problems until a high-confidence solution is found.",
     techStack: ["LangGraph", "FastAPI", "SQLite", "Python", "Docker", "Mermaid.js"],
     photos: [
@@ -765,7 +784,7 @@ export const projectsData = [
     id: "p0b",
     title: "Enterprise Price Intelligence Scraper",
     category: "Data Engineering",
-    thumbnail: "/projects/Enterprise Price Intelligence Scraper/4_enriched_products.png",
+    thumbnail: "/projects/Enterprise Price Intelligence Scraper/1_swagger_ui.png",
     shortDesc: "A production-grade, distributed web scraping pipeline for real-time e-commerce price tracking. Built with Scrapy, Playwright, Celery, FastAPI, PostgreSQL, and Redis.",
     techStack: ["Scrapy", "Playwright", "FastAPI", "PostgreSQL", "Redis", "Celery", "Docker"],
     photos: [
