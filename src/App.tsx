@@ -730,6 +730,53 @@ const App = () => {
 // ==========================================
 export const projectsData = [
   {
+    id: "p0",
+    title: "Agentic Workflow - AIGents",
+    category: "Agentic AI",
+    thumbnail: "/projects/Agentic Workflow - AIGents/workflow_demo_recording.webp",
+    shortDesc: "The ultimate modular AI agent build powered by LangGraph, FastAPI, and SQLite. A state machine architecture that loops through problems until a high-confidence solution is found.",
+    techStack: ["LangGraph", "FastAPI", "SQLite", "Python", "Docker", "Mermaid.js"],
+    photos: [
+      { url: "/projects/Agentic Workflow - AIGents/workflow_demo_recording.webp", caption: "Live walkthrough of the agentic reasoning loop from incident detection to resolution.", tools: "FastAPI, LangGraph" },
+      { url: "/projects/Agentic Workflow - AIGents/AIGents.png", caption: "High-level overview of the AIGents platform and user interface.", tools: "UI/UX Design" },
+      { url: "/projects/Agentic Workflow - AIGents/agent_invocation_demo.png", caption: "Demonstration of the agent being invoked via natural language trigger.", tools: "Natural Language Processing" },
+      { url: "/projects/Agentic Workflow - AIGents/api_endpoint_details.png", caption: "Detailed API documentation for the agentic workflow endpoints.", tools: "FastAPI, Swagger" },
+      { url: "/projects/Agentic Workflow - AIGents/data_schemas.png", caption: "Underlying data schemas managing the agent's memory and environment state.", tools: "SQLite, Pydantic" },
+      { url: "/projects/Agentic Workflow - AIGents/swagger_ui.png", caption: "Interactive Swagger UI for testing agent tools and reasoning nodes.", tools: "FastAPI, OpenAPI" },
+      { url: "/projects/Agentic Workflow - AIGents/redoc_interface.png", caption: "Clean, production-ready developer documentation for the AIGents ecosystem.", tools: "ReDoc" }
+    ]
+  },
+  {
+    id: "p0a",
+    title: "Performance & Reliability Analysis of 4G-Based Flight Controllers in UAV Control",
+    category: "Aerospace & IoT",
+    thumbnail: "/projects/Conference Paper/1_main_photo.png",
+    shortDesc: "Comprehensive study on the performance of UAV control systems via 4G LTE networks. Published in the 2025 International Conference on Converging Technology in Electrical and Information Engineering (ICCTEIE).",
+    techStack: ["Cube Orange", "4G LTE", "MAVLink", "Mission Planner", "ArduPlot", "UAV Systems"],
+    photos: [
+      { url: "/projects/Conference Paper/1_main_photo.png", caption: "Official publication header for the IEEE Xplore conference paper.", tools: "IEEE Xplore, 2025 ICCTEIE" },
+      { url: "/projects/Conference Paper/2_author.png", caption: "Published author list contributing to the research and development of the system.", tools: "Academic Publication" },
+      { url: "/projects/Conference Paper/3_system.png", caption: "Architectural overview of the 4G-based flight controller and communication network.", tools: "Systems Engineering" },
+      { url: "/projects/Conference Paper/4_celltowertracker.png", caption: "Mapping cell tower tracking and RSRP signal strength across urban and rural environments.", tools: "RF Engineering, GIS" },
+      { url: "/projects/Conference Paper/5_missionplanner_videotransmission.png", caption: "Real-time video transmission and flight telemetry monitoring via Mission Planner.", tools: "Mission Planner, MAVLink" }
+    ]
+  },
+  {
+    id: "p0b",
+    title: "Enterprise Price Intelligence Scraper",
+    category: "Data Engineering",
+    thumbnail: "/projects/Enterprise Price Intelligence Scraper/4_enriched_products.png",
+    shortDesc: "A production-grade, distributed web scraping pipeline for real-time e-commerce price tracking. Built with Scrapy, Playwright, Celery, FastAPI, PostgreSQL, and Redis.",
+    techStack: ["Scrapy", "Playwright", "FastAPI", "PostgreSQL", "Redis", "Celery", "Docker"],
+    photos: [
+      { url: "/projects/Enterprise Price Intelligence Scraper/1_swagger_ui.png", caption: "Interactive API documentation (Swagger) for triggering and monitoring scraping tasks.", tools: "FastAPI, OpenAPI" },
+      { url: "/projects/Enterprise Price Intelligence Scraper/2_categories_api.png", caption: "Categories summary endpoint providing real-time catalog metrics and distribution.", tools: "Python, REST API" },
+      { url: "/projects/Enterprise Price Intelligence Scraper/3_products_api.png", caption: "Detailed product listing endpoint managing massive e-commerce datasets.", tools: "FastAPI, Pydantic" },
+      { url: "/projects/Enterprise Price Intelligence Scraper/4_enriched_products.png", caption: "Demonstration of enriched JSON product data ready for analytical downstream consumption.", tools: "Data Engineering, JSON" },
+      { url: "/projects/Enterprise Price Intelligence Scraper/5_pgadmin.png", caption: "Visual database view on pgAdmin monitoring thousands of indexed products and price histories.", tools: "PostgreSQL, pgAdmin" }
+    ]
+  },
+  {
     id: "p1",
     title: "Mobile App - Otentikasi",
     category: "Mobile & AI",
