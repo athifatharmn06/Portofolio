@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import {
   FaPython, FaNodeJs, FaAws, FaGithub, FaUbuntu, FaReact, FaHtml5, FaWordpress,
   FaDatabase, FaTable, FaRobot, FaTags, FaCube, FaIndustry, FaBolt, FaRoute,
@@ -740,6 +741,7 @@ const App = () => {
           )
         }
       </footer>
+      <Analytics />
     </>
   );
 }
