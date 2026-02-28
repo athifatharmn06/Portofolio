@@ -16,6 +16,7 @@ import {
   SiOracle, SiPandas, SiNumpy, SiGrafana, SiTensorflow, SiKeras, SiOpencv,
   SiDavinciresolve, SiAdobeaftereffects, SiAudacity, SiCanva
 } from 'react-icons/si';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // --- MOTION VARIANTS ---
 const fadeInUp: Variants = {
@@ -741,6 +742,7 @@ const App = () => {
           )
         }
       </footer>
+      <SpeedInsights />
       <Analytics />
     </>
   );
