@@ -1,65 +1,75 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useScrollSpy } from '../../hooks/useScrollSpy';
-import { NAV_LINKS, SECTION_IDS, NAVBAR_HEIGHT, SCROLL_OFFSET_PADDING } from '../../lib/constants';
+import { NAV_LINKS, NAVBAR_HEIGHT, SCROLL_OFFSET_PADDING } from '../../lib/constants';
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
+  activeSection: string;
 }
 
 /**
  * Fixed navigation bar with scroll-spy active state, theme toggle,
  * smooth-scroll navigation, and mobile hide-on-scroll-down behavior.
+ * Receives activeSection from parent to avoid duplicate scroll listeners.
  */
-export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
-  const { activeSection } = useScrollSpy({ sectionIds: [...SECTION_IDS] });
+export default function Navbar({ onMobileMenuToggle, activeSection }: NavbarProps) {
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [scrollDelta, setScrollDelta] = useState(0);
 
-  // Mobile hide-on-scroll-down, reveal-on-scroll-up logic
+  // Use refs for scroll tracking to avoid re-registering the listener on every scroll
+  const lastScrollYRef = useRef(0);
+  const scrollDeltaRef = useRef(0);
+  const rafIdRef = useRef<number | null>(null);
+
+  // Mobile hide-on-scroll-down, reveal-on-scroll-up logic (rAF-throttled, stable listener)
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const isMobile = window.innerWidth < 768;
+      // Throttle with rAF — at most one computation per frame
+      if (rafIdRef.current !== null) return;
+      rafIdRef.current = requestAnimationFrame(() => {
+        rafIdRef.current = null;
 
-      if (!isMobile) {
-        setIsVisible(true);
-        setLastScrollY(currentScrollY);
-        setScrollDelta(0);
-        return;
-      }
+        const currentScrollY = window.scrollY;
+        const isMobile = window.innerWidth < 768;
 
-      const diff = currentScrollY - lastScrollY;
-
-      if (diff > 0) {
-        // Scrolling down
-        const newDelta = scrollDelta + diff;
-        setScrollDelta(newDelta);
-        if (newDelta > 50) {
-          setIsVisible(false);
-        }
-      } else {
-        // Scrolling up
-        const newDelta = scrollDelta + diff; // diff is negative
-        setScrollDelta(newDelta);
-        if (newDelta < -50) {
+        if (!isMobile) {
           setIsVisible(true);
-          setScrollDelta(0);
+          lastScrollYRef.current = currentScrollY;
+          scrollDeltaRef.current = 0;
+          return;
         }
-      }
 
-      // Reset delta when direction changes
-      if ((diff > 0 && scrollDelta < 0) || (diff < 0 && scrollDelta > 0)) {
-        setScrollDelta(diff);
-      }
+        const diff = currentScrollY - lastScrollYRef.current;
 
-      setLastScrollY(currentScrollY);
+        // Reset delta when direction changes
+        if ((diff > 0 && scrollDeltaRef.current < 0) || (diff < 0 && scrollDeltaRef.current > 0)) {
+          scrollDeltaRef.current = diff;
+        } else if (diff > 0) {
+          // Scrolling down
+          scrollDeltaRef.current += diff;
+          if (scrollDeltaRef.current > 50) {
+            setIsVisible(false);
+          }
+        } else {
+          // Scrolling up
+          scrollDeltaRef.current += diff;
+          if (scrollDeltaRef.current < -50) {
+            setIsVisible(true);
+            scrollDeltaRef.current = 0;
+          }
+        }
+
+        lastScrollYRef.current = currentScrollY;
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY, scrollDelta]);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+    };
+  }, []); // Empty deps — listener is stable, uses refs for mutable state
 
   // Smooth-scroll to section with offset
   const handleNavClick = useCallback(

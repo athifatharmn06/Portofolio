@@ -15,7 +15,7 @@ const internshipPhotos = [
 ];
 
 export default function ExperienceSection() {
-  const { ref, isInView } = useInView({ threshold: 0.1 });
+  const { ref, isInView } = useInView({ once: true, threshold: 0.1 });
 
   return (
     <section
@@ -126,7 +126,7 @@ export default function ExperienceSection() {
               {internshipPhotos.map((photo, idx) => (
                 <div
                   key={idx}
-                  className={`h-20 md:h-24 rounded-xl overflow-hidden border border-white/10 transition-all duration-300 cursor-pointer group ${
+                  className={`h-20 md:h-24 rounded-xl overflow-hidden border border-white/10 transition-[border-color] duration-300 cursor-pointer group ${
                     idx % 2 === 0
                       ? 'hover:border-teal-400/80'
                       : 'hover:border-orange-400/80'
@@ -136,7 +136,7 @@ export default function ExperienceSection() {
                     src={photo.src}
                     alt={photo.alt}
                     loading="lazy"
-                    className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
+                    className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-[opacity,transform] duration-500 will-change-[transform,opacity]"
                   />
                 </div>
               ))}

@@ -27,12 +27,14 @@ export default function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Cursor-reactive glow state — follows cursor position directly (no transition, GPU-accelerated)
+  // Cursor position stored in a ref to avoid re-renders on every mousemove
+  const cursorRef = useRef({ x: 0, y: 0 });
+  const rafId = useRef<number>(0);
+  // State that triggers re-render at most once per animation frame
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [particles, setParticles] = useState<{ id: number; x: number; y: number; size: number; color: string; delay: number; duration: number; offsetX: number; offsetY: number }[]>([]);
-
-  // Generate random particles on mount
-  useEffect(() => {
+  // Section dimensions stored in state (updated via ResizeObserver) to avoid reading refs during render
+  const [sectionDims, setSectionDims] = useState({ width: 1200, height: 800 });
+  const [particles] = useState(() => {
     const colors = [
       'rgba(99,102,241,0.4)',   // indigo
       'rgba(168,85,247,0.35)',  // purple
@@ -41,7 +43,7 @@ export default function HeroSection() {
       'rgba(236,72,153,0.25)',  // pink
       'rgba(45,212,191,0.3)',   // teal
     ];
-    const generated = Array.from({ length: 40 }, (_, i) => ({
+    return Array.from({ length: 40 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -52,7 +54,22 @@ export default function HeroSection() {
       offsetX: (Math.random() - 0.5) * 30,
       offsetY: (Math.random() - 0.5) * 30,
     }));
-    setParticles(generated);
+  });
+
+  // Track section dimensions via ResizeObserver
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const ro = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (entry) {
+        const { width, height } = entry.contentRect;
+        setSectionDims({ width: width || 1200, height: height || 800 });
+      }
+    });
+    ro.observe(section);
+    return () => ro.disconnect();
   }, []);
 
   const handleMouseMove = useCallback(
@@ -62,7 +79,21 @@ export default function HeroSection() {
       if (!section) return;
 
       const rect = section.getBoundingClientRect();
-      setCursorPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+      // Store in ref immediately (no re-render)
+      cursorRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+
+      // Update CSS custom properties directly — no React re-render needed for particles
+      if (!rafId.current) {
+        rafId.current = requestAnimationFrame(() => {
+          const { x, y } = cursorRef.current;
+          if (section) {
+            section.style.setProperty('--cursor-x', `${x}`);
+            section.style.setProperty('--cursor-y', `${y}`);
+          }
+          setCursorPos(cursorRef.current);
+          rafId.current = 0;
+        });
+      }
     },
     [prefersReducedMotion]
   );
@@ -74,6 +105,10 @@ export default function HeroSection() {
     section.addEventListener('mousemove', handleMouseMove);
     return () => {
       section.removeEventListener('mousemove', handleMouseMove);
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+        rafId.current = 0;
+      }
     };
   }, [handleMouseMove, prefersReducedMotion]);
 
@@ -124,8 +159,8 @@ export default function HeroSection() {
         <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
           {particles.map((p) => {
             // Calculate repulsion from cursor (antigravity effect)
-            const sectionWidth = sectionRef.current?.offsetWidth || 1200;
-            const sectionHeight = sectionRef.current?.offsetHeight || 800;
+            const sectionWidth = sectionDims.width;
+            const sectionHeight = sectionDims.height;
             const px = (p.x / 100) * sectionWidth;
             const py = (p.y / 100) * sectionHeight;
             const dx = cursorPos.x - px;
@@ -166,8 +201,8 @@ export default function HeroSection() {
             { top: '85%', left: '55%', size: 'w-4 h-4', border: 'border-indigo-500/20 rounded-full', dur: 9 },
             { top: '10%', right: '40%', size: 'w-6 h-6', border: 'border-violet-500/15', dur: 11 },
           ].map((shape, i) => {
-            const sectionWidth = sectionRef.current?.offsetWidth || 1200;
-            const sectionHeight = sectionRef.current?.offsetHeight || 800;
+            const sectionWidth = sectionDims.width;
+            const sectionHeight = sectionDims.height;
             const sx = shape.left ? (parseFloat(shape.left) / 100) * sectionWidth : sectionWidth - (parseFloat(shape.right || '0') / 100) * sectionWidth;
             const sy = (parseFloat(shape.top) / 100) * sectionHeight;
             const sdx = cursorPos.x - sx;
@@ -317,20 +352,19 @@ export default function HeroSection() {
           variants={prefersReducedMotion ? reducedMotionVariants : { hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } } }}
         >
           <div className="relative">
-            {/* Glow that follows the image contour — uses the same image as a blurred backdrop */}
+            {/* CSS-only glow effect — radial-gradient replaces duplicate profile.webp load */}
             <div
-              className={`absolute inset-0 ${
+              className={`absolute inset-0 scale-110 rounded-full ${
                 prefersReducedMotion ? 'opacity-30' : 'opacity-50 animate-glow-pulse'
               }`}
               aria-hidden="true"
-            >
-              <img
-                src="/profile.webp"
-                alt=""
-                className="h-full w-full object-contain blur-xl scale-105 saturate-150 brightness-150"
-              />
-            </div>
+              style={{
+                background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.5) 0%, rgba(168,85,247,0.4) 25%, rgba(59,130,246,0.3) 50%, rgba(6,182,212,0.15) 70%, transparent 85%)',
+                filter: 'blur(24px)',
+              }}
+            />
             <div className="relative h-80 w-80 sm:h-96 sm:w-96 lg:h-[28rem] lg:w-[28rem] flex items-center justify-center">
+              {/* profile.webp — main profile image with glow halo via CSS radial-gradient above */}
               <ImageWithFallback
                 src="/profile.webp"
                 alt="Athif Adheel - Professional profile photo"

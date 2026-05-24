@@ -160,23 +160,17 @@
   }
 
   /* --------------------------------------------------------
-     Theme transitions for common elements
-     Ensures smooth 300ms ease-in-out transitions on toggle
+     Theme transitions for themed elements only
+     Scoped to elements that actually change during theme toggle.
+     Avoids applying transitions to all DOM nodes (performance).
      -------------------------------------------------------- */
-  *,
-  *::before,
-  *::after {
+  body,
+  .surface-card,
+  .surface-elevated,
+  .theme-transition {
     transition-property: background-color, color, border-color, box-shadow;
     transition-duration: 300ms;
     transition-timing-function: ease-in-out;
-  }
-
-  /* Exclude elements that need their own transition timing
-     (e.g., Framer Motion animated elements, transform-based animations) */
-  [data-no-theme-transition],
-  [data-no-theme-transition] *,
-  .no-theme-transition {
-    transition-property: none !important;
   }
 
   /* --------------------------------------------------------
