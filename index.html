@@ -6,10 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Athif Portfolio</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <!-- Google Fonts -->
+    <!-- Google Fonts: preconnect for faster DNS/TLS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Non-render-blocking font load with media="print" onload pattern -->
     <link
         href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+        rel="stylesheet"
+        media="print"
+        onload="this.media='all'" />
+    <!-- Fallback for no-JS environments -->
+    <noscript>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" />
+    </noscript>
     <!-- Synchronous inline script: apply theme before first paint to prevent flash -->
     <script>
         (function() {

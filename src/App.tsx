@@ -67,7 +67,7 @@ export default function App() {
   return (
     <>
       {/* Navigation */}
-      <Navbar onMobileMenuToggle={handleMobileMenuToggle} />
+      <Navbar onMobileMenuToggle={handleMobileMenuToggle} activeSection={activeSection} />
 
       {/* Mobile menu overlay */}
       <MobileMenu
