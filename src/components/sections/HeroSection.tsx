@@ -242,7 +242,7 @@ export default function HeroSection() {
               <span
                 className="block font-handwriting"
                 style={{
-                  fontSize: 'clamp(3rem, 8vw, 5.5rem)',
+                  fontSize: 'clamp(3.5rem, 10vw, 7rem)',
                   lineHeight: 1.1,
                   background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)',
                   WebkitBackgroundClip: 'text',
@@ -250,7 +250,7 @@ export default function HeroSection() {
                   backgroundClip: 'text',
                 }}
               >
-                Athif Fadheel
+                Athif
               </span>
             </h1>
           </motion.div>
@@ -431,27 +431,10 @@ export default function HeroSection() {
 
             {/* Card info */}
             <div className="px-6 pb-6 text-center">
-              <h2 className="text-lg font-bold text-white mb-0.5">Athif Fadheel</h2>
-              <p className="text-xs font-medium mb-4" style={{ color: 'rgba(148,163,184,0.7)' }}>
+              <h2 className="text-lg font-bold text-white mb-0.5">Athif</h2>
+              <p className="text-xs font-medium" style={{ color: 'rgba(148,163,184,0.7)' }}>
                 Electrical Engineering · Telkom University
               </p>
-
-              {/* Tech chips */}
-              <div className="flex flex-wrap justify-center gap-1.5">
-                {['React', 'TypeScript', 'Python', 'Three.js', 'AI/ML', 'Cloud'].map((tech) => (
-                  <span
-                    key={tech}
-                    className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
-                    style={{
-                      background: 'rgba(139,92,246,0.12)',
-                      border: '1px solid rgba(139,92,246,0.25)',
-                      color: 'rgba(196,181,253,0.85)',
-                    }}
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
             </div>
           </div>
         </motion.div>
