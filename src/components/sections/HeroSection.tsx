@@ -1,11 +1,10 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
-import { FaLinkedin, FaEye, FaDownload } from 'react-icons/fa';
+import { motion, useSpring, useTransform } from 'framer-motion';
+import { FaLinkedin, FaEye, FaDownload, FaArrowRight } from 'react-icons/fa';
 import TypingAnimation from '../ui/TypingAnimation';
 import ScrollIndicator from '../ui/ScrollIndicator';
 import ImageWithFallback from '../ui/ImageWithFallback';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { fadeInUp, staggerContainer, reducedMotionVariants } from '../../lib/animations';
 import { NAVBAR_HEIGHT, SCROLL_OFFSET_PADDING } from '../../lib/constants';
 
 const ROLES = [
@@ -15,62 +14,32 @@ const ROLES = [
   'Cloud Architect',
 ];
 
-/**
- * HeroSection — Full-viewport landing area with typing animation,
- * cursor-reactive floating blob, CTA buttons, profile image with
- * animated border glow, and scroll indicator.
- *
- * Responsive: stacks vertically on mobile (<768px) with text above image.
- * Respects prefers-reduced-motion by disabling transform animations.
- */
+const STAT_ITEMS = [
+  { value: '15+', label: 'Projects Built' },
+  { value: '3+', label: 'Years Coding' },
+  { value: '10+', label: 'Tech Stacks' },
+];
+
 export default function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
-
-  // Cursor position stored in a ref to avoid re-renders on every mousemove
   const cursorRef = useRef({ x: 0, y: 0 });
   const rafId = useRef<number>(0);
-  // State that triggers re-render at most once per animation frame
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  // Section dimensions stored in state (updated via ResizeObserver) to avoid reading refs during render
-  const [sectionDims, setSectionDims] = useState({ width: 1200, height: 800 });
-  const [particles] = useState(() => {
-    const colors = [
-      'rgba(99,102,241,0.4)',   // indigo
-      'rgba(168,85,247,0.35)',  // purple
-      'rgba(59,130,246,0.35)',  // blue
-      'rgba(6,182,212,0.3)',    // cyan
-      'rgba(236,72,153,0.25)',  // pink
-      'rgba(45,212,191,0.3)',   // teal
-    ];
-    return Array.from({ length: 40 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 4 + 1,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      delay: Math.random() * 5,
-      duration: Math.random() * 4 + 3,
-      offsetX: (Math.random() - 0.5) * 30,
-      offsetY: (Math.random() - 0.5) * 30,
-    }));
-  });
 
-  // Track section dimensions via ResizeObserver
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+  const [cursorPos, setCursorPos] = useState({ x: -999, y: -999 });
+  const [mouseNorm, setMouseNorm] = useState({ x: 0.5, y: 0.5 });
 
-    const ro = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (entry) {
-        const { width, height } = entry.contentRect;
-        setSectionDims({ width: width || 1200, height: height || 800 });
-      }
-    });
-    ro.observe(section);
-    return () => ro.disconnect();
-  }, []);
+  // Spring-based smooth cursor following
+  const springX = useSpring(0, { stiffness: 80, damping: 20 });
+  const springY = useSpring(0, { stiffness: 80, damping: 20 });
+
+  // Parallax transforms for aurora orbs
+  const orb1X = useTransform(springX, [-1, 1], [-60, 60]);
+  const orb1Y = useTransform(springY, [-1, 1], [-40, 40]);
+  const orb2X = useTransform(springX, [-1, 1], [40, -40]);
+  const orb2Y = useTransform(springY, [-1, 1], [30, -30]);
+  const orb3X = useTransform(springX, [-1, 1], [-30, 30]);
+  const orb3Y = useTransform(springY, [-1, 1], [-50, 50]);
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
@@ -79,305 +48,439 @@ export default function HeroSection() {
       if (!section) return;
 
       const rect = section.getBoundingClientRect();
-      // Store in ref immediately (no re-render)
       cursorRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
 
-      // Update CSS custom properties directly — no React re-render needed for particles
       if (!rafId.current) {
         rafId.current = requestAnimationFrame(() => {
           const { x, y } = cursorRef.current;
-          if (section) {
-            section.style.setProperty('--cursor-x', `${x}`);
-            section.style.setProperty('--cursor-y', `${y}`);
-          }
-          setCursorPos(cursorRef.current);
+          const nx = (x / rect.width) * 2 - 1;
+          const ny = (y / rect.height) * 2 - 1;
+          springX.set(nx);
+          springY.set(ny);
+          setMouseNorm({ x: x / rect.width, y: y / rect.height });
+          setCursorPos({ x, y });
           rafId.current = 0;
         });
       }
     },
-    [prefersReducedMotion]
+    [prefersReducedMotion, springX, springY]
   );
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section || prefersReducedMotion) return;
-
     section.addEventListener('mousemove', handleMouseMove);
     return () => {
       section.removeEventListener('mousemove', handleMouseMove);
-      if (rafId.current) {
-        cancelAnimationFrame(rafId.current);
-        rafId.current = 0;
-      }
+      if (rafId.current) { cancelAnimationFrame(rafId.current); rafId.current = 0; }
     };
   }, [handleMouseMove, prefersReducedMotion]);
 
   const scrollToProjects = () => {
     const el = document.getElementById('projects');
     if (el) {
-      const offset = NAVBAR_HEIGHT + SCROLL_OFFSET_PADDING;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      const top = el.getBoundingClientRect().top + window.scrollY - NAVBAR_HEIGHT - SCROLL_OFFSET_PADDING;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
-  const variants = prefersReducedMotion ? reducedMotionVariants : fadeInUp;
-  const containerVariants = prefersReducedMotion
-    ? reducedMotionVariants
-    : staggerContainer;
+  // Card tilt based on mouse position
+  const cardRotateX = prefersReducedMotion ? 0 : (mouseNorm.y - 0.5) * -12;
+  const cardRotateY = prefersReducedMotion ? 0 : (mouseNorm.x - 0.5) * 12;
 
   return (
     <section
       id="home"
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 bg-[#030014]"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #020010 0%, #050118 30%, #020820 60%, #010010 100%)' }}
     >
-      {/* === ANIMATED BACKGROUND === */}
-
-      {/* Gradient mesh background */}
+      {/* ── AURORA BACKGROUND ORBS ── */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {/* Top-left gradient orb */}
-        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-600/20 via-purple-600/10 to-transparent blur-3xl animate-blob" />
-        {/* Bottom-right gradient orb */}
-        <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-to-tl from-cyan-500/15 via-blue-600/10 to-transparent blur-3xl animate-blob" style={{ animationDelay: '3s' }} />
-        {/* Center accent */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-to-r from-violet-600/5 via-transparent to-teal-500/5 blur-3xl" />
+        {/* Primary aurora — violet/indigo */}
+        <motion.div
+          className="absolute rounded-full"
+          style={{
+            width: 900, height: 900,
+            top: '-20%', left: '-15%',
+            x: orb1X, y: orb1Y,
+            background: 'radial-gradient(circle, rgba(139,92,246,0.18) 0%, rgba(99,102,241,0.12) 40%, transparent 70%)',
+            filter: 'blur(80px)',
+          }}
+        />
+        {/* Secondary aurora — cyan/teal */}
+        <motion.div
+          className="absolute rounded-full"
+          style={{
+            width: 700, height: 700,
+            bottom: '-10%', right: '-10%',
+            x: orb2X, y: orb2Y,
+            background: 'radial-gradient(circle, rgba(6,182,212,0.15) 0%, rgba(45,212,191,0.10) 40%, transparent 70%)',
+            filter: 'blur(70px)',
+          }}
+        />
+        {/* Tertiary aurora — pink/rose */}
+        <motion.div
+          className="absolute rounded-full"
+          style={{
+            width: 500, height: 500,
+            top: '30%', right: '20%',
+            x: orb3X, y: orb3Y,
+            background: 'radial-gradient(circle, rgba(236,72,153,0.10) 0%, rgba(168,85,247,0.08) 50%, transparent 70%)',
+            filter: 'blur(60px)',
+          }}
+        />
+        {/* Static deep blue center glow */}
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: 600, height: 600,
+            top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+          }}
+        />
       </div>
 
-      {/* Animated grid overlay */}
+      {/* ── NOISE TEXTURE OVERLAY ── */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.06]"
+        className="absolute inset-0 pointer-events-none opacity-[0.025]"
         aria-hidden="true"
         style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundSize: '200px 200px',
         }}
       />
 
-      {/* Floating particles — antigravity: float randomly + flee from cursor */}
-      {!prefersReducedMotion && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          {particles.map((p) => {
-            // Calculate repulsion from cursor (antigravity effect)
-            const sectionWidth = sectionDims.width;
-            const sectionHeight = sectionDims.height;
-            const px = (p.x / 100) * sectionWidth;
-            const py = (p.y / 100) * sectionHeight;
-            const dx = cursorPos.x - px;
-            const dy = cursorPos.y - py;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            const maxPush = 200;
-            const pushStrength = dist < maxPush ? (1 - dist / maxPush) * 40 : 0;
-            const pushX = dist > 0 ? -(dx / dist) * pushStrength : 0;
-            const pushY = dist > 0 ? -(dy / dist) * pushStrength : 0;
-
-            return (
-              <div
-                key={p.id}
-                className="absolute rounded-full will-change-transform"
-                style={{
-                  left: `${p.x}%`,
-                  top: `${p.y}%`,
-                  width: p.size,
-                  height: p.size,
-                  backgroundColor: p.color,
-                  boxShadow: `0 0 ${p.size * 3}px ${p.color}`,
-                  transform: `translate(${pushX}px, ${pushY}px)`,
-                  transition: 'transform 0.15s ease-out',
-                  animation: `float ${p.duration}s ease-in-out infinite`,
-                  animationDelay: `${p.delay}s`,
-                }}
-              />
-            );
-          })}
-
-          {/* Geometric shapes — also flee from cursor */}
-          {[
-            { top: '18%', left: '12%', size: 'w-6 h-6', border: 'border-blue-500/30', dur: 8 },
-            { top: '65%', left: '8%', size: 'w-4 h-4', border: 'border-purple-500/30 rounded-sm', dur: 6 },
-            { top: '75%', right: '15%', size: 'w-8 h-8', border: 'border-teal-500/25', dur: 10 },
-            { top: '30%', right: '20%', size: 'w-5 h-5', border: 'border-cyan-500/25 rounded-full', dur: 7 },
-            { top: '50%', left: '35%', size: 'w-3 h-3', border: 'border-pink-500/30', dur: 5 },
-            { top: '85%', left: '55%', size: 'w-4 h-4', border: 'border-indigo-500/25 rounded-full', dur: 9 },
-            { top: '10%', right: '40%', size: 'w-6 h-6', border: 'border-violet-500/20', dur: 11 },
-          ].map((shape, i) => {
-            const sectionWidth = sectionDims.width;
-            const sectionHeight = sectionDims.height;
-            const sx = shape.left ? (parseFloat(shape.left) / 100) * sectionWidth : sectionWidth - (parseFloat(shape.right || '0') / 100) * sectionWidth;
-            const sy = (parseFloat(shape.top) / 100) * sectionHeight;
-            const sdx = cursorPos.x - sx;
-            const sdy = cursorPos.y - sy;
-            const sdist = Math.sqrt(sdx * sdx + sdy * sdy);
-            const sPush = sdist < 180 ? (1 - sdist / 180) * 30 : 0;
-            const sPushX = sdist > 0 ? -(sdx / sdist) * sPush : 0;
-            const sPushY = sdist > 0 ? -(sdy / sdist) * sPush : 0;
-
-            return (
-              <div
-                key={`shape-${i}`}
-                className={`absolute border ${shape.size} ${shape.border} will-change-transform`}
-                style={{
-                  top: shape.top,
-                  left: shape.left,
-                  right: shape.right,
-                  transform: `translate(${sPushX}px, ${sPushY}px) rotate(${45 + i * 15}deg)`,
-                  transition: 'transform 0.2s ease-out',
-                  animation: `float ${shape.dur}s ease-in-out infinite ${i * 0.7}s`,
-                }}
-              />
-            );
-          })}
-
-          {/* Line accents — subtle parallax with cursor */}
-          <div
-            className="absolute w-24 h-[1px] bg-gradient-to-r from-transparent via-blue-400/50 to-transparent will-change-transform"
-            style={{ top: '35%', left: '5%', transform: `translateY(${(cursorPos.y - 400) * 0.02}px)`, animation: 'float 7s ease-in-out infinite' }}
-          />
-          <div
-            className="absolute w-16 h-[1px] bg-gradient-to-r from-transparent via-purple-400/40 to-transparent will-change-transform"
-            style={{ bottom: '22%', right: '5%', transform: `translateY(${(cursorPos.y - 400) * -0.015}px)`, animation: 'float 9s ease-in-out infinite 3s' }}
-          />
-          <div
-            className="absolute w-10 h-[1px] bg-gradient-to-r from-transparent via-teal-400/45 to-transparent will-change-transform"
-            style={{ top: '55%', right: '35%', transform: `translateX(${(cursorPos.x - 600) * 0.01}px)`, animation: 'float 6s ease-in-out infinite 1.5s' }}
-          />
-          <div
-            className="absolute w-20 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/35 to-transparent will-change-transform"
-            style={{ top: '80%', left: '30%', transform: `translateX(${(cursorPos.x - 600) * -0.012}px)`, animation: 'float 8s ease-in-out infinite 2s' }}
-          />
-        </div>
-      )}
-
-      {/* Cursor-following radial glow light */}
-      {!prefersReducedMotion && (
-        <div
-          className="pointer-events-none absolute inset-0 overflow-hidden"
-          aria-hidden="true"
-        >
-          <div
-            className="absolute h-[600px] w-[600px] rounded-full opacity-70 will-change-transform"
-            style={{
-              transform: `translate(${cursorPos.x - 300}px, ${cursorPos.y - 300}px)`,
-              background: 'radial-gradient(circle, rgba(99,102,241,0.3) 0%, rgba(168,85,247,0.18) 40%, transparent 70%)',
-            }}
-          />
-        </div>
-      )}
-
-      {/* Vignette overlay for depth */}
+      {/* ── SUBTLE GRID ── */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse at center, transparent 50%, rgba(3,0,20,0.7) 100%)',
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)`,
+          backgroundSize: '80px 80px',
+          maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
         }}
       />
 
-      {/* Main content — always white text since hero is always dark */}
-      <motion.div
-        className="relative z-10 flex w-full max-w-6xl flex-col items-center gap-10 md:flex-row md:justify-between"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Text content */}
-        <motion.div
-          className="flex flex-col items-center text-center md:items-start md:text-left md:max-w-[55%]"
-          variants={variants}
-        >
-          <motion.p
-            className="text-sm font-medium uppercase tracking-widest text-blue-400 mb-2"
-            variants={variants}
-          >
-            Welcome to my portfolio
-          </motion.p>
+      {/* ── CURSOR SPOTLIGHT ── */}
+      {!prefersReducedMotion && cursorPos.x > 0 && (
+        <div
+          className="absolute pointer-events-none will-change-transform"
+          aria-hidden="true"
+          style={{
+            width: 500, height: 500,
+            borderRadius: '50%',
+            left: cursorPos.x - 250,
+            top: cursorPos.y - 250,
+            background: 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, rgba(99,102,241,0.06) 40%, transparent 70%)',
+            filter: 'blur(20px)',
+            transition: 'left 0.08s ease-out, top 0.08s ease-out',
+          }}
+        />
+      )}
 
-          <motion.h1
-            className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl text-white"
-            variants={variants}
+      {/* ── FLOATING GLASS CHIPS (background decoration) ── */}
+      {!prefersReducedMotion && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+          {[
+            { x: '8%', y: '20%', delay: 0, dur: 7 },
+            { x: '85%', y: '15%', delay: 1.5, dur: 9 },
+            { x: '12%', y: '70%', delay: 3, dur: 6 },
+            { x: '78%', y: '65%', delay: 0.8, dur: 8 },
+            { x: '45%', y: '85%', delay: 2, dur: 10 },
+            { x: '92%', y: '45%', delay: 4, dur: 7 },
+            { x: '3%', y: '45%', delay: 1, dur: 11 },
+          ].map((chip, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 rounded-full"
+              style={{
+                left: chip.x, top: chip.y,
+                background: i % 3 === 0
+                  ? 'rgba(139,92,246,0.5)'
+                  : i % 3 === 1
+                  ? 'rgba(6,182,212,0.5)'
+                  : 'rgba(236,72,153,0.4)',
+                boxShadow: i % 3 === 0
+                  ? '0 0 12px rgba(139,92,246,0.6)'
+                  : i % 3 === 1
+                  ? '0 0 12px rgba(6,182,212,0.6)'
+                  : '0 0 12px rgba(236,72,153,0.5)',
+                animation: `float ${chip.dur}s ease-in-out infinite`,
+                animationDelay: `${chip.delay}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* ── MAIN CONTENT ── */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-16 py-24">
+
+        {/* LEFT — Text content */}
+        <motion.div
+          className="flex flex-col items-center text-center lg:items-start lg:text-left lg:max-w-[52%]"
+          initial="hidden"
+          animate="visible"
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
+        >
+          {/* Badge */}
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="mb-5"
           >
-            Hi, I&apos;m{' '}
-            <span className="font-handwriting text-4xl sm:text-5xl lg:text-6xl text-blue-400">Athif</span>
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase"
+              style={{
+                background: 'rgba(139,92,246,0.12)',
+                border: '1px solid rgba(139,92,246,0.3)',
+                color: 'rgba(196,181,253,0.9)',
+                backdropFilter: 'blur(8px)',
+              }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+              Available for opportunities
+            </span>
+          </motion.div>
+
+          {/* Name */}
+          <motion.h1
+            variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}
+            className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-4"
+          >
+            <span className="text-white">Hi, I'm </span>
+            <span
+              className="font-handwriting"
+              style={{
+                background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                fontSize: '1.15em',
+              }}
+            >
+              Athif
+            </span>
           </motion.h1>
 
+          {/* Typing role */}
           <motion.div
-            className="mt-3 text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-200"
-            variants={variants}
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="text-xl sm:text-2xl lg:text-3xl font-semibold mb-5"
+            style={{ color: 'rgba(148,163,184,0.9)' }}
           >
             <TypingAnimation roles={ROLES} typingSpeed={50} pauseDuration={1800} />
           </motion.div>
 
+          {/* Description */}
           <motion.p
-            className="mt-4 max-w-md text-base text-gray-400"
-            variants={variants}
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="max-w-lg text-base leading-relaxed mb-8"
+            style={{ color: 'rgba(148,163,184,0.75)' }}
           >
-            Passionate about building innovative solutions at the intersection of
-            software, hardware, and artificial intelligence.
+            Building innovative solutions at the intersection of software, hardware, and AI.
+            From embedded systems to cloud-scale applications — I engineer things that work.
           </motion.p>
 
-          {/* CTA Button Group */}
-          <motion.div className="mt-6 flex flex-col gap-3" variants={variants}>
-            <div className="flex flex-wrap gap-4">
-              <button
-                onClick={scrollToProjects}
-                className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:bg-blue-500 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#030014]"
-              >
-                <FaEye className="text-base" />
-                View My Work
-              </button>
-              <a
-                href="/1_CV ATS - Athif Fadheel Atharahman (Nov 2025).pdf"
-                download
-                className="inline-flex items-center gap-2 rounded-lg border border-gray-600 bg-white/5 px-6 py-3 text-sm font-semibold text-gray-200 shadow transition-all duration-200 hover:border-blue-400 hover:text-blue-400 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#030014]"
-              >
-                <FaDownload className="text-base" />
-                Download CV
-              </a>
-            </div>
+          {/* CTA Buttons */}
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="flex flex-wrap gap-3 mb-10"
+          >
+            {/* Primary CTA */}
+            <button
+              onClick={scrollToProjects}
+              className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-[#020010]"
+              style={{
+                background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
+                boxShadow: '0 0 30px rgba(124,58,237,0.35), inset 0 1px 0 rgba(255,255,255,0.1)',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 0 50px rgba(124,58,237,0.55), inset 0 1px 0 rgba(255,255,255,0.15)')}
+              onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 0 30px rgba(124,58,237,0.35), inset 0 1px 0 rgba(255,255,255,0.1)')}
+            >
+              <FaEye />
+              View My Work
+              <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
+
+            {/* Secondary CTA */}
+            <a
+              href="/1_CV ATS - Athif Fadheel Atharahman (Nov 2025).pdf"
+              download
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-[#020010]"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                color: 'rgba(226,232,240,0.9)',
+                backdropFilter: 'blur(8px)',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.08)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(139,92,246,0.5)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.12)'; }}
+            >
+              <FaDownload />
+              Download CV
+            </a>
+
+            {/* LinkedIn */}
             <a
               href="https://www.linkedin.com/in/athif-fadheel-atharahman-1a3353245/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 w-full rounded-lg bg-[#0077b5] px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:bg-[#005f8d] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#0077b5] focus:ring-offset-2 focus:ring-offset-[#030014]"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#0077b5] focus:ring-offset-2 focus:ring-offset-[#020010]"
+              style={{
+                background: 'rgba(0,119,181,0.2)',
+                border: '1px solid rgba(0,119,181,0.4)',
+                backdropFilter: 'blur(8px)',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,119,181,0.35)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,119,181,0.2)'; }}
             >
-              <FaLinkedin className="text-lg" />
-              Let&apos;s Connect
+              <FaLinkedin className="text-[#38bdf8]" />
+              LinkedIn
             </a>
+          </motion.div>
+
+          {/* Stats row */}
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="flex items-center gap-8"
+          >
+            {STAT_ITEMS.map((stat, i) => (
+              <div key={i} className="flex flex-col items-center lg:items-start">
+                <span
+                  className="text-2xl font-black"
+                  style={{
+                    background: 'linear-gradient(135deg, #a78bfa, #38bdf8)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  {stat.value}
+                </span>
+                <span className="text-xs font-medium" style={{ color: 'rgba(148,163,184,0.6)' }}>
+                  {stat.label}
+                </span>
+              </div>
+            ))}
           </motion.div>
         </motion.div>
 
-        {/* Profile image with contour-following glow */}
+        {/* RIGHT — Glass profile card */}
         <motion.div
           className="relative flex-shrink-0"
-          variants={prefersReducedMotion ? reducedMotionVariants : { hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } } }}
+          initial={{ opacity: 0, scale: 0.85, y: 40 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+          style={{
+            transform: prefersReducedMotion
+              ? 'none'
+              : `perspective(1000px) rotateX(${cardRotateX}deg) rotateY(${cardRotateY}deg)`,
+            transition: 'transform 0.15s ease-out',
+          }}
         >
-          <div className="relative">
-            {/* CSS-only glow effect — radial-gradient replaces duplicate profile.webp load */}
+          {/* Outer glow ring */}
+          <div
+            className="absolute -inset-4 rounded-3xl"
+            style={{
+              background: 'linear-gradient(135deg, rgba(139,92,246,0.3), rgba(6,182,212,0.2), rgba(236,72,153,0.15))',
+              filter: 'blur(20px)',
+              animation: 'glow-pulse 3s ease-in-out infinite',
+            }}
+          />
+
+          {/* Glass card */}
+          <div
+            className="relative rounded-2xl overflow-hidden"
+            style={{
+              width: 340,
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              backdropFilter: 'blur(20px)',
+              boxShadow: '0 25px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)',
+            }}
+          >
+            {/* Card top gradient bar */}
             <div
-              className={`absolute inset-0 scale-110 rounded-full ${
-                prefersReducedMotion ? 'opacity-30' : 'opacity-50 animate-glow-pulse'
-              }`}
-              aria-hidden="true"
-              style={{
-                background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.5) 0%, rgba(168,85,247,0.4) 25%, rgba(59,130,246,0.3) 50%, rgba(6,182,212,0.15) 70%, transparent 85%)',
-                filter: 'blur(24px)',
-              }}
+              className="h-1 w-full"
+              style={{ background: 'linear-gradient(90deg, #7c3aed, #4f46e5, #0ea5e9, #2dd4bf)' }}
             />
-            <div className="relative h-80 w-80 sm:h-96 sm:w-96 lg:h-[28rem] lg:w-[28rem] flex items-center justify-center">
-              {/* profile.webp — main profile image with glow halo via CSS radial-gradient above */}
-              <ImageWithFallback
-                src="/profile.webp"
-                alt="Athif Adheel - Professional profile photo"
-                className="h-full w-full object-contain drop-shadow-2xl relative z-10"
-                placeholderClassName="rounded-full"
+
+            {/* Profile image area */}
+            <div className="relative p-6 pb-4">
+              {/* Glow behind image */}
+              <div
+                className="absolute top-4 left-1/2 -translate-x-1/2 w-48 h-48 rounded-full"
+                style={{
+                  background: 'radial-gradient(circle, rgba(139,92,246,0.25) 0%, transparent 70%)',
+                  filter: 'blur(30px)',
+                }}
               />
+              <div className="relative mx-auto w-52 h-52 sm:w-60 sm:h-60">
+                {/* Animated border ring */}
+                <div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: 'conic-gradient(from 0deg, #7c3aed, #4f46e5, #0ea5e9, #2dd4bf, #7c3aed)',
+                    padding: 2,
+                    animation: prefersReducedMotion ? 'none' : 'spin 6s linear infinite',
+                  }}
+                >
+                  <div className="w-full h-full rounded-full" style={{ background: '#050118' }} />
+                </div>
+                <ImageWithFallback
+                  src="/profile.webp"
+                  alt="Athif Fadheel — Professional profile photo"
+                  className="absolute inset-[3px] w-[calc(100%-6px)] h-[calc(100%-6px)] object-contain rounded-full z-10"
+                  placeholderClassName="rounded-full"
+                />
+              </div>
+            </div>
+
+            {/* Card info */}
+            <div className="px-6 pb-6 text-center">
+              <h2 className="text-lg font-bold text-white mb-0.5">Athif Fadheel</h2>
+              <p className="text-xs font-medium mb-4" style={{ color: 'rgba(148,163,184,0.7)' }}>
+                Electrical Engineering · Telkom University
+              </p>
+
+              {/* Tech chips */}
+              <div className="flex flex-wrap justify-center gap-1.5 mb-5">
+                {['React', 'TypeScript', 'Python', 'Three.js', 'AI/ML'].map((tech) => (
+                  <span
+                    key={tech}
+                    className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
+                    style={{
+                      background: 'rgba(139,92,246,0.12)',
+                      border: '1px solid rgba(139,92,246,0.25)',
+                      color: 'rgba(196,181,253,0.85)',
+                    }}
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              {/* Status indicator */}
+              <div
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium"
+                style={{
+                  background: 'rgba(34,197,94,0.1)',
+                  border: '1px solid rgba(34,197,94,0.25)',
+                  color: 'rgba(134,239,172,0.9)',
+                }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                Open to work
+              </div>
             </div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
 
-      {/* Scroll Indicator at bottom */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+      {/* ── SCROLL INDICATOR ── */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
         <ScrollIndicator />
       </div>
     </section>
