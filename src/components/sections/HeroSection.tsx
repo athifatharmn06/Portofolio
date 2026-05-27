@@ -146,10 +146,10 @@ export default function HeroSection() {
 
       {/* Animated grid overlay */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.04]"
+        className="absolute inset-0 pointer-events-none opacity-[0.06]"
         aria-hidden="true"
         style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)`,
           backgroundSize: '60px 60px',
         }}
       />
@@ -193,13 +193,13 @@ export default function HeroSection() {
 
           {/* Geometric shapes — also flee from cursor */}
           {[
-            { top: '18%', left: '12%', size: 'w-6 h-6', border: 'border-blue-500/25', dur: 8 },
-            { top: '65%', left: '8%', size: 'w-4 h-4', border: 'border-purple-500/25 rounded-sm', dur: 6 },
-            { top: '75%', right: '15%', size: 'w-8 h-8', border: 'border-teal-500/20', dur: 10 },
-            { top: '30%', right: '20%', size: 'w-5 h-5', border: 'border-cyan-500/20 rounded-full', dur: 7 },
-            { top: '50%', left: '35%', size: 'w-3 h-3', border: 'border-pink-500/25', dur: 5 },
-            { top: '85%', left: '55%', size: 'w-4 h-4', border: 'border-indigo-500/20 rounded-full', dur: 9 },
-            { top: '10%', right: '40%', size: 'w-6 h-6', border: 'border-violet-500/15', dur: 11 },
+            { top: '18%', left: '12%', size: 'w-6 h-6', border: 'border-blue-500/30', dur: 8 },
+            { top: '65%', left: '8%', size: 'w-4 h-4', border: 'border-purple-500/30 rounded-sm', dur: 6 },
+            { top: '75%', right: '15%', size: 'w-8 h-8', border: 'border-teal-500/25', dur: 10 },
+            { top: '30%', right: '20%', size: 'w-5 h-5', border: 'border-cyan-500/25 rounded-full', dur: 7 },
+            { top: '50%', left: '35%', size: 'w-3 h-3', border: 'border-pink-500/30', dur: 5 },
+            { top: '85%', left: '55%', size: 'w-4 h-4', border: 'border-indigo-500/25 rounded-full', dur: 9 },
+            { top: '10%', right: '40%', size: 'w-6 h-6', border: 'border-violet-500/20', dur: 11 },
           ].map((shape, i) => {
             const sectionWidth = sectionDims.width;
             const sectionHeight = sectionDims.height;
@@ -230,19 +230,19 @@ export default function HeroSection() {
 
           {/* Line accents — subtle parallax with cursor */}
           <div
-            className="absolute w-24 h-[1px] bg-gradient-to-r from-transparent via-blue-400/40 to-transparent will-change-transform"
+            className="absolute w-24 h-[1px] bg-gradient-to-r from-transparent via-blue-400/50 to-transparent will-change-transform"
             style={{ top: '35%', left: '5%', transform: `translateY(${(cursorPos.y - 400) * 0.02}px)`, animation: 'float 7s ease-in-out infinite' }}
           />
           <div
-            className="absolute w-16 h-[1px] bg-gradient-to-r from-transparent via-purple-400/30 to-transparent will-change-transform"
+            className="absolute w-16 h-[1px] bg-gradient-to-r from-transparent via-purple-400/40 to-transparent will-change-transform"
             style={{ bottom: '22%', right: '5%', transform: `translateY(${(cursorPos.y - 400) * -0.015}px)`, animation: 'float 9s ease-in-out infinite 3s' }}
           />
           <div
-            className="absolute w-10 h-[1px] bg-gradient-to-r from-transparent via-teal-400/35 to-transparent will-change-transform"
+            className="absolute w-10 h-[1px] bg-gradient-to-r from-transparent via-teal-400/45 to-transparent will-change-transform"
             style={{ top: '55%', right: '35%', transform: `translateX(${(cursorPos.x - 600) * 0.01}px)`, animation: 'float 6s ease-in-out infinite 1.5s' }}
           />
           <div
-            className="absolute w-20 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent will-change-transform"
+            className="absolute w-20 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/35 to-transparent will-change-transform"
             style={{ top: '80%', left: '30%', transform: `translateX(${(cursorPos.x - 600) * -0.012}px)`, animation: 'float 8s ease-in-out infinite 2s' }}
           />
         </div>
@@ -255,10 +255,10 @@ export default function HeroSection() {
           aria-hidden="true"
         >
           <div
-            className="absolute h-[600px] w-[600px] rounded-full opacity-60 will-change-transform"
+            className="absolute h-[600px] w-[600px] rounded-full opacity-70 will-change-transform"
             style={{
               transform: `translate(${cursorPos.x - 300}px, ${cursorPos.y - 300}px)`,
-              background: 'radial-gradient(circle, rgba(99,102,241,0.25) 0%, rgba(168,85,247,0.15) 40%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(99,102,241,0.3) 0%, rgba(168,85,247,0.18) 40%, transparent 70%)',
             }}
           />
         </div>
@@ -269,11 +269,11 @@ export default function HeroSection() {
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse at center, transparent 50%, rgba(3,0,20,0.6) 100%)',
+          background: 'radial-gradient(ellipse at center, transparent 50%, rgba(3,0,20,0.7) 100%)',
         }}
       />
 
-      {/* Main content */}
+      {/* Main content — always white text since hero is always dark */}
       <motion.div
         className="relative z-10 flex w-full max-w-6xl flex-col items-center gap-10 md:flex-row md:justify-between"
         variants={containerVariants}
@@ -286,29 +286,29 @@ export default function HeroSection() {
           variants={variants}
         >
           <motion.p
-            className="text-sm font-medium uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2"
+            className="text-sm font-medium uppercase tracking-widest text-blue-400 mb-2"
             variants={variants}
           >
             Welcome to my portfolio
           </motion.p>
 
           <motion.h1
-            className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl text-gray-900 dark:text-white"
+            className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl text-white"
             variants={variants}
           >
             Hi, I&apos;m{' '}
-            <span className="font-handwriting text-4xl sm:text-5xl lg:text-6xl text-blue-600 dark:text-blue-400">Athif</span>
+            <span className="font-handwriting text-4xl sm:text-5xl lg:text-6xl text-blue-400">Athif</span>
           </motion.h1>
 
           <motion.div
-            className="mt-3 text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-700 dark:text-gray-200"
+            className="mt-3 text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-200"
             variants={variants}
           >
             <TypingAnimation roles={ROLES} typingSpeed={50} pauseDuration={1800} />
           </motion.div>
 
           <motion.p
-            className="mt-4 max-w-md text-base text-gray-600 dark:text-gray-400"
+            className="mt-4 max-w-md text-base text-gray-400"
             variants={variants}
           >
             Passionate about building innovative solutions at the intersection of
@@ -320,7 +320,7 @@ export default function HeroSection() {
             <div className="flex flex-wrap gap-4">
               <button
                 onClick={scrollToProjects}
-                className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:bg-blue-700 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:bg-blue-500 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#030014]"
               >
                 <FaEye className="text-base" />
                 View My Work
@@ -328,7 +328,7 @@ export default function HeroSection() {
               <a
                 href="/1_CV ATS - Athif Fadheel Atharahman (Nov 2025).pdf"
                 download
-                className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-700 shadow transition-all duration-200 hover:border-blue-400 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-blue-400 dark:hover:text-blue-400 dark:focus:ring-offset-gray-900"
+                className="inline-flex items-center gap-2 rounded-lg border border-gray-600 bg-white/5 px-6 py-3 text-sm font-semibold text-gray-200 shadow transition-all duration-200 hover:border-blue-400 hover:text-blue-400 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#030014]"
               >
                 <FaDownload className="text-base" />
                 Download CV
@@ -338,7 +338,7 @@ export default function HeroSection() {
               href="https://www.linkedin.com/in/athif-fadheel-atharahman-1a3353245/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 w-full rounded-lg bg-[#0077b5] px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:bg-[#005f8d] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#0077b5] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              className="inline-flex items-center justify-center gap-2 w-full rounded-lg bg-[#0077b5] px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:bg-[#005f8d] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#0077b5] focus:ring-offset-2 focus:ring-offset-[#030014]"
             >
               <FaLinkedin className="text-lg" />
               Let&apos;s Connect

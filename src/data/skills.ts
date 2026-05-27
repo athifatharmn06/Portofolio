@@ -4,7 +4,7 @@ import {
   FaBroadcastTower, FaMicrochip, FaCogs, FaMapMarkedAlt, FaTasks, FaChartLine, FaSearch, FaCog,
   FaUsers, FaLanguage, FaServer, FaNetworkWired, FaHdd, FaEthernet, FaEye, FaFont,
   FaCloud, FaLaptopCode, FaChartBar, FaBrain, FaRobot as FaBot, FaPaintBrush, FaBriefcase,
-  FaCubes, FaMusic, FaFileExcel, FaPlane,
+  FaCubes, FaMusic, FaFileExcel, FaPlane, FaLayerGroup,
 } from 'react-icons/fa';
 import {
   SiCplusplus, SiGooglecloud, SiTailwindcss, SiJavascript, SiTypescript,
@@ -13,6 +13,7 @@ import {
   SiFirebase, SiDocker, SiMysql, SiPostgresql, SiRedis,
   SiJupyter, SiFastapi, SiScrapy,
   SiVite, SiVercel, SiRaspberrypi,
+  SiThreedotjs, SiNextdotjs, SiSupabase, SiGreensock, SiFramer,
 } from 'react-icons/si';
 import { FaMicrosoft } from 'react-icons/fa';
 import { createElement } from 'react';
@@ -41,6 +42,8 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Scrapy', icon: icon(SiScrapy, 'text-[#60A839]'), level: 'intermediate' },
       { name: 'Playwright', icon: icon(FaLaptopCode, 'text-[#2EAD33]'), level: 'intermediate' },
       { name: 'Celery', icon: icon(FaCogs, 'text-green-400'), level: 'intermediate' },
+      { name: 'Cheerio', icon: icon(FaSearch, 'text-yellow-400'), level: 'intermediate' },
+      { name: 'Zod', icon: icon(FaLayerGroup, 'text-blue-300'), level: 'intermediate' },
     ],
   },
   {
@@ -69,12 +72,19 @@ export const skillCategories: SkillCategory[] = [
     accentColor: 'cyan',
     skills: [
       { name: 'React / React Native', icon: icon(FaReact, 'text-[#61DAFB]'), level: 'expert' },
+      { name: 'Next.js', icon: icon(SiNextdotjs, 'text-white'), level: 'intermediate' },
       { name: 'TypeScript', icon: icon(SiTypescript, 'text-[#3178C6]'), level: 'expert' },
       { name: 'JavaScript', icon: icon(SiJavascript, 'text-[#F7DF1E]'), level: 'expert' },
       { name: 'Tailwind CSS', icon: icon(SiTailwindcss, 'text-[#06B6D4]'), level: 'expert' },
       { name: 'HTML5/CSS3', icon: icon(FaHtml5, 'text-[#E34F26]'), level: 'expert' },
       { name: 'Vite', icon: icon(SiVite, 'text-[#646CFF]'), level: 'expert' },
-      { name: 'Framer Motion', icon: icon(FaCube, 'text-purple-400'), level: 'intermediate' },
+      { name: 'Three.js / React Three Fiber', icon: icon(SiThreedotjs, 'text-white'), level: 'intermediate' },
+      { name: 'Framer Motion', icon: icon(SiFramer, 'text-purple-400'), level: 'intermediate' },
+      { name: 'GSAP', icon: icon(SiGreensock, 'text-[#88CE02]'), level: 'intermediate' },
+      { name: 'Recharts', icon: icon(FaChartBar, 'text-blue-400'), level: 'intermediate' },
+      { name: 'shadcn/ui', icon: icon(FaLayerGroup, 'text-gray-300'), level: 'intermediate' },
+      { name: 'Zustand', icon: icon(FaCube, 'text-orange-400'), level: 'intermediate' },
+      { name: 'Web Workers', icon: icon(FaMicrochip, 'text-yellow-400'), level: 'intermediate' },
       { name: 'Responsive Design', icon: icon(FaLaptopCode, 'text-cyan-300'), level: 'expert' },
       { name: 'WordPress', icon: icon(FaWordpress, 'text-[#21759B]'), level: 'familiar' },
     ],
@@ -90,6 +100,8 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Microsoft SQL Server', icon: icon(FaMicrosoft, 'text-[#CC2927]'), level: 'expert' },
       { name: 'PostgreSQL', icon: icon(SiPostgresql, 'text-[#4169E1]'), level: 'intermediate' },
       { name: 'Redis', icon: icon(SiRedis, 'text-[#DC382D]'), level: 'intermediate' },
+      { name: 'Supabase', icon: icon(SiSupabase, 'text-[#3ECF8E]'), level: 'intermediate' },
+      { name: 'Dexie.js (IndexedDB)', icon: icon(FaDatabase, 'text-orange-300'), level: 'intermediate' },
       { name: 'Pandas', icon: icon(SiPandas, 'text-[#150458]'), level: 'expert' },
       { name: 'NumPy', icon: icon(SiNumpy, 'text-[#013243]'), level: 'expert' },
       { name: 'Matplotlib', icon: icon(FaChartBar, 'text-[#11557C]'), level: 'intermediate' },
