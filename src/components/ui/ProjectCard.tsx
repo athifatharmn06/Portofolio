@@ -118,9 +118,9 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
             {project.title}
           </h3>
 
-          {/* Tech stack pills */}
+          {/* Tech stack pills — show all */}
           <div className="flex flex-wrap gap-1.5 mb-3">
-            {project.techStack.slice(0, 4).map((tech) => (
+            {project.techStack.map((tech) => (
               <span
                 key={tech}
                 className="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
@@ -128,11 +128,6 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
                 {tech}
               </span>
             ))}
-            {project.techStack.length > 4 && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
-                +{project.techStack.length - 4}
-              </span>
-            )}
           </div>
 
           {/* Action row */}
