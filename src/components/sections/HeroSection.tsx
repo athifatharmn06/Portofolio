@@ -226,43 +226,34 @@ export default function HeroSection() {
           animate="visible"
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
         >
-          {/* Badge */}
-          <motion.div
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
-            className="mb-5"
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase"
-              style={{
-                background: 'rgba(139,92,246,0.12)',
-                border: '1px solid rgba(139,92,246,0.3)',
-                color: 'rgba(196,181,253,0.9)',
-                backdropFilter: 'blur(8px)',
-              }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-              Available for opportunities
-            </span>
-          </motion.div>
+          {/* Badge — REMOVED (no "available for opportunities") */}
 
-          {/* Name */}
-          <motion.h1
+          {/* Name — on two lines so handwriting font never clips */}
+          <motion.div
             variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-4"
+            className="mb-4"
           >
-            <span className="text-white">Hi, I'm </span>
-            <span
-              className="font-handwriting"
-              style={{
-                background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                fontSize: '1.15em',
-              }}
-            >
-              Athif
-            </span>
-          </motion.h1>
+            <h1 className="font-black leading-tight tracking-tight">
+              <span
+                className="block text-4xl sm:text-5xl lg:text-6xl text-white"
+              >
+                Hi, I'm
+              </span>
+              <span
+                className="block font-handwriting"
+                style={{
+                  fontSize: 'clamp(3rem, 8vw, 5.5rem)',
+                  lineHeight: 1.1,
+                  background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                Athif Fadheel
+              </span>
+            </h1>
+          </motion.div>
 
           {/* Typing role */}
           <motion.div
@@ -446,8 +437,8 @@ export default function HeroSection() {
               </p>
 
               {/* Tech chips */}
-              <div className="flex flex-wrap justify-center gap-1.5 mb-5">
-                {['React', 'TypeScript', 'Python', 'Three.js', 'AI/ML'].map((tech) => (
+              <div className="flex flex-wrap justify-center gap-1.5">
+                {['React', 'TypeScript', 'Python', 'Three.js', 'AI/ML', 'Cloud'].map((tech) => (
                   <span
                     key={tech}
                     className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
@@ -460,19 +451,6 @@ export default function HeroSection() {
                     {tech}
                   </span>
                 ))}
-              </div>
-
-              {/* Status indicator */}
-              <div
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium"
-                style={{
-                  background: 'rgba(34,197,94,0.1)',
-                  border: '1px solid rgba(34,197,94,0.25)',
-                  color: 'rgba(134,239,172,0.9)',
-                }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                Open to work
               </div>
             </div>
           </div>
