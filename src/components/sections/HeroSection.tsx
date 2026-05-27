@@ -221,14 +221,14 @@ export default function HeroSection() {
           animate="visible"
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
         >
-          {/* Name */}
+          {/* Name — all on one line */}
           <motion.div
             variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}
             className="mb-4"
           >
-            <h1 className="font-black tracking-tight" style={{ lineHeight: 1 }}>
-              <span className="block text-4xl sm:text-5xl lg:text-6xl text-white mb-2">
-                Hi, I'm
+            <h1 className="font-black tracking-tight" style={{ lineHeight: 1.2 }}>
+              <span className="text-4xl sm:text-5xl lg:text-6xl text-white">
+                Hi, I'm{' '}
               </span>
               <span
                 style={{
@@ -239,6 +239,7 @@ export default function HeroSection() {
                   lineHeight: 1.3,
                   paddingRight: '0.35em',
                   paddingBottom: '0.1em',
+                  verticalAlign: 'middle',
                   background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -355,7 +356,7 @@ export default function HeroSection() {
 
         {/* RIGHT — Full-body photo with interactive contour glow */}
         <motion.div
-          className="relative flex-shrink-0 flex items-end justify-center"
+          className="relative flex-shrink-0 flex items-center justify-center"
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
