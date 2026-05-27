@@ -224,9 +224,9 @@ export default function HeroSection() {
           {/* Name — all on one line */}
           <motion.div
             variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}
-            className="mb-2"
+            className="mb-1"
           >
-            <h1 className="font-black tracking-tight" style={{ lineHeight: 1.2 }}>
+            <h1 className="font-black tracking-tight" style={{ lineHeight: 1 }}>
               <span className="text-4xl sm:text-5xl lg:text-6xl text-white">
                 Hi, I'm{' '}
               </span>
@@ -236,10 +236,8 @@ export default function HeroSection() {
                   fontFamily: 'Caveat, cursive',
                   fontWeight: 700,
                   fontSize: 'clamp(3.5rem, 9vw, 6.5rem)',
-                  lineHeight: 1.3,
+                  lineHeight: 1,
                   paddingRight: '0.35em',
-                  paddingBottom: '0.1em',
-                  verticalAlign: 'middle',
                   background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
