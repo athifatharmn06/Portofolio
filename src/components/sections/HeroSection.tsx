@@ -221,26 +221,24 @@ export default function HeroSection() {
           animate="visible"
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
         >
-          {/* Badge — REMOVED (no "available for opportunities") */}
-
           {/* Name */}
           <motion.div
             variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}
             className="mb-4"
-            style={{ overflow: 'visible' }}
           >
-            <h1 className="font-black tracking-tight" style={{ overflow: 'visible', lineHeight: 1 }}>
-              <span className="block text-4xl sm:text-5xl lg:text-6xl text-white mb-1">
+            <h1 className="font-black tracking-tight" style={{ lineHeight: 1 }}>
+              <span className="block text-4xl sm:text-5xl lg:text-6xl text-white mb-2">
                 Hi, I'm
               </span>
               <span
-                className="block font-handwriting"
                 style={{
-                  fontSize: 'clamp(3.5rem, 9vw, 6.5rem)',
-                  lineHeight: 1.2,
-                  paddingBottom: '0.15em',
-                  overflow: 'visible',
                   display: 'inline-block',
+                  fontFamily: 'Caveat, cursive',
+                  fontWeight: 700,
+                  fontSize: 'clamp(3.5rem, 9vw, 6.5rem)',
+                  lineHeight: 1.3,
+                  paddingRight: '0.35em',
+                  paddingBottom: '0.1em',
                   background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -361,63 +359,42 @@ export default function HeroSection() {
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-          style={{ width: 380, minHeight: 480 }}
+          style={{ width: 'min(45vw, 520px)', minWidth: 320, minHeight: 500 }}
         >
-          {/* Ambient glow pool at feet — follows mouse color */}
+          {/* Ambient glow pool at feet */}
           <div
             className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
             style={{
-              width: 320, height: 120,
-              background: `radial-gradient(ellipse, rgba(139,92,246,0.35) 0%, rgba(99,102,241,0.2) 40%, transparent 70%)`,
-              filter: 'blur(30px)',
+              width: '80%', height: 100,
+              background: 'radial-gradient(ellipse, rgba(139,92,246,0.4) 0%, rgba(99,102,241,0.2) 40%, transparent 70%)',
+              filter: 'blur(25px)',
               animation: 'glow-pulse 3s ease-in-out infinite',
             }}
           />
 
-          {/* Large aurora behind the figure */}
+          {/* Aurora behind the figure — follows mouse */}
           <motion.div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: `radial-gradient(ellipse 70% 80% at ${50 + (mouseNorm.x - 0.5) * 20}% ${50 + (mouseNorm.y - 0.5) * 20}%, rgba(139,92,246,0.22) 0%, rgba(6,182,212,0.12) 50%, transparent 75%)`,
+              background: `radial-gradient(ellipse 70% 80% at ${50 + (mouseNorm.x - 0.5) * 20}% ${50 + (mouseNorm.y - 0.5) * 20}%, rgba(139,92,246,0.25) 0%, rgba(6,182,212,0.15) 50%, transparent 75%)`,
               filter: 'blur(40px)',
               transition: 'background 0.1s ease-out',
             }}
           />
 
-          {/* The profile image — full body, no crop, contour glow via drop-shadow */}
-          <div className="relative z-10 w-full h-full flex items-end justify-center">
-            <img
-              src="/profile.webp"
-              alt="Athif Fadheel — Professional profile photo"
-              className="w-full h-auto object-contain select-none"
-              style={{
-                filter: prefersReducedMotion
-                  ? 'drop-shadow(0 0 30px rgba(139,92,246,0.5))'
-                  : `drop-shadow(0 0 ${20 + Math.abs(mouseNorm.x - 0.5) * 40}px rgba(139,92,246,${0.4 + Math.abs(mouseNorm.x - 0.5) * 0.4})) drop-shadow(0 0 ${15 + Math.abs(mouseNorm.y - 0.5) * 30}px rgba(6,182,212,${0.3 + Math.abs(mouseNorm.y - 0.5) * 0.3}))`,
-                transition: 'filter 0.15s ease-out',
-              }}
-            />
-          </div>
-
-          {/* Floating name card below photo */}
-          <motion.div
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-          >
-            <div
-              className="px-5 py-2 rounded-full text-sm font-semibold text-white"
-              style={{
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.12)',
-                backdropFilter: 'blur(12px)',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-              }}
-            >
-              Electrical Engineering · Telkom University
-            </div>
-          </motion.div>
+          {/* Profile image — full body, contour glow via drop-shadow */}
+          <img
+            src="/profile.webp"
+            alt="Athif Fadheel — Professional profile photo"
+            className="relative z-10 w-full h-auto object-contain select-none"
+            style={{
+              maxHeight: '80vh',
+              filter: prefersReducedMotion
+                ? 'drop-shadow(0 0 40px rgba(139,92,246,0.6))'
+                : `drop-shadow(0 0 ${25 + Math.abs(mouseNorm.x - 0.5) * 50}px rgba(139,92,246,${0.5 + Math.abs(mouseNorm.x - 0.5) * 0.4})) drop-shadow(0 0 ${20 + Math.abs(mouseNorm.y - 0.5) * 35}px rgba(6,182,212,${0.35 + Math.abs(mouseNorm.y - 0.5) * 0.35}))`,
+              transition: 'filter 0.12s ease-out',
+            }}
+          />
         </motion.div>
       </div>
 
