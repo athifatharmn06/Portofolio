@@ -224,7 +224,7 @@ export default function HeroSection() {
           {/* Name — all on one line */}
           <motion.div
             variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}
-            className="mb-4"
+            className="mb-2"
           >
             <h1 className="font-black tracking-tight" style={{ lineHeight: 1.2 }}>
               <span className="text-4xl sm:text-5xl lg:text-6xl text-white">
@@ -254,7 +254,7 @@ export default function HeroSection() {
           {/* Typing role */}
           <motion.div
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
-            className="text-xl sm:text-2xl lg:text-3xl font-semibold mb-5"
+            className="text-xl sm:text-2xl lg:text-3xl font-semibold mb-4"
             style={{ color: 'rgba(148,163,184,0.9)' }}
           >
             <TypingAnimation roles={ROLES} typingSpeed={50} pauseDuration={1800} />
