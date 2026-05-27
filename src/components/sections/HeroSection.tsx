@@ -3,7 +3,6 @@ import { motion, useSpring, useTransform } from 'framer-motion';
 import { FaLinkedin, FaEye, FaDownload, FaArrowRight } from 'react-icons/fa';
 import TypingAnimation from '../ui/TypingAnimation';
 import ScrollIndicator from '../ui/ScrollIndicator';
-import ImageWithFallback from '../ui/ImageWithFallback';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { NAVBAR_HEIGHT, SCROLL_OFFSET_PADDING } from '../../lib/constants';
 
@@ -83,10 +82,6 @@ export default function HeroSection() {
       window.scrollTo({ top, behavior: 'smooth' });
     }
   };
-
-  // Card tilt based on mouse position
-  const cardRotateX = prefersReducedMotion ? 0 : (mouseNorm.y - 0.5) * -12;
-  const cardRotateY = prefersReducedMotion ? 0 : (mouseNorm.x - 0.5) * 12;
 
   return (
     <section
@@ -228,22 +223,24 @@ export default function HeroSection() {
         >
           {/* Badge — REMOVED (no "available for opportunities") */}
 
-          {/* Name — on two lines so handwriting font never clips */}
+          {/* Name */}
           <motion.div
             variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}
             className="mb-4"
+            style={{ overflow: 'visible' }}
           >
-            <h1 className="font-black leading-tight tracking-tight">
-              <span
-                className="block text-4xl sm:text-5xl lg:text-6xl text-white"
-              >
+            <h1 className="font-black tracking-tight" style={{ overflow: 'visible', lineHeight: 1 }}>
+              <span className="block text-4xl sm:text-5xl lg:text-6xl text-white mb-1">
                 Hi, I'm
               </span>
               <span
                 className="block font-handwriting"
                 style={{
-                  fontSize: 'clamp(3.5rem, 10vw, 7rem)',
-                  lineHeight: 1.1,
+                  fontSize: 'clamp(3.5rem, 9vw, 6.5rem)',
+                  lineHeight: 1.2,
+                  paddingBottom: '0.15em',
+                  overflow: 'visible',
+                  display: 'inline-block',
                   background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -358,85 +355,69 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* RIGHT — Glass profile card */}
+        {/* RIGHT — Full-body photo with interactive contour glow */}
         <motion.div
-          className="relative flex-shrink-0"
-          initial={{ opacity: 0, scale: 0.85, y: 40 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-          style={{
-            transform: prefersReducedMotion
-              ? 'none'
-              : `perspective(1000px) rotateX(${cardRotateX}deg) rotateY(${cardRotateY}deg)`,
-            transition: 'transform 0.15s ease-out',
-          }}
+          className="relative flex-shrink-0 flex items-end justify-center"
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+          style={{ width: 380, minHeight: 480 }}
         >
-          {/* Outer glow ring */}
+          {/* Ambient glow pool at feet — follows mouse color */}
           <div
-            className="absolute -inset-4 rounded-3xl"
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
             style={{
-              background: 'linear-gradient(135deg, rgba(139,92,246,0.3), rgba(6,182,212,0.2), rgba(236,72,153,0.15))',
-              filter: 'blur(20px)',
+              width: 320, height: 120,
+              background: `radial-gradient(ellipse, rgba(139,92,246,0.35) 0%, rgba(99,102,241,0.2) 40%, transparent 70%)`,
+              filter: 'blur(30px)',
               animation: 'glow-pulse 3s ease-in-out infinite',
             }}
           />
 
-          {/* Glass card */}
-          <div
-            className="relative rounded-2xl overflow-hidden"
+          {/* Large aurora behind the figure */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
             style={{
-              width: 340,
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              backdropFilter: 'blur(20px)',
-              boxShadow: '0 25px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)',
+              background: `radial-gradient(ellipse 70% 80% at ${50 + (mouseNorm.x - 0.5) * 20}% ${50 + (mouseNorm.y - 0.5) * 20}%, rgba(139,92,246,0.22) 0%, rgba(6,182,212,0.12) 50%, transparent 75%)`,
+              filter: 'blur(40px)',
+              transition: 'background 0.1s ease-out',
             }}
-          >
-            {/* Card top gradient bar */}
-            <div
-              className="h-1 w-full"
-              style={{ background: 'linear-gradient(90deg, #7c3aed, #4f46e5, #0ea5e9, #2dd4bf)' }}
+          />
+
+          {/* The profile image — full body, no crop, contour glow via drop-shadow */}
+          <div className="relative z-10 w-full h-full flex items-end justify-center">
+            <img
+              src="/profile.webp"
+              alt="Athif Fadheel — Professional profile photo"
+              className="w-full h-auto object-contain select-none"
+              style={{
+                filter: prefersReducedMotion
+                  ? 'drop-shadow(0 0 30px rgba(139,92,246,0.5))'
+                  : `drop-shadow(0 0 ${20 + Math.abs(mouseNorm.x - 0.5) * 40}px rgba(139,92,246,${0.4 + Math.abs(mouseNorm.x - 0.5) * 0.4})) drop-shadow(0 0 ${15 + Math.abs(mouseNorm.y - 0.5) * 30}px rgba(6,182,212,${0.3 + Math.abs(mouseNorm.y - 0.5) * 0.3}))`,
+                transition: 'filter 0.15s ease-out',
+              }}
             />
-
-            {/* Profile image area */}
-            <div className="relative p-6 pb-4">
-              {/* Glow behind image */}
-              <div
-                className="absolute top-4 left-1/2 -translate-x-1/2 w-48 h-48 rounded-full"
-                style={{
-                  background: 'radial-gradient(circle, rgba(139,92,246,0.25) 0%, transparent 70%)',
-                  filter: 'blur(30px)',
-                }}
-              />
-              <div className="relative mx-auto w-52 h-52 sm:w-60 sm:h-60">
-                {/* Animated border ring */}
-                <div
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background: 'conic-gradient(from 0deg, #7c3aed, #4f46e5, #0ea5e9, #2dd4bf, #7c3aed)',
-                    padding: 2,
-                    animation: prefersReducedMotion ? 'none' : 'spin 6s linear infinite',
-                  }}
-                >
-                  <div className="w-full h-full rounded-full" style={{ background: '#050118' }} />
-                </div>
-                <ImageWithFallback
-                  src="/profile.webp"
-                  alt="Athif Fadheel — Professional profile photo"
-                  className="absolute inset-[3px] w-[calc(100%-6px)] h-[calc(100%-6px)] object-contain rounded-full z-10"
-                  placeholderClassName="rounded-full"
-                />
-              </div>
-            </div>
-
-            {/* Card info */}
-            <div className="px-6 pb-6 text-center">
-              <h2 className="text-lg font-bold text-white mb-0.5">Athif</h2>
-              <p className="text-xs font-medium" style={{ color: 'rgba(148,163,184,0.7)' }}>
-                Electrical Engineering · Telkom University
-              </p>
-            </div>
           </div>
+
+          {/* Floating name card below photo */}
+          <motion.div
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+          >
+            <div
+              className="px-5 py-2 rounded-full text-sm font-semibold text-white"
+              style={{
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                backdropFilter: 'blur(12px)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+              }}
+            >
+              Electrical Engineering · Telkom University
+            </div>
+          </motion.div>
         </motion.div>
       </div>
 
