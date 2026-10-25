@@ -1,61 +1,98 @@
-import { FiArrowUpRight } from 'react-icons/fi';
-import Reveal from '../ui/Reveal';
+import { motion } from 'framer-motion';
+import { socialLinks } from '../../data/social';
+import { useInView } from '../../hooks/useInView';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { fadeInUp, staggerContainer, reducedMotionVariants } from '../../lib/animations';
 
-const EMAIL = 'athifadheel@gmail.com';
-
-const LINKS = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/athif-fadheel-atharahman-1a3353245/' },
-  { label: 'Instagram', href: 'https://www.instagram.com/athifatharmn/' },
-  { label: 'GitHub', href: 'https://github.com/athifatharmn06' },
-];
-
+/**
+ * ContactSection — Engaging contact section with social links.
+ *
+ * Features:
+ * - Gradient background distinct from adjacent sections
+ * - Social links as animated icon buttons with hover scale and color transition
+ * - Visible text labels for each platform
+ * - Card-based layout with glassmorphic styling (backdrop-blur, semi-transparent bg)
+ * - All links open in new tab with rel="noopener noreferrer"
+ * - Motivational tagline encouraging collaboration
+ */
 export default function ContactSection() {
+  const { ref, isInView } = useInView({ once: true, threshold: 0.15 });
+  const prefersReducedMotion = useReducedMotion();
+
+  const containerVariants = prefersReducedMotion ? reducedMotionVariants : staggerContainer;
+  const itemVariants = prefersReducedMotion ? reducedMotionVariants : fadeInUp;
+
   return (
-    <section id="contact" className="bg-fg py-24 text-bg md:py-36">
-      <div className="wrap">
-        <Reveal className="mb-14 md:mb-20">
-          <div className="flex items-center gap-4 border-t border-bg/20 pt-4">
-            <span className="eyebrow !text-accent">05</span>
-            <span className="eyebrow !text-bg/60">Contact</span>
-          </div>
-        </Reveal>
+    <section
+      id="contact"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="w-full relative overflow-hidden bg-gradient-to-br from-[#0a0320] via-[#0d0a1a] to-[#04081a] py-24 md:py-32"
+    >
+      {/* Decorative background blobs */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-900/15 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-teal-900/15 rounded-full blur-[100px] pointer-events-none" />
 
-        <Reveal>
-          <h2 className="display max-w-5xl text-[clamp(2.75rem,8vw,7rem)]">
-            Have something in mind? <em className="text-accent">Let's talk.</em>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? 'visible' : 'hidden'}
+        className="container mx-auto px-6 max-w-4xl relative z-10"
+      >
+        {/* Section heading */}
+        <motion.div variants={itemVariants} className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Get In Touch
           </h2>
-        </Reveal>
-
-        <Reveal delay={0.05} className="mt-14">
-          <a
-            href={`mailto:${EMAIL}`}
-            className="group inline-flex items-center gap-3 border-b border-bg/30 pb-2 text-xl transition-colors hover:border-accent hover:text-accent sm:text-3xl"
-          >
-            {EMAIL}
-            <FiArrowUpRight className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
-          </a>
-        </Reveal>
-
-        <Reveal delay={0.1} className="mt-16 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <ul className="flex flex-wrap gap-x-8 gap-y-3">
-            {LINKS.map((l) => (
-              <li key={l.label}>
-                <a
-                  href={l.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="link-underline inline-flex items-center gap-1 text-sm"
-                >
-                  {l.label} <FiArrowUpRight size={13} />
-                </a>
-              </li>
-            ))}
-          </ul>
-          <p className="max-w-xs text-sm text-bg/60">
-            Open to freelance work, collaborations and interesting engineering problems.
+          <p className="text-lg md:text-xl text-gray-300 font-light max-w-2xl mx-auto">
+            Let's build something extraordinary together
           </p>
-        </Reveal>
-      </div>
+        </motion.div>
+
+        {/* Glassmorphic card with social links */}
+        <motion.div
+          variants={itemVariants}
+          className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 md:p-12 shadow-xl"
+        >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-10">
+            {socialLinks.map((link) => (
+              <a
+                key={link.platform}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col items-center gap-3 p-4 rounded-xl transition-all duration-300 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+                aria-label={`Visit ${link.platform}`}
+              >
+                {/* Animated icon button */}
+                <span
+                  className="w-14 h-14 flex items-center justify-center rounded-full bg-white/10 border border-white/10 text-white transition-all duration-250 group-hover:scale-[1.2] group-hover:border-transparent group-hover:shadow-lg"
+                  style={{
+                    // Apply hover color via CSS custom property for the group-hover state
+                    ['--hover-color' as string]: link.hoverColor,
+                  }}
+                >
+                  <span className="text-2xl transition-colors duration-250 group-hover:text-[var(--hover-color)]">
+                    {link.icon}
+                  </span>
+                </span>
+
+                {/* Visible text label */}
+                <span className="text-sm font-medium text-gray-400 transition-colors duration-250 group-hover:text-white">
+                  {link.platform}
+                </span>
+              </a>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Footer note */}
+        <motion.p
+          variants={itemVariants}
+          className="text-center text-gray-500 text-sm mt-8"
+        >
+          Open to freelance opportunities, collaborations, and exciting projects.
+        </motion.p>
+      </motion.div>
     </section>
   );
 }
