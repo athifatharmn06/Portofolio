@@ -227,10 +227,10 @@ export default function HeroSection() {
                       display: 'inline-block',
                       backgroundImage: 'linear-gradient(120deg, #a78bfa, #818cf8, #38bdf8, #2dd4bf, #a78bfa)',
                       backgroundSize: '300% 100%',
-                      // Padding keeps Caveat's overhanging glyphs (the f's hook and tail) inside the clip box
+                      // Padding keeps Caveat's overhanging glyphs (the f's hook and tail) inside the clip box (the f overhangs its advance width by ~0.22em)
                       lineHeight: 1.25,
-                      padding: '0.1em 0.18em 0.2em 0.04em',
-                      margin: '-0.1em -0.18em -0.2em -0.04em',
+                      padding: '0.1em 0.3em 0.2em 0.04em',
+                      margin: '-0.1em -0.3em -0.2em -0.04em',
                       animation: prefersReducedMotion ? undefined : 'gradient-shift 6s ease-in-out infinite',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
