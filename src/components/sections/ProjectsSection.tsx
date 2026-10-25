@@ -54,6 +54,7 @@ export default function ProjectsSection({ onOpenGallery }: ProjectsSectionProps)
       >
         {projectsData.map((project) => (
           <motion.div
+            className="h-full"
             key={project.id}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}

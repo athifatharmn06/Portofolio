@@ -31,7 +31,7 @@ export default function LeadershipSection() {
       <div className="pointer-events-none absolute -right-24 top-20 h-[460px] w-[460px] rounded-full bg-fuchsia-600/[0.08] blur-[120px]" />
       <div className="pointer-events-none absolute -left-24 bottom-10 h-[420px] w-[420px] rounded-full bg-orange-500/[0.06] blur-[120px]" />
 
-      <div className="container relative z-10 mx-auto max-w-6xl px-6 py-32">
+      <div className="container relative z-10 mx-auto max-w-5xl px-6 py-24">
         <motion.div
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
@@ -48,7 +48,7 @@ export default function LeadershipSection() {
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
           variants={variants}
-          className="mb-14 max-w-3xl text-4xl font-bold leading-tight text-white md:text-5xl"
+          className="mb-10 max-w-3xl text-3xl font-bold leading-tight text-white md:text-4xl"
         >
           Vice Captain of a <span className="text-teal-400">UAV research laboratory</span>
         </motion.h3>
@@ -80,13 +80,13 @@ export default function LeadershipSection() {
             }}
           />
 
-          <div className="relative grid overflow-hidden rounded-[20px] bg-[#101114] md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+          <div className="relative grid overflow-hidden rounded-[20px] bg-[#101114] md:grid-cols-[minmax(0,4fr)_minmax(0,6fr)]">
             {/* Post image */}
-            <div className="relative aspect-[5/6] overflow-hidden bg-black md:aspect-auto">
+            <div className="relative aspect-[4/5] max-h-[420px] w-full overflow-hidden bg-black md:aspect-auto md:max-h-none">
               <ImageWithFallback
                 src="/leadership/aptrg-leader-2025.webp"
                 alt="APTRG 2025 Leader poster showing the laboratory captain and vice captains"
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03] md:absolute md:inset-0"
                 loading="lazy"
               />
             </div>
@@ -105,7 +105,7 @@ export default function LeadershipSection() {
                 <FiMoreHorizontal className="ml-auto h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
 
-              <div className="flex-1 space-y-5 px-5 py-5 text-sm leading-relaxed text-gray-200">
+              <div className="flex-1 space-y-4 px-5 py-4 text-sm leading-relaxed text-gray-200">
                 <p>
                   <span className="font-semibold text-white">aptrg</span> We are proud to introduce our team behind
                   APTRG Laboratory for the 2024 - 2025 period.
@@ -113,13 +113,13 @@ export default function LeadershipSection() {
 
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-teal-400">My role</p>
-                  <p className="mt-1 text-base font-semibold text-white">Vice Captain &amp; Deputy Coordinator of External Affairs</p>
+                  <p className="mt-1 text-[0.95rem] font-semibold leading-snug text-white">Vice Captain &amp; Deputy Coordinator of External Affairs</p>
                   <p className="text-xs text-gray-500">
                     Aeromodelling &amp; Payload Telemetry Research Group (APTRG) | Telkom University | Oct 2024 - Oct 2025
                   </p>
                 </div>
 
-                <ul className="space-y-2.5 text-[0.82rem] text-gray-300">
+                <ul className="space-y-2 text-[0.78rem] leading-relaxed text-gray-300">
                   {RESPONSIBILITIES.map((r) => (
                     <li key={r} className="flex gap-2.5">
                       <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-teal-400" aria-hidden="true" />

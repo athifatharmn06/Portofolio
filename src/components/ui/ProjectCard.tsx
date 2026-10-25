@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaImages } from 'react-icons/fa';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import ImageWithFallback from './ImageWithFallback';
+import TechTags from './TechTags';
 import type { ProjectData } from '../../types';
 
 interface ProjectCardProps {
@@ -66,7 +67,7 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
 
   return (
     <motion.div
-      className="relative group rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md dark:shadow-gray-900/30 border border-gray-200 dark:border-gray-700 transition-shadow duration-300 hover:shadow-xl dark:hover:shadow-gray-900/50"
+      className="relative group h-full flex flex-col rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md dark:shadow-gray-900/30 border border-gray-200 dark:border-gray-700 transition-shadow duration-300 hover:shadow-xl dark:hover:shadow-gray-900/50"
       style={{
         perspective: '1000px',
       }}
@@ -75,7 +76,7 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       <div
-        className="transition-transform duration-300 ease-out"
+        className="flex flex-1 flex-col transition-transform duration-300 ease-out"
         style={{
           transform: prefersReducedMotion
             ? 'none'
@@ -125,25 +126,18 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
         </div>
 
         {/* Card body */}
-        <div className="p-4">
-          <h3 className="text-base font-bold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2">
+        <div className="flex flex-1 flex-col p-4">
+          <h3 className="text-base font-bold leading-snug text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 min-h-[2.75em]">
             {project.title}
           </h3>
 
-          {/* Tech stack pills - show all */}
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {project.techStack.map((tech) => (
-              <span
-                key={tech}
-                className="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
-              >
-                {tech}
-              </span>
-            ))}
+          {/* Tech stack pills, clamped to two rows */}
+          <div className="mb-3">
+            <TechTags tags={project.techStack} />
           </div>
 
           {/* Action row */}
-          <div className="flex items-center justify-between gap-2">
+          <div className="mt-auto flex items-center justify-between gap-2">
             {/* Conditional links */}
             {hasLinks && (
               <div className="flex items-center gap-2">
