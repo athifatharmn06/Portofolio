@@ -27,11 +27,6 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
   const [isHovered, setIsHovered] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
-  const truncatedDesc =
-    project.shortDesc.length > 80
-      ? project.shortDesc.slice(0, 77) + '...'
-      : project.shortDesc;
-
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (prefersReducedMotion) return;
@@ -110,7 +105,7 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
           {/* Gradient overlay - visible on hover */}
           <div
             className={`
-              absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent
+              absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/20
               flex flex-col justify-end p-4
               transition-opacity duration-300
               ${isHovered ? 'opacity-100' : 'opacity-0'}
@@ -119,8 +114,8 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
             <span className="text-xs font-semibold uppercase tracking-wider text-teal-300 mb-1">
               {project.category}
             </span>
-            <p className="text-sm text-gray-100 leading-snug">
-              {truncatedDesc}
+            <p className="text-sm text-gray-100 leading-snug line-clamp-6">
+              {project.shortDesc}
             </p>
           </div>
         </div>
