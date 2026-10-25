@@ -12,7 +12,7 @@ import ScrollWords from '../ui/ScrollWords';
  * AboutSection - Bio, stats counters, languages, education card.
  *
  * - Animated numeric counters (3+ stats) triggered by useInView
- * - Education card with hover-expand revealing GPA and coursework (300ms)
+ * - Education card with hover-expand revealing final project and coursework (300ms)
  * - Staggered fade-in-up transitions (150ms delay, 600ms per element)
  * - Two-column on desktop (≥1024px): 60% text left, 40% image right
  * - Single-column on mobile: heading → text → languages → image → education card
@@ -163,10 +163,16 @@ export default function AboutSection() {
               />
             </div>
 
-            {/* Education Card with hover-expand */}
+            {/* Education Card: key facts always visible, details expand on hover, focus or tap */}
             <motion.div
+              role="button"
+              tabIndex={0}
+              aria-expanded={isEducationExpanded}
               onMouseEnter={() => setIsEducationExpanded(true)}
               onMouseLeave={() => setIsEducationExpanded(false)}
+              onFocus={() => setIsEducationExpanded(true)}
+              onBlur={() => setIsEducationExpanded(false)}
+              onClick={() => setIsEducationExpanded((v) => !v)}
               className="w-full max-w-sm bg-gray-900/50 border border-gray-800 rounded-xl p-5 hover:border-teal-500/50 transition-colors duration-300 cursor-pointer shadow-lg"
             >
               <div className="flex items-center gap-5">
@@ -183,30 +189,46 @@ export default function AboutSection() {
                     Bachelor of Electrical Engineering
                   </h4>
                   <p className="text-teal-400 text-xs font-semibold mb-1">Telkom University</p>
-                  <p className="text-gray-400 text-xs">2022 - Present</p>
+                  <p className="text-gray-400 text-xs">2022 - 2026</p>
                 </div>
+              </div>
+
+              {/* Always visible: result */}
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="rounded-full border border-teal-400/40 bg-teal-400/10 px-3 py-1 text-xs font-semibold text-teal-300">
+                  Cum Laude
+                </span>
+                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-gray-300">
+                  GPA 3.53 / 4.00
+                </span>
               </div>
 
               {/* Expandable details */}
               <div
                 className="overflow-hidden transition-all duration-300 ease-in-out"
                 style={{
-                  maxHeight: isEducationExpanded ? '200px' : '0px',
+                  maxHeight: isEducationExpanded ? '420px' : '0px',
                   opacity: isEducationExpanded ? 1 : 0,
                 }}
               >
-                <div className="pt-4 mt-4 border-t border-gray-800 space-y-2">
-                  <p className="text-sm text-gray-300">
-                    <span className="font-semibold text-white">GPA:</span> 3.51 / 4.00
-                  </p>
+                <div className="pt-4 mt-4 border-t border-gray-800 space-y-4">
+                  <div>
+                    <p className="text-xs font-semibold text-teal-400 mb-1">Final Project (Grade A):</p>
+                    <p className="text-xs leading-relaxed text-gray-300">
+                      Driver Fatigue Detection on Facial Features Using Edge-AI in Low-Light Conditions with
+                      Infrared Camera
+                    </p>
+                  </div>
                   <div>
                     <p className="text-xs font-semibold text-teal-400 mb-1">Relevant Coursework:</p>
                     <ul className="text-xs text-gray-400 space-y-1 list-disc list-inside">
-                      <li>Digital Signal Processing</li>
-                      <li>Control Systems Engineering</li>
-                      <li>Embedded Systems & IoT</li>
-                      <li>Power Electronics</li>
-                      <li>Machine Learning & AI</li>
+                      <li>Control System</li>
+                      <li>Industrial Automation</li>
+                      <li>IoT System</li>
+                      <li>Artificial Intelligence</li>
+                      <li>Deep Learning and Application</li>
+                      <li>Robotics</li>
+                      <li>Microcomputers</li>
                     </ul>
                   </div>
                 </div>
