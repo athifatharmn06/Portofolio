@@ -36,7 +36,7 @@ export const ANIMATION_DURATIONS = {
 
 // --- Layout ---
 /** Navbar height in pixels (used for scroll offset calculations) */
-export const NAVBAR_HEIGHT = 72;
+export const NAVBAR_HEIGHT = 64;
 
 /** Additional padding below navbar for scroll-to offset */
 export const SCROLL_OFFSET_PADDING = 12;
@@ -56,9 +56,9 @@ export type SectionId = (typeof SECTION_IDS)[number];
 // --- Navigation Labels ---
 export const NAV_LINKS: { id: SectionId; label: string }[] = [
   { id: 'home', label: 'Home' },
-  { id: 'about', label: 'About me' },
+  { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
   { id: 'skills', label: 'Skills' },
-  { id: 'projects', label: 'My Work' },
-  { id: 'contact', label: 'Contact me' },
+  { id: 'projects', label: 'Work' },
+  { id: 'contact', label: 'Contact' },
 ];

@@ -146,7 +146,7 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
       variants={overlayVariants}
       initial="hidden"
       animate="visible"
@@ -164,20 +164,20 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute -top-2 -right-2 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+          className="absolute -top-2 -right-2 z-10 p-2 bg-white/10 hover:bg-white/20 text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
           aria-label="Close gallery"
         >
           <FiX className="w-6 h-6" />
         </button>
 
         {/* Position indicator */}
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded-full bg-black/50 text-white text-sm font-medium">
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 px-3 py-1 bg-black/60 text-white font-mono text-xs tracking-wider">
           {currentIndex + 1} / {totalPhotos}
         </div>
 
         {/* Main image area */}
         <div
-          className="relative w-full flex-1 min-h-0 flex items-center justify-center overflow-hidden rounded-lg"
+          className="relative w-full flex-1 min-h-0 flex items-center justify-center overflow-hidden"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
@@ -187,14 +187,14 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
             <>
               <button
                 onClick={goPrev}
-                className="absolute left-2 z-10 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="absolute left-2 z-10 p-2 bg-black/60 hover:bg-black/80 text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
                 aria-label="Previous image"
               >
                 <FiChevronLeft className="w-6 h-6" />
               </button>
               <button
                 onClick={goNext}
-                className="absolute right-2 z-10 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="absolute right-2 z-10 p-2 bg-black/60 hover:bg-black/80 text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
                 aria-label="Next image"
               >
                 <FiChevronRight className="w-6 h-6" />
@@ -216,16 +216,16 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
               <ImageWithFallback
                 src={currentPhoto.url}
                 alt={currentPhoto.caption || `${project.title} screenshot ${currentIndex + 1}`}
-                className="max-h-[60vh] w-auto max-w-full object-contain rounded-lg shadow-2xl"
+                className="max-h-[60vh] w-auto max-w-full object-contain shadow-2xl"
               />
               {/* Caption and tools */}
               {(currentPhoto.caption || currentPhoto.tools) && (
                 <div className="mt-3 text-center text-white/90 px-4">
                   {currentPhoto.caption && (
-                    <p className="text-sm font-medium">{currentPhoto.caption}</p>
+                    <p className="text-sm text-white">{currentPhoto.caption}</p>
                   )}
                   {currentPhoto.tools && (
-                    <p className="text-xs text-white/60 mt-1">{currentPhoto.tools}</p>
+                    <p className="font-mono text-[0.7rem] text-white/60 mt-1">{currentPhoto.tools}</p>
                   )}
                 </div>
               )}
@@ -247,7 +247,7 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
                   setDirection(index > currentIndex ? 1 : -1);
                   setCurrentIndex(index);
                 }}
-                className={`flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 ${
+                className={`flex-shrink-0 w-16 h-16 overflow-hidden border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 ${
                   index === currentIndex
                     ? 'border-white opacity-100 scale-105'
                     : 'border-transparent opacity-60 hover:opacity-80'

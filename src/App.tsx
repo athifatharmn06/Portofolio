@@ -7,7 +7,6 @@ import { SECTION_IDS } from './lib/constants';
 // Layout components
 import Navbar from './components/layout/Navbar';
 import MobileMenu from './components/layout/MobileMenu';
-import SectionDivider from './components/layout/SectionDivider';
 import Footer from './components/layout/Footer';
 
 // Section components
@@ -67,7 +66,12 @@ export default function App() {
   return (
     <>
       {/* Navigation */}
-      <Navbar onMobileMenuToggle={handleMobileMenuToggle} activeSection={activeSection} />
+      <Navbar
+        onMobileMenuToggle={handleMobileMenuToggle}
+        onToggleTheme={toggleTheme}
+        isDark={isDark}
+        activeSection={activeSection}
+      />
 
       {/* Mobile menu overlay */}
       <MobileMenu
@@ -81,15 +85,10 @@ export default function App() {
       {/* Main content */}
       <main>
         <HeroSection />
-        <SectionDivider />
         <AboutSection />
-        <SectionDivider />
         <ExperienceSection />
-        <SectionDivider />
         <SkillsSection />
-        <SectionDivider />
         <ProjectsSection onOpenGallery={handleOpenGallery} />
-        <SectionDivider />
         <ContactSection />
       </main>
 

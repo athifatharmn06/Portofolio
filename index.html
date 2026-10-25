@@ -1,40 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Athif Portfolio</title>
+    <title>Athif Fadheel Atharahman — Electrical & Software Engineer</title>
+    <meta name="description" content="Portfolio of Athif Fadheel Atharahman — electrical and software engineer working across embedded systems, cloud, data and AI." />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <!-- Google Fonts: preconnect for faster DNS/TLS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Non-render-blocking font load with media="print" onload pattern -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-        media="print"
-        onload="this.media='all'" />
-    <!-- Fallback for no-JS environments -->
-    <noscript>
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" />
-    </noscript>
-    <!-- Synchronous inline script: apply theme before first paint to prevent flash -->
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet" />
+    <!-- Apply theme before first paint to prevent a flash -->
     <script>
-        (function() {
-            var theme = localStorage.getItem('color-theme');
-            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+        (function () {
+            try {
+                var theme = localStorage.getItem('color-theme');
+                var dark = theme ? theme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.classList.toggle('dark', dark);
+            } catch (e) {}
         })();
     </script>
 </head>
 
-<body class="font-sans antialiased">
+<body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 </body>
