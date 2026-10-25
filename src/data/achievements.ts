@@ -34,7 +34,6 @@ export const achievementsData: Achievement[] = [
     clip: {
       src: '/achievements/teknofest-2026/takeoff.mp4',
       poster: '/achievements/teknofest-2026/takeoff_poster.webp',
-      portrait: true,
     },
     photos: [
       { url: '/achievements/teknofest-2026/takeoff.mp4', poster: '/achievements/teknofest-2026/takeoff_poster.webp', caption: 'Takeoff on the runway in Malatya.', tools: 'TEKNOFEST 2026, Fixed Wing' },
