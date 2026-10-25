@@ -17,6 +17,7 @@ import TechMarquee from './components/ui/TechMarquee';
 import HeroSection from './components/sections/HeroSection';
 import AboutSection from './components/sections/AboutSection';
 import ExperienceSection from './components/sections/ExperienceSection';
+import LeadershipSection from './components/sections/LeadershipSection';
 import AchievementsSection from './components/sections/AchievementsSection';
 import SkillsSection from './components/sections/SkillsSection';
 import ProjectsSection from './components/sections/ProjectsSection';
@@ -92,6 +93,8 @@ export default function App() {
         <AboutSection />
         <SectionDivider />
         <ExperienceSection />
+        <SectionDivider />
+        <LeadershipSection />
         <SectionDivider />
         <AchievementsSection onOpenGallery={handleOpenGallery} />
         <SectionDivider />
