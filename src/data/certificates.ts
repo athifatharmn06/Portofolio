@@ -159,13 +159,14 @@ export const certificatesData: Certificate[] = [
   },
   {
     id: 'hki',
-    title: 'Copyright Registration: Rumeksa Pocket Book',
+    title: 'Intellectual Property Registration: Rumeksa',
     issuer: 'Ministry of Law, Directorate General of Intellectual Property (Indonesia)',
     date: 'Sep 7, 2026',
     result: 'Registered',
     category: 'Intellectual Property',
     image: '/certificates/hki-rumeksa.webp',
     portrait: true,
-    note: 'Surat Pencatatan Ciptaan for the pocket book of the infrared-camera, Edge-AI driver drowsiness detection device. Addresses are redacted for privacy and the creators attachment page is omitted.',
+    verifyUrl: 'https://hakcipta.dgip.go.id/legal/c/MDAxNDc0MjEw',
+    note: 'Surat Pencatatan Ciptaan (copyright registration) for Rumeksa, an infrared-camera, Edge-AI driver drowsiness detection device. Addresses are redacted for privacy and the creators attachment page is omitted.',
   },
 ];
