@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FiAward, FiBookOpen, FiGithub, FiImage, FiMaximize2 } from 'react-icons/fi';
+import { FiArrowUpRight, FiAward, FiBookOpen, FiClock, FiCheckCircle, FiGithub, FiImage, FiMaximize2 } from 'react-icons/fi';
 import { useInView } from '../../hooks/useInView';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { fadeInUp, reducedMotionVariants } from '../../lib/animations';
 import {
   eventScores,
   finalProject,
+  funding,
+  outcomes,
   finalProjectStats,
   hardwareGallery,
   methodGallery,
@@ -179,6 +181,59 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
             </motion.div>
           ))}
         </dl>
+
+        {/* Funding and outcomes */}
+        <div className="mb-20">
+          <h4 className="mb-6 text-xl font-bold text-white">Funding and outcomes</h4>
+
+          <div className="mb-5 flex items-start gap-4 rounded-2xl border border-teal-400/30 bg-gradient-to-r from-teal-400/10 via-teal-400/[0.04] to-transparent p-5">
+            <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-400/15 text-teal-300">
+              <FiAward className="h-4 w-4" />
+            </span>
+            <div>
+              <p className="text-[0.7rem] font-semibold uppercase tracking-wider text-teal-300">Research funding</p>
+              <p className="mt-1 text-sm font-semibold leading-relaxed text-white md:text-base">{funding}</p>
+            </div>
+          </div>
+
+          <ul className="grid gap-4 md:grid-cols-2">
+            {outcomes.map((o, i) => (
+              <motion.li
+                key={o.title}
+                initial="hidden"
+                animate={isInView ? 'visible' : 'hidden'}
+                variants={variants}
+                transition={{ delay: reduced ? 0 : i * 0.08 }}
+                className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-white/25"
+              >
+                <p className="text-[0.7rem] font-semibold uppercase tracking-wider text-gray-500">{o.kind}</p>
+                <p className="mt-2 text-sm font-semibold leading-snug text-white">{o.title}</p>
+                <p className="mt-1.5 text-xs text-gray-500">{o.venue}</p>
+                <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-4">
+                  <span
+                    className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold ${
+                      o.state === 'done'
+                        ? 'border-teal-400/40 bg-teal-400/10 text-teal-300'
+                        : 'border-amber-400/40 bg-amber-400/10 text-amber-300'
+                    }`}
+                  >
+                    {o.state === 'done' ? <FiCheckCircle className="h-3.5 w-3.5" /> : <FiClock className="h-3.5 w-3.5" />}
+                    {o.status}
+                  </span>
+                  {o.href && (
+                    <a
+                      href={o.href}
+                      {...(o.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      className="inline-flex items-center gap-1 text-xs font-medium text-gray-300 hover:text-teal-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+                    >
+                      {o.linkLabel} <FiArrowUpRight className="h-3 w-3" />
+                    </a>
+                  )}
+                </div>
+              </motion.li>
+            ))}
+          </ul>
+        </div>
 
         {/* Pipeline */}
         <div className="mb-20">

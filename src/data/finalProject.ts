@@ -18,6 +18,56 @@ export const finalProject = {
   ],
 };
 
+export const funding =
+  'Fully funded by the Direktorat Penelitian dan Pengabdian kepada Masyarakat (PPM), Telkom University';
+
+export type OutcomeStatus = 'done' | 'pending';
+
+export interface Outcome {
+  kind: string;
+  title: string;
+  venue: string;
+  status: string;
+  state: OutcomeStatus;
+  href?: string;
+  linkLabel?: string;
+}
+
+export const outcomes: Outcome[] = [
+  {
+    kind: 'Conference paper',
+    title: 'Adaptive Blink Detection Using MediaPipe FaceMesh and Sigmoid-Based Eye-Closure Scoring Under Low-Light Conditions',
+    venue: 'EECSI 2026, Yogyakarta',
+    status: 'Presented',
+    state: 'done',
+    href: '#certificates',
+    linkLabel: 'View certificate',
+  },
+  {
+    kind: 'Copyright registration',
+    title: 'Rumeksa: infrared-camera, Edge-AI driver drowsiness detection device',
+    venue: 'Directorate General of Intellectual Property, Indonesia',
+    status: 'Registered',
+    state: 'done',
+    href: 'https://hakcipta.dgip.go.id/legal/c/MDAxNDc0MjEw',
+    linkLabel: 'Verify registration',
+  },
+  {
+    kind: 'Journal article',
+    title: 'Multi-Signal Rule-Based Driver Drowsiness Detection Across Heterogeneous Real-World Datasets',
+    venue: 'JNTETI, SINTA 2',
+    status: 'Minor revision submitted, awaiting final decision',
+    state: 'pending',
+  },
+  {
+    kind: 'Patent',
+    title: 'Drowsiness detection alert: edge computer-vision fatigue alert on Raspberry Pi with infrared imaging at 0 lux',
+    venue: 'Patent application, Indonesia',
+    status: 'Awaiting acceptance',
+    state: 'pending',
+  },
+];
+
 export const finalProjectStats = [
   { value: 30, suffix: '', label: 'FPS on-device', note: 'CPU only, no GPU or TPU' },
   { value: 23, suffix: ' ms', label: 'End-to-end latency', note: 'Mean across 12 sessions' },
