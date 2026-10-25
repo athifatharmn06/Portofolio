@@ -3,7 +3,8 @@ import { motion, useSpring, useTransform } from 'framer-motion';
 import { FaLinkedin, FaEye, FaDownload, FaArrowRight } from 'react-icons/fa';
 import TypingAnimation from '../ui/TypingAnimation';
 import ScrollIndicator from '../ui/ScrollIndicator';
-import ParticleField from '../ui/ParticleField';
+import HeroField from '../ui/HeroField';
+import OrbitRings from '../ui/OrbitRings';
 import Magnetic from '../ui/Magnetic';
 import CounterAnimation from '../ui/CounterAnimation';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -182,7 +183,7 @@ export default function HeroSection() {
       )}
 
       {/* INTERACTIVE PARTICLE NETWORK */}
-      <ParticleField />
+      <HeroField />
 
       {/* ── MAIN CONTENT ── */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-16 py-24">
@@ -358,6 +359,8 @@ export default function HeroSection() {
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
           style={{ width: 'min(45vw, 520px)', minWidth: 320, minHeight: 500 }}
         >
+          <OrbitRings />
+
           {/* Ambient glow pool at feet */}
           <div
             className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
