@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { fadeInUp, staggerContainer } from '../../lib/animations';
 import { useInView } from '../../hooks/useInView';
 
@@ -16,6 +17,9 @@ const internshipPhotos = [
 
 export default function ExperienceSection() {
   const { ref, isInView } = useInView({ once: true, threshold: 0.1 });
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: timelineRef, offset: ['start 70%', 'end 60%'] });
+  const lineScale = useSpring(scrollYProgress, { stiffness: 100, damping: 25, mass: 0.3 });
 
   return (
     <section
@@ -72,7 +76,11 @@ export default function ExperienceSection() {
           </motion.div>
 
           {/* Right Column: Details */}
-          <motion.div variants={fadeInUp} className="w-full md:w-3/4 space-y-5">
+          <motion.div ref={timelineRef} variants={fadeInUp} className="relative w-full md:w-3/4 space-y-5 md:pl-10">
+            <div className="absolute left-0 top-2 bottom-2 hidden w-px bg-white/10 md:block" aria-hidden="true">
+              <motion.div className="h-full w-full origin-top bg-gradient-to-b from-violet-400 via-teal-400 to-cyan-400" style={{ scaleY: lineScale }} />
+              <span className="absolute -left-[5px] top-0 h-[11px] w-[11px] rounded-full bg-teal-400 shadow-[0_0_14px_rgba(45,212,191,0.9)]" />
+            </div>
             <h3 className="text-2xl md:text-3xl font-bold leading-snug mb-2 flex flex-col gap-1">
               <span className="text-orange-400">PT PLN (Persero) UIP2B JAMALI</span>
               <span className="text-white">
@@ -81,36 +89,61 @@ export default function ExperienceSection() {
             </h3>
 
             <ul className="space-y-4 text-gray-400 text-sm md:text-base leading-relaxed list-disc list-outside ml-6 marker:text-teal-500">
-              <li>
+              <motion.li
+                initial={{ opacity: 0, x: -28 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.55, ease: 'easeOut' }}
+              >
                 <strong className="text-gray-200">Engineered Python scripts</strong> to automate
                 downtime analysis and reliability reporting by parsing massive, unstructured server
                 and RTU logs.
-              </li>
-              <li>
+              </motion.li>
+              <motion.li
+                initial={{ opacity: 0, x: -28 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.55, ease: 'easeOut' }}
+              >
                 <strong className="text-gray-200">
                   Prototyped an open-source ICCP (IEC 60870-6) gateway
                 </strong>{' '}
                 by compiling complex C-libraries (libiec61850) and debugging low-level system
                 interoperability errors.
-              </li>
-              <li>
+              </motion.li>
+              <motion.li
+                initial={{ opacity: 0, x: -28 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.55, ease: 'easeOut' }}
+              >
                 <strong className="text-gray-200">Configured Grafana</strong> for real-time data
                 visualization and applied comprehensive database management skills utilizing both
                 Oracle Database and Microsoft SQL to optimize system reliability.
-              </li>
-              <li>
+              </motion.li>
+              <motion.li
+                initial={{ opacity: 0, x: -28 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.55, ease: 'easeOut' }}
+              >
                 <strong className="text-gray-200">
                   Deployed a high-performance Network Attached Storage (NAS)
                 </strong>{' '}
                 system configured with RAID 0 and static IP addressing for secure local data access.
-              </li>
-              <li>
+              </motion.li>
+              <motion.li
+                initial={{ opacity: 0, x: -28 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.55, ease: 'easeOut' }}
+              >
                 <strong className="text-gray-200">
                   Executed Factory Acceptance Tests (FAT)
                 </strong>{' '}
                 for critical 48V DC systems, performing hands-on wiring and inspection of rectifiers
                 and Ni-Cd batteries.
-              </li>
+              </motion.li>
             </ul>
 
             <div className="pt-4 border-t border-gray-800/60 mt-8">

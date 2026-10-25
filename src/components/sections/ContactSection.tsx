@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Magnetic from '../ui/Magnetic';
 import { socialLinks } from '../../data/social';
 import { useInView } from '../../hooks/useInView';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -51,12 +52,14 @@ export default function ContactSection() {
         {/* Glassmorphic card with social links */}
         <motion.div
           variants={itemVariants}
-          className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 md:p-12 shadow-xl"
+          className="rounded-2xl p-[1.5px]"
+          style={{ background: 'linear-gradient(120deg, #8b5cf6, #38bdf8, #2dd4bf, #8b5cf6)', backgroundSize: '300% 300%', animation: prefersReducedMotion ? undefined : 'gradient-shift 8s ease infinite' }}
         >
+          <div className="bg-[#0a0a1c]/95 backdrop-blur-md rounded-[15px] p-8 md:p-12 shadow-xl">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-10">
             {socialLinks.map((link) => (
+              <Magnetic key={link.platform}>
               <a
-                key={link.platform}
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -81,7 +84,9 @@ export default function ContactSection() {
                   {link.platform}
                 </span>
               </a>
+              </Magnetic>
             ))}
+          </div>
           </div>
         </motion.div>
 

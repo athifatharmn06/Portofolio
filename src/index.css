@@ -328,3 +328,32 @@
     border: 1px solid hsl(222, 30%, 20%);
   }
 }
+
+/* ============================================================
+   Motion utilities
+   ============================================================ */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee {
+  animation: marquee 70s linear infinite;
+}
+.marquee[data-reverse='true'] {
+  animation-direction: reverse;
+  animation-duration: 85s;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee { animation: none; }
+}

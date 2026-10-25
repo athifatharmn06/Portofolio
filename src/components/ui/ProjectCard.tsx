@@ -44,6 +44,8 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
       const rotateY = ((x - centerX) / centerX) * 10;
       const rotateX = ((centerY - y) / centerY) * 10;
 
+      e.currentTarget.style.setProperty('--mx', `${x}px`);
+      e.currentTarget.style.setProperty('--my', `${y}px`);
       setTilt({ rotateX, rotateY });
     },
     [prefersReducedMotion]
@@ -84,6 +86,16 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
+        {/* Cursor spotlight */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-300"
+          style={{
+            opacity: isHovered ? 1 : 0,
+            background: 'radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(139,92,246,0.22), transparent 70%)',
+          }}
+        />
+
         {/* Thumbnail with gradient overlay */}
         <div className="relative aspect-video overflow-hidden">
           <ImageWithFallback
