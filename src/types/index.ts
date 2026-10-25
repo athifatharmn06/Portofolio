@@ -4,6 +4,8 @@ export interface PhotoContext {
   url: string;
   caption: string;
   tools: string;
+  /** Still frame for video items (.mp4), also used in the thumbnail strip */
+  poster?: string;
 }
 
 export interface ProjectData {

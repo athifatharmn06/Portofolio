@@ -1,5 +1,6 @@
+import { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { FiAward, FiImage, FiArrowUpRight } from 'react-icons/fi';
+import { FiAward, FiImage, FiPlay, FiArrowUpRight } from 'react-icons/fi';
 import { useInView } from '../../hooks/useInView';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { achievementsData } from '../../data/achievements';
@@ -17,12 +18,73 @@ function toGalleryItem(a: Achievement): ProjectData {
   return {
     id: a.id,
     title: a.title,
-    shortDesc: a.description,
+    shortDesc: a.outcome,
     category: a.category,
     techStack: [],
     thumbnail: a.thumbnail,
     photos: a.photos,
   };
+}
+
+/** Card thumbnail: the team photo, with the takeoff clip fading in and looping on hover. */
+function CardMedia({ a, reduced }: { a: Achievement; reduced: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const play = () => {
+    if (reduced) return;
+    videoRef.current?.play().catch(() => undefined);
+  };
+  const stop = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.pause();
+    v.currentTime = 0;
+  };
+
+  return (
+    <div
+      className="relative aspect-[4/3] overflow-hidden"
+      onMouseEnter={play}
+      onMouseLeave={stop}
+      onFocus={play}
+      onBlur={stop}
+    >
+      <ImageWithFallback
+        src={a.thumbnail}
+        alt={`${a.title} team photo`}
+        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        loading="lazy"
+      />
+
+      {!reduced && (
+        <video
+          ref={videoRef}
+          src={a.clip.src}
+          poster={a.clip.poster}
+          muted
+          loop
+          playsInline
+          preload="none"
+          aria-hidden="true"
+          tabIndex={-1}
+          className={`absolute inset-0 h-full w-full bg-black opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
+            a.clip.portrait ? 'object-contain' : 'object-cover'
+          }`}
+        />
+      )}
+
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#05050f] via-transparent to-transparent" />
+      <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-xs font-semibold tracking-wider text-white backdrop-blur-md">
+        {a.year}
+      </span>
+      <span className="absolute bottom-4 left-4 flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1 text-xs text-gray-200 backdrop-blur-md">
+        <FiPlay className="h-3 w-3" /> Takeoff clip
+      </span>
+      <span className="absolute bottom-4 right-4 flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1 text-xs text-gray-200 backdrop-blur-md">
+        <FiImage className="h-3.5 w-3.5" /> {a.photos.length}
+      </span>
+    </div>
+  );
 }
 
 export default function AchievementsSection({ onOpenGallery }: AchievementsSectionProps) {
@@ -76,32 +138,25 @@ export default function AchievementsSection({ onOpenGallery }: AchievementsSecti
               onClick={() => onOpenGallery(toGalleryItem(a))}
               whileHover={reduced ? undefined : { y: -6 }}
               transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-              aria-label={`Open photos for ${a.title}`}
+              aria-label={`Open photos and clips for ${a.title}`}
               className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] text-left transition-colors duration-300 hover:border-teal-400/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <ImageWithFallback
-                  src={a.thumbnail}
-                  alt={`${a.title} team photo`}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#05050f] via-[#05050f]/20 to-transparent" />
-                <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-xs font-semibold tracking-wider text-white backdrop-blur-md">
-                  {a.year}
-                </span>
-                <span className="absolute bottom-4 right-4 flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1 text-xs text-gray-200 backdrop-blur-md">
-                  <FiImage className="h-3.5 w-3.5" /> {a.photos.length} photos
-                </span>
-              </div>
+              <CardMedia a={a} reduced={reduced} />
 
               <div className="flex flex-1 flex-col p-6">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-teal-400">{a.category}</p>
-                <h4 className="mb-3 flex items-center justify-between gap-2 text-xl font-bold text-white">
+                <h4 className="mb-4 flex items-center justify-between gap-2 text-xl font-bold text-white">
                   {a.title}
                   <FiArrowUpRight className="h-5 w-5 shrink-0 text-gray-500 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-teal-400" />
                 </h4>
-                <p className="text-sm leading-relaxed text-gray-400">{a.description}</p>
+
+                <p className="text-sm font-semibold text-gray-100">{a.role}</p>
+                <p className="mt-1 text-xs leading-relaxed text-gray-500">{a.team}</p>
+
+                <div className="mt-5 border-t border-white/10 pt-4">
+                  <p className="mb-1.5 text-[0.7rem] font-semibold uppercase tracking-wider text-gray-500">Outcome</p>
+                  <p className="text-sm leading-relaxed text-gray-300">{a.outcome}</p>
+                </div>
               </div>
             </motion.button>
           ))}

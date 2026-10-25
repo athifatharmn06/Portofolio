@@ -5,52 +5,82 @@ export interface Achievement {
   title: string;
   year: string;
   category: string;
-  description: string;
+  /** Role held in the team */
+  role: string;
+  /** Team, division and location */
+  team: string;
+  /** Result and contribution, shown at the bottom of the card */
+  outcome: string;
   thumbnail: string;
+  /** Short looping takeoff clip that plays on hover */
+  clip: { src: string; poster: string; portrait?: boolean };
   photos: ProjectData['photos'];
 }
 
 export const achievementsData: Achievement[] = [
   {
     id: 'a3',
-    title: 'Teknofest 2026',
+    title: 'TEKNOFEST 2026',
     year: '2026',
-    category: 'International UAV Competition',
-    description:
-      'Competed at Teknofest in the Güneydoğu (Southeast) edition, one of the largest aerospace and technology festivals in the world, in the unmanned aerial vehicle (İnsansız Hava Aracı) competition.',
+    category: 'Fixed Wing UAV Competition',
+    role: 'Team Responsible & Lead Programmer',
+    team: 'Team Avalerion APTRG, Telkom University | Malatya, Türkiye',
+    outcome:
+      "Led flight software and autonomous mission planning for Telkom University's fixed-wing UAV at the TÜBİTAK competition, and coordinated technical milestones, hardware integration and deliverables to the international committee.",
     thumbnail: '/achievements/teknofest-2026/1.webp',
+    clip: {
+      src: '/achievements/teknofest-2026/handlaunch.mp4',
+      poster: '/achievements/teknofest-2026/handlaunch_poster.webp',
+    },
     photos: [
-      { url: '/achievements/teknofest-2026/1.webp', caption: 'Team photo in front of the Teknofest UAV competition backdrop with our fixed-wing aircraft.', tools: 'Teknofest 2026, UAV Competition' },
+      { url: '/achievements/teknofest-2026/takeoff.mp4', poster: '/achievements/teknofest-2026/takeoff_poster.webp', caption: 'Takeoff on the runway in Malatya.', tools: 'TEKNOFEST 2026, Fixed Wing' },
+      { url: '/achievements/teknofest-2026/handlaunch.mp4', poster: '/achievements/teknofest-2026/handlaunch_poster.webp', caption: 'Hand launch of the fixed-wing aircraft.', tools: 'Fixed-wing UAV' },
+      { url: '/achievements/teknofest-2026/1.webp', caption: 'The team in front of the TEKNOFEST UAV competition backdrop with our aircraft.', tools: 'TEKNOFEST 2026' },
       { url: '/achievements/teknofest-2026/2.webp', caption: 'Holding the aircraft at the competition venue.', tools: 'Fixed-wing UAV' },
-      { url: '/achievements/teknofest-2026/3.webp', caption: 'The team at our pit stand with the Indonesian flag and Telkom University banners.', tools: 'Telkom University' },
+      { url: '/achievements/teknofest-2026/3.webp', caption: 'The team at our stand with the Indonesian flag and Telkom University banners.', tools: 'Team Avalerion APTRG' },
     ],
   },
   {
     id: 'a2',
     title: 'KRTI 2025',
     year: '2025',
-    category: 'Racing Plane',
-    description:
-      'Participated in the Indonesian Flying Robot Contest (Kontes Robot Terbang Indonesia) in the Racing Plane category.',
-    thumbnail: '/achievements/krti-2025/1.webp',
+    category: 'Racing Plane Division',
+    role: 'Technical Supervisor & Lead Programmer',
+    team: 'Team Frigate APTRG | KRTI, Padang, Indonesia',
+    outcome:
+      'National Top 8 finish. Led technical coordination across a 10+ member multidisciplinary team, maintained autopilot scripts, ran telemetry integration tests and resolved hardware failures in the field.',
+    thumbnail: '/achievements/krti-2025/3.webp',
+    clip: {
+      src: '/achievements/krti-2025/takeoff.mp4',
+      poster: '/achievements/krti-2025/takeoff_poster.webp',
+    },
     photos: [
-      { url: '/achievements/krti-2025/1.webp', caption: 'Catapult launch of the racing plane on the runway.', tools: 'KRTI 2025, Racing Plane' },
-      { url: '/achievements/krti-2025/2.webp', caption: 'Team photo at the competition venue.', tools: 'KRTI 2025' },
-      { url: '/achievements/krti-2025/3.webp', caption: 'Telkom University contingent in front of the team bus.', tools: 'Telkom University' },
+      { url: '/achievements/krti-2025/takeoff.mp4', poster: '/achievements/krti-2025/takeoff_poster.webp', caption: 'Catapult launch of the racing plane.', tools: 'KRTI 2025, Racing Plane' },
+      { url: '/achievements/krti-2025/3.webp', caption: 'Telkom University contingent in front of the team bus.', tools: 'KRTI 2025' },
+      { url: '/achievements/krti-2025/2.webp', caption: 'The team at the competition venue.', tools: 'Team Frigate APTRG' },
+      { url: '/achievements/krti-2025/1.webp', caption: 'Catapult launch on the runway.', tools: 'Racing Plane' },
     ],
   },
   {
     id: 'a1',
     title: 'KRTI 2024',
     year: '2024',
-    category: 'Long Endurance Low Altitude',
-    description:
-      'Participated in the Indonesian Flying Robot Contest (Kontes Robot Terbang Indonesia) in the Long Endurance Low Altitude category.',
+    category: 'Long Endurance Low Altitude (LELA)',
+    role: 'Data Systems Programmer & Telemetry',
+    team: 'Team Strix APTRG | KRTI, DI Yogyakarta, Indonesia',
+    outcome:
+      'Built RF and 4G-LTE telemetry pipelines with store-and-forward cloud messaging for long-endurance autonomous flight.',
     thumbnail: '/achievements/krti-2024/2.webp',
+    clip: {
+      src: '/achievements/krti-2024/takeoff.mp4',
+      poster: '/achievements/krti-2024/takeoff_poster.webp',
+      portrait: true,
+    },
     photos: [
-      { url: '/achievements/krti-2024/2.webp', caption: 'Team photo with the flying-wing aircraft.', tools: 'KRTI 2024, Long Endurance Low Altitude' },
-      { url: '/achievements/krti-2024/1.webp', caption: 'Team and aircraft on the airfield before the flight.', tools: 'KRTI 2024' },
-      { url: '/achievements/krti-2024/3.webp', caption: 'Full team lined up with the aircraft.', tools: 'KRTI 2024' },
+      { url: '/achievements/krti-2024/takeoff.mp4', poster: '/achievements/krti-2024/takeoff_poster.webp', caption: 'Launch of the long-endurance aircraft.', tools: 'KRTI 2024, LELA' },
+      { url: '/achievements/krti-2024/3.webp', caption: 'The full team lined up with the aircraft.', tools: 'Team Strix APTRG' },
+      { url: '/achievements/krti-2024/2.webp', caption: 'Team photo with the flying-wing aircraft.', tools: 'KRTI 2024' },
+      { url: '/achievements/krti-2024/1.webp', caption: 'Team and aircraft on the airfield before the flight.', tools: 'Long Endurance Low Altitude' },
     ],
   },
 ];

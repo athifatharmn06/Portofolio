@@ -262,7 +262,7 @@ export default function HeroSection() {
             {/* Secondary CTA */}
             <Magnetic>
             <a
-              href="/1_CV ATS - Athif Fadheel Atharahman (Nov 2025).pdf"
+              href="/CV_Athif_Fadheel_Atharahman.pdf"
               download
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-[#020010]"
               style={{

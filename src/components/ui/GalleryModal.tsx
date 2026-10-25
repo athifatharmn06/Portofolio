@@ -12,6 +12,8 @@ interface GalleryModalProps {
   onClose: () => void;
 }
 
+const isVideo = (url: string) => /\.(mp4|webm)$/i.test(url);
+
 const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -68,6 +70,7 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
     const nextIndex = (currentIndex + 1) % totalPhotos;
 
     const preloadImage = (url: string) => {
+      if (isVideo(url)) return;
       const img = new Image();
       img.src = url;
     };
@@ -213,11 +216,25 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
               exit="exit"
               className="w-full flex flex-col items-center"
             >
-              <ImageWithFallback
-                src={currentPhoto.url}
-                alt={currentPhoto.caption || `${project.title} screenshot ${currentIndex + 1}`}
-                className="max-h-[60vh] w-auto max-w-full object-contain rounded-lg shadow-2xl"
-              />
+              {isVideo(currentPhoto.url) ? (
+                <video
+                  key={currentPhoto.url}
+                  src={currentPhoto.url}
+                  poster={currentPhoto.poster}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  aria-label={currentPhoto.caption}
+                  className="max-h-[60vh] w-auto max-w-full object-contain shadow-2xl"
+                />
+              ) : (
+                <ImageWithFallback
+                  src={currentPhoto.url}
+                  alt={currentPhoto.caption || `${project.title} screenshot ${currentIndex + 1}`}
+                  className="max-h-[60vh] w-auto max-w-full object-contain shadow-2xl"
+                />
+              )}
               {/* Caption and tools */}
               {(currentPhoto.caption || currentPhoto.tools) && (
                 <div className="mt-3 text-center text-white/90 px-4">
@@ -257,7 +274,7 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
                 aria-label={`View image ${index + 1}: ${photo.caption || ''}`}
               >
                 <img
-                  src={photo.url}
+                  src={photo.poster ?? photo.url}
                   alt=""
                   className="w-full h-full object-cover"
                   loading="lazy"
