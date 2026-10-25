@@ -6,6 +6,7 @@ import { stats } from '../../data/stats';
 import { fadeInUp, staggerContainer, scaleUp, reducedMotionVariants } from '../../lib/animations';
 import CounterAnimation from '../ui/CounterAnimation';
 import ImageWithFallback from '../ui/ImageWithFallback';
+import ScrollWords from '../ui/ScrollWords';
 
 /**
  * AboutSection — Bio, stats counters, languages, education card.
@@ -55,16 +56,15 @@ export default function AboutSection() {
         </motion.div>
 
         {/* Section Heading */}
-        <motion.h3
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={variants}
+        <ScrollWords
           className="text-4xl md:text-5xl font-bold leading-tight text-white mb-16"
-        >
-          I'm an innovative <span className="text-teal-400">Electrical & Software Engineer</span> specializing in{' '}
-          <br className="hidden md:block" />
-          <span className="text-teal-400">Autonomous Systems & Data Architecture</span>
-        </motion.h3>
+          segments={[
+            { text: "I'm an innovative ", className: 'text-white' },
+            { text: 'Electrical & Software Engineer', className: 'text-teal-400' },
+            { text: ' specializing in ', className: 'text-white' },
+            { text: 'Autonomous Systems & Data Architecture', className: 'text-teal-400' },
+          ]}
+        />
 
         {/* Stats Counters */}
         <motion.div

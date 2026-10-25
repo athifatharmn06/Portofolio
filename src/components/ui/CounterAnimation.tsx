@@ -58,6 +58,8 @@ export default function CounterAnimation({
       if (animationFrameRef.current !== null) {
         cancelAnimationFrame(animationFrameRef.current);
       }
+      // Allow a re-run (StrictMode double-invoke, dependency change) to restart the count
+      hasAnimated.current = false;
     };
   }, [isInView, target, duration]);
 

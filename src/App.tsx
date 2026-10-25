@@ -9,6 +9,9 @@ import Navbar from './components/layout/Navbar';
 import MobileMenu from './components/layout/MobileMenu';
 import SectionDivider from './components/layout/SectionDivider';
 import Footer from './components/layout/Footer';
+import ScrollProgress from './components/ui/ScrollProgress';
+import CursorGlow from './components/ui/CursorGlow';
+import TechMarquee from './components/ui/TechMarquee';
 
 // Section components
 import HeroSection from './components/sections/HeroSection';
@@ -66,6 +69,9 @@ export default function App() {
 
   return (
     <>
+      <ScrollProgress />
+      <CursorGlow />
+
       {/* Navigation */}
       <Navbar onMobileMenuToggle={handleMobileMenuToggle} activeSection={activeSection} />
 
@@ -81,7 +87,7 @@ export default function App() {
       {/* Main content */}
       <main>
         <HeroSection />
-        <SectionDivider />
+        <TechMarquee />
         <AboutSection />
         <SectionDivider />
         <ExperienceSection />
