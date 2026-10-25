@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useSpring, useTransform } from 'framer-motion';
-import { FaLinkedin, FaEye, FaDownload, FaArrowRight } from 'react-icons/fa';
+import { FaLinkedin, FaDownload } from 'react-icons/fa';
 import TypingAnimation from '../ui/TypingAnimation';
 import ScrollIndicator from '../ui/ScrollIndicator';
 import HeroField from '../ui/HeroField';
@@ -8,7 +8,6 @@ import OrbitRings from '../ui/OrbitRings';
 import Magnetic from '../ui/Magnetic';
 import CounterAnimation from '../ui/CounterAnimation';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { NAVBAR_HEIGHT, SCROLL_OFFSET_PADDING } from '../../lib/constants';
 
 const ROLES = [
   'Software Engineer',
@@ -80,14 +79,6 @@ export default function HeroSection() {
       if (rafId.current) { cancelAnimationFrame(rafId.current); rafId.current = 0; }
     };
   }, [handleMouseMove, prefersReducedMotion]);
-
-  const scrollToProjects = () => {
-    const el = document.getElementById('projects');
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - NAVBAR_HEIGHT - SCROLL_OFFSET_PADDING;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  };
 
   return (
     <section
@@ -268,24 +259,6 @@ export default function HeroSection() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
             className="flex flex-wrap gap-3 mb-10"
           >
-            {/* Primary CTA */}
-            <Magnetic>
-            <button
-              onClick={scrollToProjects}
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-[#020010]"
-              style={{
-                background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
-                boxShadow: '0 0 30px rgba(124,58,237,0.35), inset 0 1px 0 rgba(255,255,255,0.1)',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 0 50px rgba(124,58,237,0.55), inset 0 1px 0 rgba(255,255,255,0.15)')}
-              onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 0 30px rgba(124,58,237,0.35), inset 0 1px 0 rgba(255,255,255,0.1)')}
-            >
-              <FaEye />
-              View My Work
-              <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
-            </Magnetic>
-
             {/* Secondary CTA */}
             <Magnetic>
             <a
