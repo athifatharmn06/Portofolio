@@ -45,6 +45,7 @@ export const SCROLL_OFFSET_PADDING = 12;
 export const SECTION_IDS = [
   'home',
   'about',
+  'education',
   'experience',
   'achievements',
   'skills',
@@ -58,6 +59,7 @@ export type SectionId = (typeof SECTION_IDS)[number];
 export const NAV_LINKS: { id: SectionId; label: string }[] = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About me' },
+  { id: 'education', label: 'Education' },
   { id: 'experience', label: 'Experience' },
   { id: 'achievements', label: 'Awards' },
   { id: 'skills', label: 'Skills' },

@@ -357,3 +357,8 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee { animation: none; }
 }
+
+@keyframes scan {
+  0%, 100% { top: -20%; }
+  50% { top: 85%; }
+}
