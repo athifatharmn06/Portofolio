@@ -17,8 +17,9 @@ interface Ripple {
 }
 
 const SPACING = 38;
-const MOUSE_R = 170;
-const LINK_R = 64;
+const MOUSE_R = 270;
+const LINK_R = 92;
+const TRAIL_LEN = 28;
 const IDLE_MS = 2200;
 
 /**
@@ -44,6 +45,7 @@ export default function HeroField() {
     let visible = true;
     let dots: Dot[] = [];
     const ripples: Ripple[] = [];
+    const trail: { x: number; y: number }[] = [];
     const mouse = { x: -9999, y: -9999, last: 0 };
 
     const resize = () => {
@@ -84,24 +86,49 @@ export default function HeroField() {
         if (ripples[i].r > Math.hypot(w, h)) ripples.splice(i, 1);
       }
 
+      // Cursor trail: remember recent pointer positions and draw a fading ribbon
+      if (!reduced) {
+        const last = trail[trail.length - 1];
+        if (!last || Math.hypot(last.x - px, last.y - py) > 3) trail.push({ x: px, y: py });
+        while (trail.length > TRAIL_LEN) trail.shift();
+        ctx.lineCap = 'round';
+        for (let i = 1; i < trail.length; i++) {
+          const k = i / trail.length;
+          ctx.strokeStyle = `hsla(${262 - (trail[i].x / w) * 78}, 95%, 70%, ${k * 0.35 * power})`;
+          ctx.lineWidth = k * 5;
+          ctx.beginPath();
+          ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+          ctx.lineTo(trail[i].x, trail[i].y);
+          ctx.stroke();
+        }
+      }
+
+      // Soft glow centred on the pointer
+      const glowR = MOUSE_R * 1.1;
+      const g = ctx.createRadialGradient(px, py, 0, px, py, glowR);
+      g.addColorStop(0, `hsla(${262 - (px / w) * 78}, 95%, 65%, ${0.22 * power})`);
+      g.addColorStop(1, 'hsla(220, 95%, 60%, 0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(px - glowR, py - glowR, glowR * 2, glowR * 2);
+
       const near: Dot[] = [];
       const vignetteR = Math.hypot(w, h) * 0.55;
 
       for (const d of dots) {
         // Ambient travelling wave
-        let glow = 0.14 + 0.1 * Math.sin(d.ox * 0.007 + d.oy * 0.005 - t * 0.0011);
-        let size = 1.15;
+        let glow = 0.26 + 0.14 * Math.sin(d.ox * 0.007 + d.oy * 0.005 - t * 0.0011);
+        let size = 1.4;
 
         const dx = d.x - px;
         const dy = d.y - py;
         const dist = Math.hypot(dx, dy);
         if (dist < MOUSE_R && dist > 0.5) {
           const f = 1 - dist / MOUSE_R;
-          d.vx += (dx / dist) * f * 1.5 * power;
-          d.vy += (dy / dist) * f * 1.5 * power;
-          glow += f * 0.75 * power;
-          size += f * 2.2 * power;
-          if (f > 0.12) near.push(d);
+          d.vx += (dx / dist) * f * 2.1 * power;
+          d.vy += (dy / dist) * f * 2.1 * power;
+          glow += f * 1.1 * power;
+          size += f * 3 * power;
+          if (f > 0.1) near.push(d);
         }
 
         for (const rp of ripples) {
@@ -127,11 +154,11 @@ export default function HeroField() {
 
         // Fade toward the edges so the field sits inside the hero, not on it
         const edge = Math.hypot(d.ox - w / 2, d.oy - h / 2) / vignetteR;
-        const alpha = Math.min(1, glow) * Math.max(0, 1 - edge * edge * 0.8);
+        const alpha = Math.min(1, glow) * Math.max(0, 1 - edge * edge * 0.6);
         if (alpha < 0.02) continue;
 
         const hue = 262 - (d.ox / w) * 78; // violet -> cyan across the width
-        ctx.fillStyle = `hsla(${hue}, 90%, ${62 + glow * 18}%, ${alpha})`;
+        ctx.fillStyle = `hsla(${hue}, 90%, ${64 + glow * 20}%, ${alpha})`;
         ctx.beginPath();
         ctx.arc(d.x, d.y, size, 0, Math.PI * 2);
         ctx.fill();
@@ -146,7 +173,7 @@ export default function HeroField() {
           const dd = Math.hypot(a.x - b.x, a.y - b.y);
           if (dd < LINK_R) {
             const hue = 262 - (a.ox / w) * 78;
-            ctx.strokeStyle = `hsla(${hue}, 90%, 72%, ${(1 - dd / LINK_R) * 0.5 * power})`;
+            ctx.strokeStyle = `hsla(${hue}, 90%, 72%, ${(1 - dd / LINK_R) * 0.65 * power})`;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
