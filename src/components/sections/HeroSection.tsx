@@ -3,6 +3,9 @@ import { motion, useSpring, useTransform } from 'framer-motion';
 import { FaLinkedin, FaEye, FaDownload, FaArrowRight } from 'react-icons/fa';
 import TypingAnimation from '../ui/TypingAnimation';
 import ScrollIndicator from '../ui/ScrollIndicator';
+import ParticleField from '../ui/ParticleField';
+import Magnetic from '../ui/Magnetic';
+import CounterAnimation from '../ui/CounterAnimation';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { NAVBAR_HEIGHT, SCROLL_OFFSET_PADDING } from '../../lib/constants';
 
@@ -14,9 +17,9 @@ const ROLES = [
 ];
 
 const STAT_ITEMS = [
-  { value: '15+', label: 'Projects Built' },
-  { value: '3+', label: 'Years Coding' },
-  { value: '10+', label: 'Tech Stacks' },
+  { value: 15, label: 'Projects Built' },
+  { value: 3, label: 'Years Coding' },
+  { value: 10, label: 'Tech Stacks' },
 ];
 
 export default function HeroSection() {
@@ -39,6 +42,8 @@ export default function HeroSection() {
   const orb2Y = useTransform(springY, [-1, 1], [30, -30]);
   const orb3X = useTransform(springX, [-1, 1], [-30, 30]);
   const orb3Y = useTransform(springY, [-1, 1], [-50, 50]);
+  const photoRotY = useTransform(springX, [-1, 1], [-9, 9]);
+  const photoRotX = useTransform(springY, [-1, 1], [6, -6]);
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
@@ -176,40 +181,8 @@ export default function HeroSection() {
         />
       )}
 
-      {/* ── FLOATING GLASS CHIPS (background decoration) ── */}
-      {!prefersReducedMotion && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          {[
-            { x: '8%', y: '20%', delay: 0, dur: 7 },
-            { x: '85%', y: '15%', delay: 1.5, dur: 9 },
-            { x: '12%', y: '70%', delay: 3, dur: 6 },
-            { x: '78%', y: '65%', delay: 0.8, dur: 8 },
-            { x: '45%', y: '85%', delay: 2, dur: 10 },
-            { x: '92%', y: '45%', delay: 4, dur: 7 },
-            { x: '3%', y: '45%', delay: 1, dur: 11 },
-          ].map((chip, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 rounded-full"
-              style={{
-                left: chip.x, top: chip.y,
-                background: i % 3 === 0
-                  ? 'rgba(139,92,246,0.5)'
-                  : i % 3 === 1
-                  ? 'rgba(6,182,212,0.5)'
-                  : 'rgba(236,72,153,0.4)',
-                boxShadow: i % 3 === 0
-                  ? '0 0 12px rgba(139,92,246,0.6)'
-                  : i % 3 === 1
-                  ? '0 0 12px rgba(6,182,212,0.6)'
-                  : '0 0 12px rgba(236,72,153,0.5)',
-                animation: `float ${chip.dur}s ease-in-out infinite`,
-                animationDelay: `${chip.delay}s`,
-              }}
-            />
-          ))}
-        </div>
-      )}
+      {/* INTERACTIVE PARTICLE NETWORK */}
+      <ParticleField />
 
       {/* ── MAIN CONTENT ── */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-16 py-24">
@@ -231,6 +204,7 @@ export default function HeroSection() {
                 Hi, I'm{' '}
               </span>
               <span
+                aria-label="Athif"
                 style={{
                   display: 'inline-block',
                   fontFamily: 'Caveat, cursive',
@@ -238,13 +212,31 @@ export default function HeroSection() {
                   fontSize: 'clamp(3.5rem, 9vw, 6.5rem)',
                   lineHeight: 1,
                   paddingRight: '0.35em',
-                  background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 40%, #38bdf8 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
                 }}
               >
-                Athif
+                {'Athif'.split('').map((ch, i) => (
+                  <motion.span
+                    key={i}
+                    aria-hidden="true"
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 40, rotate: -8 }}
+                    animate={{ opacity: 1, y: 0, rotate: 0 }}
+                    transition={{ type: 'spring', stiffness: 160, damping: 12, delay: 0.5 + i * 0.09 }}
+                    whileHover={prefersReducedMotion ? undefined : { y: -10, scale: 1.12 }}
+                    style={{
+                      display: 'inline-block',
+                      backgroundImage: 'linear-gradient(120deg, #a78bfa, #818cf8, #38bdf8, #2dd4bf, #a78bfa)',
+                      backgroundSize: '300% 100%',
+                      paddingRight: '0.06em',
+                      marginRight: '-0.06em',
+                      animation: prefersReducedMotion ? undefined : 'gradient-shift 6s ease-in-out infinite',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                    }}
+                  >
+                    {ch}
+                  </motion.span>
+                ))}
               </span>
             </h1>
           </motion.div>
@@ -274,6 +266,7 @@ export default function HeroSection() {
             className="flex flex-wrap gap-3 mb-10"
           >
             {/* Primary CTA */}
+            <Magnetic>
             <button
               onClick={scrollToProjects}
               className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-[#020010]"
@@ -288,8 +281,10 @@ export default function HeroSection() {
               View My Work
               <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
             </button>
+            </Magnetic>
 
             {/* Secondary CTA */}
+            <Magnetic>
             <a
               href="/1_CV ATS - Athif Fadheel Atharahman (Nov 2025).pdf"
               download
@@ -306,8 +301,10 @@ export default function HeroSection() {
               <FaDownload />
               Download CV
             </a>
+            </Magnetic>
 
             {/* LinkedIn */}
+            <Magnetic>
             <a
               href="https://www.linkedin.com/in/athif-fadheel-atharahman-1a3353245/"
               target="_blank"
@@ -324,6 +321,7 @@ export default function HeroSection() {
               <FaLinkedin className="text-[#38bdf8]" />
               LinkedIn
             </a>
+            </Magnetic>
           </motion.div>
 
           {/* Stats row */}
@@ -342,7 +340,7 @@ export default function HeroSection() {
                     backgroundClip: 'text',
                   }}
                 >
-                  {stat.value}
+                  <CounterAnimation target={stat.value} suffix="+" isInView duration={2200} />
                 </span>
                 <span className="text-xs font-medium" style={{ color: 'rgba(148,163,184,0.6)' }}>
                   {stat.label}
@@ -382,11 +380,14 @@ export default function HeroSection() {
           />
 
           {/* Profile image — full body, contour glow via drop-shadow */}
-          <img
+          <motion.img
             src="/profile.webp"
             alt="Athif Fadheel — Professional profile photo"
             className="relative z-10 w-full h-auto object-contain select-none"
             style={{
+              rotateY: prefersReducedMotion ? 0 : photoRotY,
+              rotateX: prefersReducedMotion ? 0 : photoRotX,
+              transformPerspective: 1000,
               maxHeight: '80vh',
               filter: prefersReducedMotion
                 ? 'drop-shadow(0 0 40px rgba(139,92,246,0.6))'
