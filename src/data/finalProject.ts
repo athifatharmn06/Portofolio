@@ -14,6 +14,7 @@ export const finalProject = {
     'Python',
     'EAR / MAR / PERCLOS',
     'State Machine',
+    'SolidWorks CAD',
     '3D Printed Enclosure',
   ],
 };

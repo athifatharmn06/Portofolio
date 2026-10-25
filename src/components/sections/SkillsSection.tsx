@@ -35,10 +35,12 @@ export default function SkillsSection() {
     'all': 'All',
     'software-backend': 'Software',
     'cloud-devops': 'Cloud',
+    'networking-security': 'Networking',
     'frontend-web': 'Frontend',
     'database-analytics': 'Database',
     'ai-cv-data': 'AI & CV',
     'robotics-automation': 'Robotics',
+    'enterprise-erp': 'SAP',
     'creative-multimedia': 'Creative',
     'professional-methodologies': 'Professional',
   };

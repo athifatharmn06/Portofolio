@@ -13,3 +13,6 @@ yarn-error.log*
 .vscode/
 *.swp
 *.bak
+
+# OneDrive/Windows folder metadata
+desktop.ini

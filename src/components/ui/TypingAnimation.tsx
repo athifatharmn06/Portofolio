@@ -45,6 +45,7 @@ export default function TypingAnimation({
           }, typingSpeed);
         } else {
           // Finished typing, pause before deleting
+          // eslint-disable-next-line react-hooks/set-state-in-effect
           setPhase('pausing');
         }
         break;

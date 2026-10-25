@@ -37,6 +37,8 @@ export default function TechTags({ tags, rows = 2 }: TechTagsProps) {
     const el = ref.current;
     if (!el || visible === 0) return;
     const tops = new Set(Array.from(el.children).map((c) => (c as HTMLElement).offsetTop));
+    // Measuring the DOM and shrinking until it fits is exactly what a layout effect is for
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (tops.size > rows) setVisible((v) => Math.max(0, v - 1));
   }, [visible, width, rows, tags]);
 
