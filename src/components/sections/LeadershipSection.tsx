@@ -114,7 +114,7 @@ export default function LeadershipSection() {
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-teal-400">My role</p>
                   <p className="mt-1 text-[0.95rem] font-semibold leading-snug text-white">Vice Captain &amp; Deputy Coordinator of External Affairs</p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-400">
                     Aeromodelling &amp; Payload Telemetry Research Group (APTRG) | Telkom University | Oct 2024 - Oct 2025
                   </p>
                 </div>
@@ -139,7 +139,7 @@ export default function LeadershipSection() {
                   <FiBookmark className="ml-auto h-6 w-6" aria-hidden="true" />
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-[0.7rem] uppercase tracking-wide text-gray-500">October 8, 2025</p>
+                  <p className="text-[0.7rem] uppercase tracking-wide text-gray-400">October 8, 2025</p>
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-[#d62976] group-hover:to-[#962fbf]">
                     View on Instagram <FiArrowUpRight className="h-3.5 w-3.5" />
                   </span>

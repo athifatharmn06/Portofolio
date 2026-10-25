@@ -17,21 +17,49 @@ import SkillBadge from '../ui/SkillBadge';
  *
  * Validates: Requirements 5.1, 5.2, 5.3, 5.4, 5.5, 5.6
  */
+/** Skills recruiters most often look for, shown first. Names must match src/data/skills.ts. */
+const HIGHLIGHTS = [
+  'Python',
+  'C/C++ (Embedded & HPC)',
+  'SQL',
+  'FastAPI',
+  'Docker',
+  'Git/GitHub',
+  'Linux/Ubuntu Admin',
+  'React / React Native',
+  'TypeScript',
+  'Oracle Database',
+  'GCP (Vertex AI, Cloud Run, Cloud Build)',
+  'Grafana',
+  'OpenCV',
+  'MediaPipe FaceMesh (478 landmarks)',
+  'TensorFlow',
+  'ArduPilot Autopilot',
+  'MAVLink Protocol',
+  'SCADA & Automation',
+  'PLC / Ladder Logic',
+  'Raspberry Pi 5 (Edge Deployment)',
+  'SolidWorks (3D CAD & Technical Drawing)',
+  'Cisco IOS Initial Configuration',
+];
+
 export default function SkillsSection() {
   const { ref, isInView } = useInView({ once: true, threshold: 0.15 });
   const prefersReducedMotion = useReducedMotion();
-  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [activeCategory, setActiveCategory] = useState<string>('core');
 
   const variants = prefersReducedMotion ? reducedMotionVariants : fadeInUp;
 
   // Build filter tabs: "All" + each category with short labels
   const tabs = [
+    { id: 'core', name: 'Highlights', icon: null },
     { id: 'all', name: 'All', icon: null },
     ...skillCategories.map((cat) => ({ id: cat.id, name: cat.name, icon: cat.icon })),
   ];
 
   // Short labels for tabs (no commas, clean single words)
   const tabLabels: Record<string, string> = {
+    'core': 'Highlights',
     'all': 'All',
     'software-backend': 'Software',
     'cloud-devops': 'Cloud',
@@ -46,10 +74,20 @@ export default function SkillsSection() {
   };
 
   // Filter skills based on active category
+  const highlightSkills = skillCategories.flatMap((cat) => cat.skills).filter((sk) => HIGHLIGHTS.includes(sk.name));
+  const highlightCategory = {
+    id: 'core',
+    name: 'Highlights',
+    icon: null,
+    accentColor: 'teal',
+    skills: HIGHLIGHTS.map((n) => highlightSkills.find((sk) => sk.name === n)).filter((sk): sk is (typeof highlightSkills)[number] => Boolean(sk)),
+  };
   const filteredCategories =
-    activeCategory === 'all'
-      ? skillCategories
-      : skillCategories.filter((cat) => cat.id === activeCategory);
+    activeCategory === 'core'
+      ? [highlightCategory]
+      : activeCategory === 'all'
+        ? skillCategories
+        : skillCategories.filter((cat) => cat.id === activeCategory);
 
   return (
     <section

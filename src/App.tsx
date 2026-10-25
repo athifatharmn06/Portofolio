@@ -98,15 +98,15 @@ export default function App() {
         <SectionDivider />
         <ExperienceSection />
         <SectionDivider />
+        <ProjectsSection onOpenGallery={handleOpenGallery} />
+        <SectionDivider />
+        <SkillsSection />
+        <SectionDivider />
         <LeadershipSection />
         <SectionDivider />
         <AchievementsSection onOpenGallery={handleOpenGallery} />
         <SectionDivider />
         <CertificatesSection onOpenGallery={handleOpenGallery} />
-        <SectionDivider />
-        <SkillsSection />
-        <SectionDivider />
-        <ProjectsSection onOpenGallery={handleOpenGallery} />
         <SectionDivider />
         <ContactSection />
       </main>

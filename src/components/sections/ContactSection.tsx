@@ -1,27 +1,42 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { FaDownload, FaGithub, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FiCheck, FiCopy, FiMail } from 'react-icons/fi';
 import Magnetic from '../ui/Magnetic';
-import { socialLinks } from '../../data/social';
 import { useInView } from '../../hooks/useInView';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { fadeInUp, staggerContainer, reducedMotionVariants } from '../../lib/animations';
 
+const EMAIL = 'athifadheel@gmail.com';
+const CV_URL = '/CV_Athif_Fadheel_Atharahman.pdf';
+
+const LINKS = [
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/athif-fadheel-atharahman-1a3353245/', icon: FaLinkedin },
+  { label: 'GitHub', href: 'https://github.com/athifatharmn06', icon: FaGithub },
+  { label: 'Instagram', href: 'https://www.instagram.com/athifatharmn/', icon: FaInstagram },
+];
+
 /**
- * ContactSection - Engaging contact section with social links.
- *
- * Features:
- * - Gradient background distinct from adjacent sections
- * - Social links as animated icon buttons with hover scale and color transition
- * - Visible text labels for each platform
- * - Card-based layout with glassmorphic styling (backdrop-blur, semi-transparent bg)
- * - All links open in new tab with rel="noopener noreferrer"
- * - Motivational tagline encouraging collaboration
+ * Contact: the email address in plain text (with copy), the CV, and the professional profiles.
+ * Written for a recruiter who wants to reach out in one click.
  */
 export default function ContactSection() {
   const { ref, isInView } = useInView({ once: true, threshold: 0.15 });
   const prefersReducedMotion = useReducedMotion();
+  const [copied, setCopied] = useState(false);
 
   const containerVariants = prefersReducedMotion ? reducedMotionVariants : staggerContainer;
   const itemVariants = prefersReducedMotion ? reducedMotionVariants : fadeInUp;
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard can be blocked; the mailto link still works
+    }
+  };
 
   return (
     <section
@@ -29,7 +44,6 @@ export default function ContactSection() {
       ref={ref as React.RefObject<HTMLElement>}
       className="w-full relative overflow-hidden bg-gradient-to-br from-[#0a0320] via-[#0d0a1a] to-[#04081a] py-24 md:py-32"
     >
-      {/* Decorative background blobs */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-900/15 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-teal-900/15 rounded-full blur-[100px] pointer-events-none" />
 
@@ -37,66 +51,66 @@ export default function ContactSection() {
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? 'visible' : 'hidden'}
-        className="container mx-auto px-6 max-w-4xl relative z-10"
+        className="container mx-auto px-6 max-w-3xl relative z-10 text-center"
       >
-        {/* Section heading */}
-        <motion.div variants={itemVariants} className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Get In Touch
-          </h2>
-          <p className="text-lg md:text-xl text-gray-300 font-light max-w-2xl mx-auto">
-            Let's build something extraordinary together
-          </p>
+        <motion.p variants={itemVariants} className="mb-4 inline-flex items-center gap-2 rounded-full border border-teal-400/35 bg-teal-400/10 px-3 py-1.5 text-xs font-medium text-teal-300">
+          <span className="h-2 w-2 rounded-full bg-teal-300" aria-hidden="true" />
+          Open to full-time roles, freelance work and collaborations
+        </motion.p>
+
+        <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold text-white mb-4">
+          Let's work together
+        </motion.h2>
+        <motion.p variants={itemVariants} className="mx-auto mb-10 max-w-xl text-base md:text-lg text-gray-300 font-light">
+          Based in Jakarta, Indonesia. The fastest way to reach me is email.
+        </motion.p>
+
+        {/* Email */}
+        <motion.div variants={itemVariants} className="mb-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Magnetic>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="inline-flex items-center gap-3 rounded-xl px-6 py-3.5 text-base font-semibold text-white transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(124,58,237,0.5)] focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
+              style={{ background: 'linear-gradient(135deg, #7c3aed, #4f46e5)' }}
+            >
+              <FiMail className="h-5 w-5" aria-hidden="true" />
+              {EMAIL}
+            </a>
+          </Magnetic>
+          <button
+            onClick={copyEmail}
+            className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-3.5 text-sm font-medium text-gray-200 transition-colors hover:border-teal-400/60 hover:text-teal-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+            aria-live="polite"
+          >
+            {copied ? <FiCheck className="h-4 w-4" aria-hidden="true" /> : <FiCopy className="h-4 w-4" aria-hidden="true" />}
+            {copied ? 'Copied' : 'Copy email'}
+          </button>
         </motion.div>
 
-        {/* Glassmorphic card with social links */}
-        <motion.div
-          variants={itemVariants}
-          className="rounded-2xl p-[1.5px]"
-          style={{ background: 'linear-gradient(120deg, #8b5cf6, #38bdf8, #2dd4bf, #8b5cf6)', backgroundSize: '300% 300%', animation: prefersReducedMotion ? undefined : 'gradient-shift 8s ease infinite' }}
-        >
-          <div className="bg-[#0a0a1c]/95 backdrop-blur-md rounded-[15px] p-8 md:p-12 shadow-xl">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-10">
-            {socialLinks.map((link) => (
-              <Magnetic key={link.platform}>
+        {/* CV and profiles */}
+        <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-3">
+          <Magnetic>
+            <a
+              href={CV_URL}
+              download
+              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-gray-100 transition-colors hover:border-violet-400/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
+            >
+              <FaDownload aria-hidden="true" /> Download CV
+            </a>
+          </Magnetic>
+          {LINKS.map((l) => (
+            <Magnetic key={l.label}>
               <a
-                href={link.url}
+                href={l.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center gap-3 p-4 rounded-xl transition-all duration-300 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-                aria-label={`Visit ${link.platform}`}
+                className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-gray-100 transition-colors hover:border-teal-400/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
               >
-                {/* Animated icon button */}
-                <span
-                  className="w-14 h-14 flex items-center justify-center rounded-full bg-white/10 border border-white/10 text-white transition-all duration-250 group-hover:scale-[1.2] group-hover:border-transparent group-hover:shadow-lg"
-                  style={{
-                    // Apply hover color via CSS custom property for the group-hover state
-                    ['--hover-color' as string]: link.hoverColor,
-                  }}
-                >
-                  <span className="text-2xl transition-colors duration-250 group-hover:text-[var(--hover-color)]">
-                    {link.icon}
-                  </span>
-                </span>
-
-                {/* Visible text label */}
-                <span className="text-sm font-medium text-gray-400 transition-colors duration-250 group-hover:text-white">
-                  {link.platform}
-                </span>
+                <l.icon aria-hidden="true" /> {l.label}
               </a>
-              </Magnetic>
-            ))}
-          </div>
-          </div>
+            </Magnetic>
+          ))}
         </motion.div>
-
-        {/* Footer note */}
-        <motion.p
-          variants={itemVariants}
-          className="text-center text-gray-500 text-sm mt-8"
-        >
-          Open to freelance opportunities, collaborations, and exciting projects.
-        </motion.p>
       </motion.div>
     </section>
   );

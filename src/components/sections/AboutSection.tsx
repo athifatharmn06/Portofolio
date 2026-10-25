@@ -57,10 +57,10 @@ export default function AboutSection() {
         <ScrollWords
           className="text-4xl md:text-5xl font-bold leading-tight text-white mb-16"
           segments={[
-            { text: "I'm an innovative ", className: 'text-white' },
-            { text: 'Electrical & Software Engineer', className: 'text-teal-400' },
+            { text: "I'm a ", className: 'text-white' },
+            { text: 'Robotics & Systems Engineer', className: 'text-teal-400' },
             { text: ' specializing in ', className: 'text-white' },
-            { text: 'Autonomous Systems & Data Architecture', className: 'text-teal-400' },
+            { text: 'Autonomous Systems, Industrial Automation & Data', className: 'text-teal-400' },
           ]}
         />
 
@@ -100,7 +100,7 @@ export default function AboutSection() {
           <motion.div variants={variants} className="w-full lg:w-3/5 space-y-8 order-1">
             <div>
               <h4 className="text-xl font-bold text-white">Athif Fadheel Atharahman</h4>
-              <p className="text-teal-400 font-medium">Electrical & Software Engineer</p>
+              <p className="text-teal-400 font-medium">Robotics & Systems Engineer</p>
             </div>
 
             <div className="space-y-4 text-gray-400 font-light leading-relaxed text-justify">

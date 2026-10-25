@@ -17,6 +17,8 @@ export interface Certificate {
   verifyUrl?: string;
   /** Extra line for the lightbox caption */
   note?: string;
+  /** Shown in the collapsed "All" view */
+  featured?: boolean;
 }
 
 /** Filter order, most relevant to recruiters first. */
@@ -32,6 +34,7 @@ export const certificateCategories: ('All' | CertificateCategory)[] = [
 export const certificatesData: Certificate[] = [
   {
     id: 'eprt',
+    featured: true,
     title: 'EPrT (English Proficiency Test)',
     issuer: 'Telkom University Language Center',
     date: 'Mar 4, 2026',
@@ -44,6 +47,7 @@ export const certificatesData: Certificate[] = [
   },
   {
     id: 'ecct',
+    featured: true,
     title: 'ECCT (English Communicative Competence Test)',
     issuer: 'Telkom University Language Center',
     date: 'Oct 3, 2024',
@@ -56,6 +60,7 @@ export const certificatesData: Certificate[] = [
   },
   {
     id: 'oracle-ai-foundations',
+    featured: true,
     title: 'Oracle AI Database Certified Foundations Associate',
     issuer: 'Oracle University',
     date: 'Aug 25, 2026',
@@ -131,6 +136,7 @@ export const certificatesData: Certificate[] = [
   },
   {
     id: 'eecsi',
+    featured: true,
     title: 'EECSI 2026 Presenter',
     issuer: 'The 13th International Conference on Electrical Engineering, Computer Science and Informatics',
     date: 'Sep 2-3, 2026',
@@ -150,6 +156,7 @@ export const certificatesData: Certificate[] = [
   },
   {
     id: 'teknofest',
+    featured: true,
     title: 'TEKNOFEST 2026 Güneydoğu, International UAV Competition',
     issuer: 'TEKNOFEST / TÜBİTAK',
     date: 'Sep 30 - Oct 4, 2026',
@@ -160,6 +167,7 @@ export const certificatesData: Certificate[] = [
   },
   {
     id: 'hki',
+    featured: true,
     title: 'Intellectual Property Registration: Rumeksa',
     issuer: 'Ministry of Law, Directorate General of Intellectual Property (Indonesia)',
     date: 'Sep 7, 2026',

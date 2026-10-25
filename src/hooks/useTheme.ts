@@ -14,18 +14,10 @@ interface UseThemeReturn {
  * Falls back to 'dark' if no preference is found.
  */
 function getInitialTheme(): Theme {
-  // Check localStorage first
+  // The site is designed dark-first and has no light variant for most sections, so ignore the OS preference
+  // unless the visitor explicitly stored a choice.
   const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored === 'light' || stored === 'dark') {
-    return stored;
-  }
-
-  // Fall back to system preference
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return 'dark';
-  }
-
-  return 'light';
+  return stored === 'light' ? 'light' : 'dark';
 }
 
 /**

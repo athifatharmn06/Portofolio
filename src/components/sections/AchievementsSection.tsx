@@ -147,16 +147,16 @@ export default function AchievementsSection({ onOpenGallery }: AchievementsSecti
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-teal-400">{a.category}</p>
                 <h4 className="mb-4 flex items-center justify-between gap-2 text-xl font-bold text-white">
                   {a.title}
-                  <FiArrowUpRight className="h-5 w-5 shrink-0 text-gray-500 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-teal-400" />
+                  <FiArrowUpRight className="h-5 w-5 shrink-0 text-gray-400 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-teal-400" />
                 </h4>
 
                 <p className="text-sm font-semibold text-gray-100">{a.role}</p>
-                <p className="mt-1 text-xs leading-relaxed text-gray-500">{a.team}</p>
+                <p className="mt-1 text-xs leading-relaxed text-gray-400">{a.team}</p>
 
                 <p className="mt-5 mb-6 text-sm leading-relaxed text-gray-400">{a.description}</p>
 
                 <div className="mt-auto border-t border-white/10 pt-5">
-                  <p className="mb-2 text-[0.7rem] font-semibold uppercase tracking-wider text-gray-500">Outcome</p>
+                  <p className="mb-2 text-[0.7rem] font-semibold uppercase tracking-wider text-gray-400">Outcome</p>
                   <p className="inline-flex items-center gap-2 rounded-full border border-teal-400/40 bg-teal-400/10 px-4 py-1.5 text-sm font-semibold text-teal-300">
                     <FiAward className="h-4 w-4" /> {a.outcome}
                   </p>

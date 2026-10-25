@@ -157,13 +157,13 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
               initial="hidden"
               animate={isInView ? 'visible' : 'hidden'}
               variants={variants}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+              className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5"
             >
-              <dd className="text-3xl font-bold text-teal-400 md:text-4xl [&_span]:text-teal-400">
+              <dd className="order-1 text-3xl font-bold text-teal-400 md:text-4xl [&_span]:text-teal-400">
                 <CounterAnimation target={s.value} suffix={s.suffix} isInView={isInView} />
               </dd>
-              <dt className="mt-2 text-sm font-semibold text-gray-100">{s.label}</dt>
-              <p className="mt-1 text-xs text-gray-500">{s.note}</p>
+              <dt className="order-2 mt-2 text-sm font-semibold text-gray-100">{s.label}</dt>
+              <dd className="order-3 mt-1 text-xs text-gray-400">{s.note}</dd>
             </motion.div>
           ))}
         </dl>
@@ -192,9 +192,9 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
                 transition={{ delay: reduced ? 0 : i * 0.08 }}
                 className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-white/25"
               >
-                <p className="text-[0.7rem] font-semibold uppercase tracking-wider text-gray-500">{o.kind}</p>
+                <p className="text-[0.7rem] font-semibold uppercase tracking-wider text-gray-400">{o.kind}</p>
                 <p className="mt-2 text-sm font-semibold leading-snug text-white">{o.title}</p>
-                <p className="mt-1.5 text-xs text-gray-500">{o.venue}</p>
+                <p className="mt-1.5 text-xs text-gray-400">{o.venue}</p>
                 <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-4">
                   <span
                     className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold ${
@@ -357,7 +357,7 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
             {/* Event scores */}
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
               <p className="mb-1 text-sm font-semibold text-white">F1 score per fatigue event</p>
-              <p className="mb-6 text-xs text-gray-500">Event-level, all subjects and lighting conditions</p>
+              <p className="mb-6 text-xs text-gray-400">Event-level, all subjects and lighting conditions</p>
               <ul className="space-y-5">
                 {eventScores.map((e, i) => (
                   <li key={e.event}>
@@ -381,7 +381,7 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
                 <li className="flex gap-2"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-400" aria-hidden="true" />Landmarks tracked through prescription glasses (2 of 6 subjects)</li>
                 <li className="flex gap-2"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-400" aria-hidden="true" />Yawn F1 of 0.964 at 0 lux</li>
               </ul>
-              <p className="mt-5 text-xs leading-relaxed text-gray-500">
+              <p className="mt-5 text-xs leading-relaxed text-gray-400">
                 Ground truth: 621 blinks, 33 microsleeps, 62 yawns and 39 head drops.
               </p>
             </div>

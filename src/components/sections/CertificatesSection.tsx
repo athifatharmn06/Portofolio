@@ -35,13 +35,16 @@ export default function CertificatesSection({ onOpenGallery }: CertificatesSecti
   const { ref, isInView } = useInView({ once: true, threshold: 0.08 });
   const reduced = useReducedMotion();
   const [filter, setFilter] = useState<'All' | CertificateCategory>('All');
+  const [showAll, setShowAll] = useState(false);
 
   const variants = reduced ? reducedMotionVariants : fadeInUp;
 
-  const visible = useMemo(
-    () => (filter === 'All' ? certificatesData : certificatesData.filter((c) => c.category === filter)),
-    [filter]
-  );
+  // The collapsed "All" view shows the featured certificates; any category filter shows everything in it
+  const collapsed = filter === 'All' && !showAll;
+  const visible = useMemo(() => {
+    const inCategory = filter === 'All' ? certificatesData : certificatesData.filter((c) => c.category === filter);
+    return collapsed ? inCategory.filter((c) => c.featured) : inCategory;
+  }, [filter, collapsed]);
 
   return (
     <section
@@ -156,7 +159,7 @@ export default function CertificatesSection({ onOpenGallery }: CertificatesSecti
 
                   <div className="mt-auto flex items-center justify-between gap-3 pt-4">
                     <div className="min-w-0">
-                      <p className="text-xs text-gray-500">{c.date}</p>
+                      <p className="text-xs text-gray-400">{c.date}</p>
                       {c.result && (
                         <p className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold text-teal-300">
                           <FiCheckCircle className="h-3.5 w-3.5 shrink-0" /> {c.result}
@@ -179,6 +182,18 @@ export default function CertificatesSection({ onOpenGallery }: CertificatesSecti
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {filter === 'All' && (
+          <div className="mt-10 text-center">
+            <button
+              onClick={() => setShowAll((v) => !v)}
+              aria-expanded={showAll}
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-2.5 text-sm font-semibold text-gray-100 transition-colors hover:border-teal-400/60 hover:text-teal-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+            >
+              {showAll ? 'Show fewer' : `Show all ${certificatesData.length} certificates`}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

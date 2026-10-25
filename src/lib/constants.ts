@@ -47,9 +47,11 @@ export const SECTION_IDS = [
   'about',
   'education',
   'experience',
-  'achievements',
-  'skills',
   'projects',
+  'skills',
+  'leadership',
+  'achievements',
+  'certificates',
   'contact',
 ] as const;
 
@@ -58,11 +60,12 @@ export type SectionId = (typeof SECTION_IDS)[number];
 // --- Navigation Labels ---
 export const NAV_LINKS: { id: SectionId; label: string }[] = [
   { id: 'home', label: 'Home' },
-  { id: 'about', label: 'About me' },
+  { id: 'about', label: 'About' },
   { id: 'education', label: 'Education' },
   { id: 'experience', label: 'Experience' },
-  { id: 'achievements', label: 'Awards' },
+  { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
-  { id: 'projects', label: 'My Work' },
-  { id: 'contact', label: 'Contact me' },
+  { id: 'achievements', label: 'Awards' },
+  { id: 'certificates', label: 'Certificates' },
+  { id: 'contact', label: 'Contact' },
 ];

@@ -8,18 +8,19 @@ import OrbitRings from '../ui/OrbitRings';
 import Magnetic from '../ui/Magnetic';
 import CounterAnimation from '../ui/CounterAnimation';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { projectsData } from '../../data/projects';
 
 const ROLES = [
-  'Software Engineer',
-  'Electrical Engineer',
-  'AI Specialist',
-  'Cloud Architect',
+  'Robotics & Systems Engineer',
+  'Industrial Automation (SCADA / PLC)',
+  'AI & Computer Vision',
+  'Data Engineering',
 ];
 
 const STAT_ITEMS = [
-  { value: 15, label: 'Projects Built' },
-  { value: 3, label: 'Years Coding' },
-  { value: 10, label: 'Tech Stacks' },
+  { value: projectsData.length, suffix: '', label: 'Projects' },
+  { value: 3, suffix: '', label: 'Conference Papers' },
+  { value: 3, suffix: '+', label: 'Years Coding' },
 ];
 
 export default function HeroSection() {
@@ -196,7 +197,6 @@ export default function HeroSection() {
                 Hi, I'm{' '}
               </span>
               <span
-                aria-label="Athif"
                 style={{
                   display: 'inline-block',
                   fontFamily: 'Caveat, cursive',
@@ -206,6 +206,7 @@ export default function HeroSection() {
                   paddingRight: '0.35em',
                 }}
               >
+                <span className="sr-only">Athif</span>
                 {'Athif'.split('').map((ch, i) => (
                   <motion.span
                     key={i}
@@ -250,9 +251,29 @@ export default function HeroSection() {
             className="max-w-lg text-base leading-relaxed mb-8"
             style={{ color: 'rgba(148,163,184,0.75)' }}
           >
-            Building innovative solutions at the intersection of software, hardware, and AI.
-            From embedded systems to cloud-scale applications. I engineer things that work.
+            Electrical Engineering graduate (Cum Laude) building UAV flight software, SCADA and PLC integrations,
+            and the data pipelines that turn field signals into decisions.
           </motion.p>
+
+          {/* Quick facts for recruiters */}
+          <motion.ul
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="mb-8 flex flex-wrap items-center justify-center gap-2 lg:justify-start"
+          >
+            <li
+              className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium"
+              style={{ background: 'rgba(45,212,191,0.1)', border: '1px solid rgba(45,212,191,0.35)', color: '#5eead4' }}
+            >
+              <span className="h-2 w-2 rounded-full bg-teal-300" style={{ animation: prefersReducedMotion ? undefined : 'pulse-dot 2.4s ease-out infinite' }} aria-hidden="true" />
+              Open to work and freelance
+            </li>
+            <li
+              className="rounded-full px-3 py-1.5 text-xs font-medium"
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(226,232,240,0.9)' }}
+            >
+              Jakarta, Indonesia
+            </li>
+          </motion.ul>
 
           {/* CTA Buttons */}
           <motion.div
@@ -316,9 +337,9 @@ export default function HeroSection() {
                     backgroundClip: 'text',
                   }}
                 >
-                  <CounterAnimation target={stat.value} suffix="+" isInView duration={2200} />
+                  <CounterAnimation target={stat.value} suffix={stat.suffix} isInView duration={2200} />
                 </span>
-                <span className="text-xs font-medium" style={{ color: 'rgba(148,163,184,0.6)' }}>
+                <span className="text-xs font-medium" style={{ color: 'rgba(203,213,225,0.85)' }}>
                   {stat.label}
                 </span>
               </div>
