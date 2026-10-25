@@ -157,3 +157,16 @@ export const methodGallery: PhotoContext[] = [
   { url: `${R}subject-heatmap.webp`, caption: 'Subject-by-subject F1 map across fatigue events and lighting conditions.', tools: 'Per-subject evaluation' },
   { url: `${R}pareto.webp`, caption: 'Weight ablation: recall against false positives for the candidate score weightings, with the chosen setting marked.', tools: 'Weight ablation' },
 ];
+
+export const luxLevels = [0, 2, 24, 48, 101, 222];
+
+const DBG = '/final-project/debug/';
+
+/** Lightbox set for the debug view: IR and RGB frames per lux level, then the live EAR/MAR trace. */
+export const debugGallery: PhotoContext[] = [
+  ...luxLevels.flatMap((lux) => [
+    { url: `${DBG}ir-${lux}.webp`, caption: `Infrared Pi camera at ${lux} lux with the debug HUD: FaceMesh overlay, eye and mouth state, live EAR and MAR.`, tools: 'Raspberry Pi 5 + IR camera' },
+    { url: `${DBG}rgb-${lux}.webp`, caption: `Standard RGB webcam at ${lux} lux, same HUD.`, tools: 'RGB webcam, same room' },
+  ]),
+  { url: `${DBG}ear-mar-trace.webp`, caption: 'Live EAR and MAR traces over time, logged during the lux test.', tools: 'EAR / MAR log' },
+];
