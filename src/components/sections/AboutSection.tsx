@@ -127,18 +127,31 @@ export default function AboutSection() {
               <h5 className="text-sm font-semibold text-teal-500 mb-2">| Languages</h5>
               <hr className="border-gray-800 w-1/2 mb-4" />
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 text-sm text-gray-300">
-                <p>
+                <p className="shrink-0 whitespace-nowrap">
                   <span className="font-bold text-white">Indonesian</span> - Native
                 </p>
-                <p>
-                  <span className="font-bold text-white">English</span> - Advanced / Professional
+                <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span>
+                    <span className="font-bold text-white">English</span> - Advanced / Professional
+                  </span>
                   <a
                     href="https://igracias.telkomuniversity.ac.id/LACValidation/index.php?id=1815368&id2=107&id3=1817580&id4=1102220005"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ml-2 text-teal-400 hover:text-teal-300 underline underline-offset-2 inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:rounded-sm"
+                    className="text-teal-400 hover:text-teal-300 underline underline-offset-2 inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:rounded-sm"
                   >
                     (ECCT 3.75)
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                  <a
+                    href="https://igracias.telkomuniversity.ac.id/LACValidation/index.php?id=2639150&id2=84&id3=2641595&id4=1102220005"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-teal-400 hover:text-teal-300 underline underline-offset-2 inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:rounded-sm"
+                  >
+                    (EPrT 547, CEFR B2 equivalent)
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>

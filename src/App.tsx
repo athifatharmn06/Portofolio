@@ -19,6 +19,7 @@ import AboutSection from './components/sections/AboutSection';
 import ExperienceSection from './components/sections/ExperienceSection';
 import LeadershipSection from './components/sections/LeadershipSection';
 import AchievementsSection from './components/sections/AchievementsSection';
+import CertificatesSection from './components/sections/CertificatesSection';
 import SkillsSection from './components/sections/SkillsSection';
 import ProjectsSection from './components/sections/ProjectsSection';
 import ContactSection from './components/sections/ContactSection';
@@ -97,6 +98,8 @@ export default function App() {
         <LeadershipSection />
         <SectionDivider />
         <AchievementsSection onOpenGallery={handleOpenGallery} />
+        <SectionDivider />
+        <CertificatesSection onOpenGallery={handleOpenGallery} />
         <SectionDivider />
         <SkillsSection />
         <SectionDivider />
