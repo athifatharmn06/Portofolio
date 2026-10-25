@@ -23,7 +23,7 @@ export default function Navbar({ onMobileMenuToggle, activeSection }: NavbarProp
   // Mobile hide-on-scroll-down, reveal-on-scroll-up logic (rAF-throttled, stable listener)
   useEffect(() => {
     const handleScroll = () => {
-      // Throttle with rAF — at most one computation per frame
+      // Throttle with rAF - at most one computation per frame
       if (rafIdRef.current !== null) return;
       rafIdRef.current = requestAnimationFrame(() => {
         rafIdRef.current = null;
@@ -69,7 +69,7 @@ export default function Navbar({ onMobileMenuToggle, activeSection }: NavbarProp
         cancelAnimationFrame(rafIdRef.current);
       }
     };
-  }, []); // Empty deps — listener is stable, uses refs for mutable state
+  }, []); // Empty deps - listener is stable, uses refs for mutable state
 
   // Smooth-scroll to section with offset
   const handleNavClick = useCallback(
@@ -97,7 +97,7 @@ export default function Navbar({ onMobileMenuToggle, activeSection }: NavbarProp
           style={{ height: NAVBAR_HEIGHT - 8 }}
         >
           <nav className="h-full px-6 flex items-center justify-between">
-            {/* Logo — handwriting font */}
+            {/* Logo - handwriting font */}
             <a
               href="#home"
               onClick={(e) => handleNavClick(e, 'home')}

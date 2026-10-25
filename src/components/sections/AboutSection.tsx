@@ -9,7 +9,7 @@ import ImageWithFallback from '../ui/ImageWithFallback';
 import ScrollWords from '../ui/ScrollWords';
 
 /**
- * AboutSection — Bio, stats counters, languages, education card.
+ * AboutSection - Bio, stats counters, languages, education card.
  *
  * - Animated numeric counters (3+ stats) triggered by useInView
  * - Education card with hover-expand revealing GPA and coursework (300ms)
@@ -107,18 +107,18 @@ export default function AboutSection() {
 
             <div className="space-y-4 text-gray-400 font-light leading-relaxed text-justify">
               <p>
-                Athif is a multidisciplinary engineer with expertise in AI, cloud computing, robotics, and full-stack development.
-                With a strong foundation in both logic-based problem solving and software scalability, he bridges the gap between
+                I'm a multidisciplinary engineer with expertise in AI, cloud computing, robotics, and full-stack development.
+                With a strong foundation in both logic-based problem solving and software scalability, I bridge the gap between
                 complex engineering challenges and efficient digital solutions.
               </p>
               <p>
-                His expertise spans developing scalable web applications, managing large-scale relational databases,
+                My expertise spans developing scalable web applications, managing large-scale relational databases,
                 enterprise-level SCADA automation (with proven success at PT PLN Indonesia, the state-owned and largest
                 electricity supplier in Indonesia), and streamlining AI training pipelines.
               </p>
               <p>
-                Whether architecting cloud-based computing systems, managing technical projects, or engineering advanced
-                control logic for UAVs, he builds solutions that are precise, automated, and highly reliable.
+                Whether I'm architecting cloud-based computing systems, managing technical projects, or engineering advanced
+                control logic for UAVs, I build solutions that are precise, automated, and highly reliable.
               </p>
             </div>
 

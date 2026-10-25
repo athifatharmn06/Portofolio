@@ -45,7 +45,7 @@ export function useScrollSpy({
     };
 
     const handleScroll = () => {
-      // Use rAF guard to prevent stacking frames — at most one computation per frame
+      // Use rAF guard to prevent stacking frames - at most one computation per frame
       if (rafId.current !== null) return;
       rafId.current = requestAnimationFrame(computeActiveSection);
     };

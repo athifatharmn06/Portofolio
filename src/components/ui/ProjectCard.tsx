@@ -106,7 +106,7 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
             loading="lazy"
           />
 
-          {/* Gradient overlay — visible on hover */}
+          {/* Gradient overlay - visible on hover */}
           <div
             className={`
               absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent
@@ -130,7 +130,7 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
             {project.title}
           </h3>
 
-          {/* Tech stack pills — show all */}
+          {/* Tech stack pills - show all */}
           <div className="flex flex-wrap gap-1.5 mb-3">
             {project.techStack.map((tech) => (
               <span

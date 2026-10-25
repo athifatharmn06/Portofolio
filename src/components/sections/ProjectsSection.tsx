@@ -12,7 +12,7 @@ interface ProjectsSectionProps {
 
 /**
  * Projects section with responsive grid.
- * Shows all projects — no filter pills.
+ * Shows all projects - no filter pills.
  */
 export default function ProjectsSection({ onOpenGallery }: ProjectsSectionProps) {
   const { ref, isInView } = useInView({ once: true, threshold: 0.1 });

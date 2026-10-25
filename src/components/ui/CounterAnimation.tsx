@@ -13,7 +13,7 @@ interface CounterAnimationProps {
  *
  * - Animates over `duration` ms (default 2000) when `isInView` becomes true
  * - Supports an optional suffix (e.g., "+")
- * - Only animates once — retains final value on subsequent views
+ * - Only animates once - retains final value on subsequent views
  *
  * Validates: Requirements 4.1, 4.6
  */

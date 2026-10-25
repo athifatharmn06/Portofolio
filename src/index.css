@@ -94,7 +94,7 @@
 }
 
 /* ============================================================
-   Base Layer — Theme System
+   Base Layer - Theme System
    ============================================================ */
 @layer base {
   /* Smooth scrolling & responsive typography using clamp() */
@@ -197,7 +197,7 @@
                 0 2px 4px hsl(35, 15%, 85% / 0.15);
   }
 
-  /* Dark theme cards and elevated surfaces — visual depth */
+  /* Dark theme cards and elevated surfaces - visual depth */
   .dark .surface-card {
     background-color: var(--color-surface-dark-card);
     border-color: hsl(222, 30%, 20%);
@@ -219,7 +219,7 @@
      Dark bg (hsl(222,47%,8%) ≈ #0b1120): text must be ≥ #a0a0a0 luminance
      -------------------------------------------------------- */
 
-  /* Headings — high contrast */
+  /* Headings - high contrast */
   h1, h2, h3, h4, h5, h6 {
     color: hsl(220, 25%, 12%);
   }
@@ -228,7 +228,7 @@
     color: hsl(210, 20%, 95%);
   }
 
-  /* Body text — sufficient contrast */
+  /* Body text - sufficient contrast */
   p, li, span, label {
     color: hsl(220, 15%, 25%);
   }
@@ -237,7 +237,7 @@
     color: hsl(210, 15%, 80%);
   }
 
-  /* Muted/secondary text — still meets 4.5:1 */
+  /* Muted/secondary text - still meets 4.5:1 */
   .text-muted {
     color: hsl(220, 10%, 40%);
   }
@@ -247,7 +247,7 @@
   }
 
   /* --------------------------------------------------------
-     Focus indicators — WCAG 2.4.7 compliant
+     Focus indicators - WCAG 2.4.7 compliant
      -------------------------------------------------------- */
   :focus-visible {
     outline: 2px solid hsl(210, 100%, 50%);
@@ -267,7 +267,7 @@
   }
 
   /* --------------------------------------------------------
-     Image containment — scale within parent, no distortion
+     Image containment - scale within parent, no distortion
      -------------------------------------------------------- */
   img,
   video {
@@ -293,7 +293,7 @@
 }
 
 /* ============================================================
-   Utility Layer — Theme-specific gradients and borders
+   Utility Layer - Theme-specific gradients and borders
    ============================================================ */
 @layer utilities {
   /* Radial gradient for cursor glow */
