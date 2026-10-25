@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaImages } from 'react-icons/fa';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import ImageWithFallback from './ImageWithFallback';
+import TechTags from './TechTags';
 import type { ProjectData } from '../../types';
 
 interface ProjectCardProps {
@@ -25,11 +26,6 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const prefersReducedMotion = useReducedMotion();
-
-  const truncatedDesc =
-    project.shortDesc.length > 80
-      ? project.shortDesc.slice(0, 77) + '...'
-      : project.shortDesc;
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -66,7 +62,7 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
 
   return (
     <motion.div
-      className="relative group rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md dark:shadow-gray-900/30 border border-gray-200 dark:border-gray-700 transition-shadow duration-300 hover:shadow-xl dark:hover:shadow-gray-900/50"
+      className="relative group h-full flex flex-col rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md dark:shadow-gray-900/30 border border-gray-200 dark:border-gray-700 transition-shadow duration-300 hover:shadow-xl dark:hover:shadow-gray-900/50"
       style={{
         perspective: '1000px',
       }}
@@ -75,7 +71,7 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       <div
-        className="transition-transform duration-300 ease-out"
+        className="flex flex-1 flex-col transition-transform duration-300 ease-out"
         style={{
           transform: prefersReducedMotion
             ? 'none'
@@ -109,7 +105,7 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
           {/* Gradient overlay - visible on hover */}
           <div
             className={`
-              absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent
+              absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/20
               flex flex-col justify-end p-4
               transition-opacity duration-300
               ${isHovered ? 'opacity-100' : 'opacity-0'}
@@ -118,32 +114,25 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
             <span className="text-xs font-semibold uppercase tracking-wider text-teal-300 mb-1">
               {project.category}
             </span>
-            <p className="text-sm text-gray-100 leading-snug">
-              {truncatedDesc}
+            <p className="text-sm text-gray-100 leading-snug line-clamp-6">
+              {project.shortDesc}
             </p>
           </div>
         </div>
 
         {/* Card body */}
-        <div className="p-4">
-          <h3 className="text-base font-bold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2">
+        <div className="flex flex-1 flex-col p-4">
+          <h3 className="text-base font-bold leading-snug text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 min-h-[2.75em]">
             {project.title}
           </h3>
 
-          {/* Tech stack pills - show all */}
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {project.techStack.map((tech) => (
-              <span
-                key={tech}
-                className="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
-              >
-                {tech}
-              </span>
-            ))}
+          {/* Tech stack pills, clamped to two rows */}
+          <div className="mb-3">
+            <TechTags tags={project.techStack} />
           </div>
 
           {/* Action row */}
-          <div className="flex items-center justify-between gap-2">
+          <div className="mt-auto flex items-center justify-between gap-2">
             {/* Conditional links */}
             {hasLinks && (
               <div className="flex items-center gap-2">
@@ -165,10 +154,10 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:rounded-sm"
-                    aria-label={`View ${project.title} live demo`}
+                    aria-label={`View ${project.title}: ${project.demoLabel ?? 'live demo'}`}
                   >
                     <FaExternalLinkAlt className="text-xs" />
-                    <span>Demo</span>
+                    <span>{project.demoLabel ?? 'Demo'}</span>
                   </a>
                 )}
               </div>

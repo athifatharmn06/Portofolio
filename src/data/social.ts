@@ -1,4 +1,4 @@
-import { FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { FaLinkedin, FaInstagram, FaEnvelope, FaGithub } from 'react-icons/fa';
 import { createElement } from 'react';
 import type { SocialLink } from '../types';
 
@@ -12,6 +12,12 @@ export const socialLinks: SocialLink[] = [
     url: 'https://www.linkedin.com/in/athif-fadheel-atharahman-1a3353245/',
     icon: icon(FaLinkedin, 'w-6 h-6'),
     hoverColor: '#0077b5',
+  },
+  {
+    platform: 'GitHub',
+    url: 'https://github.com/athifatharmn06',
+    icon: icon(FaGithub, 'w-6 h-6'),
+    hoverColor: '#ffffff',
   },
   {
     platform: 'Instagram',

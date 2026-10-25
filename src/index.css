@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* dark: utilities follow the .dark class on <html> (forced on by index.html), not the OS setting */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ============================================================
    Tailwind CSS 4 Theme Configuration
    ============================================================ */
@@ -356,4 +359,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .marquee { animation: none; }
+}
+
+@keyframes scan {
+  0%, 100% { top: -20%; }
+  50% { top: 85%; }
+}
+
+@keyframes pulse-dot {
+  0% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.55); }
+  70% { box-shadow: 0 0 0 7px rgba(45, 212, 191, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
 }

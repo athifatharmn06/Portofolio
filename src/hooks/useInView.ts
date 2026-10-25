@@ -29,9 +29,8 @@ export function useInView(options: UseInViewOptions = {}): UseInViewReturn {
   );
 
   useEffect(() => {
-    // If IntersectionObserver is not supported, keep isInView as true
+    // Without IntersectionObserver the initial state is already true, so there is nothing to observe
     if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
-      setIsInView(true);
       return;
     }
 

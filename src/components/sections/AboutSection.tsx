@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from '../../hooks/useInView';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -12,7 +11,7 @@ import ScrollWords from '../ui/ScrollWords';
  * AboutSection - Bio, stats counters, languages, education card.
  *
  * - Animated numeric counters (3+ stats) triggered by useInView
- * - Education card with hover-expand revealing GPA and coursework (300ms)
+ * - Education card with GPA, honors, final project and coursework always visible
  * - Staggered fade-in-up transitions (150ms delay, 600ms per element)
  * - Two-column on desktop (≥1024px): 60% text left, 40% image right
  * - Single-column on mobile: heading → text → languages → image → education card
@@ -23,7 +22,6 @@ import ScrollWords from '../ui/ScrollWords';
 export default function AboutSection() {
   const { ref, isInView } = useInView({ once: true, threshold: 0.15 });
   const prefersReducedMotion = useReducedMotion();
-  const [isEducationExpanded, setIsEducationExpanded] = useState(false);
 
   const variants = prefersReducedMotion ? reducedMotionVariants : fadeInUp;
   const containerVariants = prefersReducedMotion ? reducedMotionVariants : staggerContainer;
@@ -59,10 +57,10 @@ export default function AboutSection() {
         <ScrollWords
           className="text-4xl md:text-5xl font-bold leading-tight text-white mb-16"
           segments={[
-            { text: "I'm an innovative ", className: 'text-white' },
-            { text: 'Electrical & Software Engineer', className: 'text-teal-400' },
+            { text: "I'm a ", className: 'text-white' },
+            { text: 'Robotics & Systems Engineer', className: 'text-teal-400' },
             { text: ' specializing in ', className: 'text-white' },
-            { text: 'Autonomous Systems & Data Architecture', className: 'text-teal-400' },
+            { text: 'Autonomous Systems, Industrial Automation & Data', className: 'text-teal-400' },
           ]}
         />
 
@@ -102,7 +100,7 @@ export default function AboutSection() {
           <motion.div variants={variants} className="w-full lg:w-3/5 space-y-8 order-1">
             <div>
               <h4 className="text-xl font-bold text-white">Athif Fadheel Atharahman</h4>
-              <p className="text-teal-400 font-medium">Electrical & Software Engineer</p>
+              <p className="text-teal-400 font-medium">Robotics & Systems Engineer</p>
             </div>
 
             <div className="space-y-4 text-gray-400 font-light leading-relaxed text-justify">
@@ -123,27 +121,35 @@ export default function AboutSection() {
             </div>
 
             {/* Languages */}
-            <div className="pt-6 order-3 lg:order-none">
-              <h5 className="text-sm font-semibold text-teal-500 mb-2">| Languages</h5>
-              <hr className="border-gray-800 w-1/2 mb-4" />
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 text-sm text-gray-300">
-                <p>
-                  <span className="font-bold text-white">Indonesian</span> - Native
-                </p>
-                <p>
-                  <span className="font-bold text-white">English</span> - Advanced / Professional
-                  <a
-                    href="https://igracias.telkomuniversity.ac.id/LACValidation/index.php?id=1815368&id2=107&id3=1817580&id4=1102220005"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ml-2 text-teal-400 hover:text-teal-300 underline underline-offset-2 inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:rounded-sm"
-                  >
-                    (ECCT 3.75)
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </a>
-                </p>
+            <div className="pt-6">
+              <h5 className="mb-4 text-sm font-semibold text-teal-500">| Languages</h5>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-xl border border-gray-800 bg-gray-900/40 p-4">
+                  <p className="text-sm font-bold text-white">Indonesian</p>
+                  <p className="mt-0.5 text-sm text-gray-400">Native</p>
+                </div>
+                <div className="rounded-xl border border-gray-800 bg-gray-900/40 p-4">
+                  <p className="text-sm font-bold text-white">English</p>
+                  <p className="mt-0.5 text-sm text-gray-400">Advanced / Professional</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <a
+                      href="https://igracias.telkomuniversity.ac.id/LACValidation/index.php?id=1815368&id2=107&id3=1817580&id4=1102220005"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-teal-400/40 bg-teal-400/10 px-3 py-1 text-xs font-semibold text-teal-300 transition-colors hover:bg-teal-400/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+                    >
+                      ECCT 3.75 <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </a>
+                    <a
+                      href="https://igracias.telkomuniversity.ac.id/LACValidation/index.php?id=2639150&id2=84&id3=2641595&id4=1102220005"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-teal-400/40 bg-teal-400/10 px-3 py-1 text-xs font-semibold text-teal-300 transition-colors hover:bg-teal-400/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+                    >
+                      EPrT 547 (CEFR B2 equivalent) <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -163,12 +169,8 @@ export default function AboutSection() {
               />
             </div>
 
-            {/* Education Card with hover-expand */}
-            <motion.div
-              onMouseEnter={() => setIsEducationExpanded(true)}
-              onMouseLeave={() => setIsEducationExpanded(false)}
-              className="w-full max-w-sm bg-gray-900/50 border border-gray-800 rounded-xl p-5 hover:border-teal-500/50 transition-colors duration-300 cursor-pointer shadow-lg"
-            >
+            {/* Education Card: everything visible, nothing hidden behind hover or tap */}
+            <div className="w-full max-w-sm rounded-xl border border-gray-800 bg-gray-900/50 p-5 shadow-lg transition-colors duration-300 hover:border-teal-500/50">
               <div className="flex items-center gap-5">
                 <div className="w-20 h-20 bg-white rounded-lg p-2 flex items-center justify-center shrink-0">
                   <ImageWithFallback
@@ -183,35 +185,41 @@ export default function AboutSection() {
                     Bachelor of Electrical Engineering
                   </h4>
                   <p className="text-teal-400 text-xs font-semibold mb-1">Telkom University</p>
-                  <p className="text-gray-400 text-xs">2022 - Present</p>
+                  <p className="text-gray-400 text-xs">2022 - 2026</p>
                 </div>
               </div>
 
-              {/* Expandable details */}
-              <div
-                className="overflow-hidden transition-all duration-300 ease-in-out"
-                style={{
-                  maxHeight: isEducationExpanded ? '200px' : '0px',
-                  opacity: isEducationExpanded ? 1 : 0,
-                }}
-              >
-                <div className="pt-4 mt-4 border-t border-gray-800 space-y-2">
-                  <p className="text-sm text-gray-300">
-                    <span className="font-semibold text-white">GPA:</span> 3.51 / 4.00
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="rounded-full border border-teal-400/40 bg-teal-400/10 px-3 py-1 text-xs font-semibold text-teal-300">
+                  Cum Laude
+                </span>
+                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-gray-300">
+                  GPA 3.53 / 4.00
+                </span>
+              </div>
+
+              <div className="mt-4 space-y-4 border-t border-gray-800 pt-4">
+                <div>
+                  <p className="mb-1 text-xs font-semibold text-teal-400">Final Project (Grade A):</p>
+                  <p className="text-xs leading-relaxed text-gray-300">
+                    Driver Fatigue Detection on Facial Features Using Edge-AI in Low-Light Conditions with Infrared
+                    Camera
                   </p>
-                  <div>
-                    <p className="text-xs font-semibold text-teal-400 mb-1">Relevant Coursework:</p>
-                    <ul className="text-xs text-gray-400 space-y-1 list-disc list-inside">
-                      <li>Digital Signal Processing</li>
-                      <li>Control Systems Engineering</li>
-                      <li>Embedded Systems & IoT</li>
-                      <li>Power Electronics</li>
-                      <li>Machine Learning & AI</li>
-                    </ul>
-                  </div>
+                </div>
+                <div>
+                  <p className="mb-1 text-xs font-semibold text-teal-400">Relevant Coursework:</p>
+                  <ul className="list-inside list-disc space-y-1 text-xs text-gray-400">
+                    <li>Control System</li>
+                    <li>Industrial Automation</li>
+                    <li>IoT System</li>
+                    <li>Artificial Intelligence</li>
+                    <li>Deep Learning and Application</li>
+                    <li>Robotics</li>
+                    <li>Microcomputers</li>
+                  </ul>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       </div>

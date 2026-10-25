@@ -12,6 +12,8 @@ interface GalleryModalProps {
   onClose: () => void;
 }
 
+const isVideo = (url: string) => /\.(mp4|webm)$/i.test(url);
+
 const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -68,6 +70,7 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
     const nextIndex = (currentIndex + 1) % totalPhotos;
 
     const preloadImage = (url: string) => {
+      if (isVideo(url)) return;
       const img = new Image();
       img.src = url;
     };
@@ -143,6 +146,8 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
   };
 
   const currentPhoto = photos[currentIndex];
+  const showOverview = project.shortDesc.trim().length > 0;
+  const mediaMaxH = showOverview ? 'max-h-[40vh]' : 'max-h-[60vh]';
 
   return (
     <motion.div
@@ -170,9 +175,26 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
           <FiX className="w-6 h-6" />
         </button>
 
-        {/* Position indicator */}
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded-full bg-black/50 text-white text-sm font-medium">
-          {currentIndex + 1} / {totalPhotos}
+        {/* Project overview + position indicator */}
+        <div className="w-full shrink-0 pb-3 pr-12 text-left">
+          <div className="flex items-start justify-between gap-4">
+            {showOverview ? (
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-wider text-teal-300">{project.category}</p>
+                <p className="text-lg font-bold leading-snug text-white">{project.title}</p>
+              </div>
+            ) : (
+              <span />
+            )}
+            <span className="shrink-0 rounded-full bg-black/50 px-3 py-1 text-sm font-medium text-white">
+              {currentIndex + 1} / {totalPhotos}
+            </span>
+          </div>
+          {showOverview && (
+            <p className="mt-2 max-h-[16vh] overflow-y-auto pr-2 text-sm leading-relaxed text-white/80">
+              {project.shortDesc}
+            </p>
+          )}
         </div>
 
         {/* Main image area */}
@@ -213,16 +235,30 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
               exit="exit"
               className="w-full flex flex-col items-center"
             >
-              <ImageWithFallback
-                src={currentPhoto.url}
-                alt={currentPhoto.caption || `${project.title} screenshot ${currentIndex + 1}`}
-                className="max-h-[60vh] w-auto max-w-full object-contain rounded-lg shadow-2xl"
-              />
+              {isVideo(currentPhoto.url) ? (
+                <video
+                  key={currentPhoto.url}
+                  src={currentPhoto.url}
+                  poster={currentPhoto.poster}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  aria-label={currentPhoto.caption}
+                  className={`${mediaMaxH} w-auto max-w-full object-contain shadow-2xl`}
+                />
+              ) : (
+                <ImageWithFallback
+                  src={currentPhoto.url}
+                  alt={currentPhoto.caption || `${project.title} screenshot ${currentIndex + 1}`}
+                  className={`${mediaMaxH} w-auto max-w-full object-contain shadow-2xl`}
+                />
+              )}
               {/* Caption and tools */}
               {(currentPhoto.caption || currentPhoto.tools) && (
                 <div className="mt-3 text-center text-white/90 px-4">
                   {currentPhoto.caption && (
-                    <p className="text-sm font-medium">{currentPhoto.caption}</p>
+                    <p className="text-sm font-medium text-white">{currentPhoto.caption}</p>
                   )}
                   {currentPhoto.tools && (
                     <p className="text-xs text-white/60 mt-1">{currentPhoto.tools}</p>
@@ -257,7 +293,7 @@ const GalleryModal = ({ project, onClose }: GalleryModalProps) => {
                 aria-label={`View image ${index + 1}: ${photo.caption || ''}`}
               >
                 <img
-                  src={photo.url}
+                  src={photo.poster ?? photo.url}
                   alt=""
                   className="w-full h-full object-cover"
                   loading="lazy"

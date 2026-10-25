@@ -84,7 +84,7 @@ export default function ExperienceSection() {
             <h3 className="text-2xl md:text-3xl font-bold leading-snug mb-2 flex flex-col gap-1">
               <span className="text-orange-400">PT PLN (Persero) UIP2B JAMALI</span>
               <span className="text-white">
-                <span className="text-gray-500 mr-2">|</span> SCADA & Automation Intern
+                <span className="text-gray-400 mr-2">|</span> SCADA & Automation Intern
               </span>
             </h3>
 
@@ -147,7 +147,7 @@ export default function ExperienceSection() {
             </ul>
 
             <div className="pt-4 border-t border-gray-800/60 mt-8">
-              <p className="text-xs text-gray-500 italic">
+              <p className="text-xs text-gray-400 italic">
                 Note: Due to the highly classified nature of this state-owned critical
                 infrastructure, the points above represent only a portion of the actual systems,
                 network configurations, and operations managed during this role.
