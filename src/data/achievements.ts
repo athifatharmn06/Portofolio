@@ -32,12 +32,12 @@ export const achievementsData: Achievement[] = [
     outcome: 'International Finalist',
     thumbnail: '/achievements/teknofest-2026/1.webp',
     clip: {
-      src: '/achievements/teknofest-2026/handlaunch.mp4',
-      poster: '/achievements/teknofest-2026/handlaunch_poster.webp',
+      src: '/achievements/teknofest-2026/takeoff.mp4',
+      poster: '/achievements/teknofest-2026/takeoff_poster.webp',
+      portrait: true,
     },
     photos: [
       { url: '/achievements/teknofest-2026/takeoff.mp4', poster: '/achievements/teknofest-2026/takeoff_poster.webp', caption: 'Takeoff on the runway in Malatya.', tools: 'TEKNOFEST 2026, Fixed Wing' },
-      { url: '/achievements/teknofest-2026/handlaunch.mp4', poster: '/achievements/teknofest-2026/handlaunch_poster.webp', caption: 'Hand launch of the fixed-wing aircraft.', tools: 'Fixed-wing UAV' },
       { url: '/achievements/teknofest-2026/1.webp', caption: 'The team in front of the TEKNOFEST UAV competition backdrop with our aircraft.', tools: 'TEKNOFEST 2026' },
       { url: '/achievements/teknofest-2026/2.webp', caption: 'Holding the aircraft at the competition venue.', tools: 'Fixed-wing UAV' },
       { url: '/achievements/teknofest-2026/3.webp', caption: 'The team at our stand with the Indonesian flag and Telkom University banners.', tools: 'Team Avalerion APTRG' },
