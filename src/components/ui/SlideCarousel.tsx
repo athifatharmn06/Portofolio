@@ -79,15 +79,6 @@ export default function SlideCarousel({ slides, onOpen, className = '' }: SlideC
           </motion.div>
         </AnimatePresence>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/75 to-transparent" />
-
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4">
-          <p className="max-w-[80%] text-xs leading-relaxed text-gray-100 md:text-sm">{slide.caption}</p>
-          <span className="shrink-0 rounded-full bg-black/55 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
-            {index + 1} / {total}
-          </span>
-        </div>
-
         {onOpen && (
           <button
             onClick={() => onOpen(index)}
@@ -116,6 +107,13 @@ export default function SlideCarousel({ slides, onOpen, className = '' }: SlideC
             </button>
           </>
         )}
+      </div>
+
+      <div className="flex min-h-[4.25rem] items-start justify-between gap-4 bg-[#0a1020] px-4 pt-3">
+        <p className="text-xs leading-relaxed text-gray-300">{slide.caption}</p>
+        <span className="shrink-0 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white">
+          {index + 1} / {total}
+        </span>
       </div>
 
       {total > 1 && (

@@ -5,7 +5,6 @@ import { useInView } from '../../hooks/useInView';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { fadeInUp, reducedMotionVariants } from '../../lib/animations';
 import {
-  debugGallery,
   eventScores,
   finalProject,
   funding,
@@ -19,7 +18,6 @@ import {
 import CounterAnimation from '../ui/CounterAnimation';
 import ImageWithFallback from '../ui/ImageWithFallback';
 import SlideCarousel from '../ui/SlideCarousel';
-import LuxCompare from '../ui/LuxCompare';
 import type { PhotoContext, ProjectData } from '../../types';
 
 interface EducationSectionProps {
@@ -389,22 +387,6 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
           </div>
         </div>
 
-        {/* Debug HUD */}
-        <div className="mb-20">
-          <h4 className="mb-2 text-xl font-bold text-white">Debug view</h4>
-          <p className="mb-8 max-w-3xl text-sm text-gray-400">
-            The on-screen HUD I used while testing. Slide the light level to compare the infrared camera with a normal webcam in the
-            same room.
-          </p>
-          <LuxCompare onOpen={(i) => onOpenGallery(galleryFor('Debug HUD and lux test', debugGallery, i))} />
-          <button
-            onClick={() => onOpenGallery(galleryFor('Debug HUD and lux test', debugGallery, debugGallery.length - 1))}
-            className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-teal-300 hover:text-teal-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
-          >
-            <FiMaximize2 className="h-4 w-4" /> See the live EAR and MAR trace
-          </button>
-        </div>
-
         {/* Hardware bento */}
         <div>
           <h4 className="mb-2 text-xl font-bold text-white">The hardware</h4>
@@ -441,7 +423,7 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
             onClick={() => onOpenGallery(galleryFor('Prototype and hardware', hardwareGallery, 5))}
             className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-teal-300 hover:text-teal-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
           >
-            <FiMaximize2 className="h-4 w-4" /> CAD renders, drawings, schematic and thesis defense photo
+            <FiMaximize2 className="h-4 w-4" /> Runtime HUD screens, CAD renders, drawings, schematic and thesis defense photo
           </button>
         </div>
       </div>

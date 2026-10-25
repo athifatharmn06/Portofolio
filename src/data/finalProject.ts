@@ -134,6 +134,7 @@ export const resultTabs: ResultTab[] = [
   },
 ];
 
+const H = '/final-project/hud/';
 const P = '/final-project/prototype/';
 const D = '/final-project/design/';
 
@@ -144,6 +145,10 @@ export const hardwareGallery: (PhotoContext & { span?: string })[] = [
   { url: `${P}side.webp`, caption: 'Side panel with the calibration push button, USB port and power switch.', tools: 'GPIO 26 calibration button' },
   { url: `${P}top.webp`, caption: 'Top view of the printed enclosure with hexagonal ventilation holes and the adjustable camera mount.', tools: '3D printed, ventilated' },
   { url: `${P}internals-top.webp`, caption: 'Component layout under the lid.', tools: 'Raspberry Pi 5, power chain' },
+  { url: `${H}safe.webp`, caption: 'Runtime debug HUD in the safe state: live EAR, MAR, pitch and thresholds on the left, the system status with a 0 to 100 drowsiness score and EAR, MAR and pitch history graphs on the right. Faces are blurred for privacy.', tools: 'Raspberry Pi 5 runtime HUD, 0 lux' },
+  { url: `${H}yawn.webp`, caption: 'Yawn detected (MENGUAP): the yawn state machine reaches CONFIRMED, the MAR graph spikes and the status rises to HATI-HATI. Recorded at 0 lux.', tools: 'Yawn state machine, 0 lux' },
+  { url: `${H}tired.webp`, caption: 'Early fatigue warning (HATI-HATI, "Mulai Lelah") as PERCLOS climbs to 14%.', tools: 'PERCLOS, drowsiness score' },
+  { url: `${H}microsleep.webp`, caption: 'Microsleep detected: EAR falls below its threshold, the status box turns red and the alarm is raised.', tools: 'Microsleep detection' },
   { url: `${D}isometric.webp`, caption: 'Isometric CAD render of the enclosure.', tools: 'CAD' },
   { url: `${D}cad-views.webp`, caption: 'Orthographic CAD views of the enclosure parts.', tools: 'CAD' },
   { url: `${D}drawing.webp`, caption: '2D technical drawings of the printed parts.', tools: '2D technical drawing' },
@@ -156,17 +161,4 @@ export const methodGallery: PhotoContext[] = [
   { url: `${R}ear-sigmoid.webp`, caption: 'Adaptive EAR threshold and sigmoid eye-closure score on a blink sequence (from the EECSI 2026 paper).', tools: 'EAR, sigmoid scoring' },
   { url: `${R}subject-heatmap.webp`, caption: 'Subject-by-subject F1 map across fatigue events and lighting conditions.', tools: 'Per-subject evaluation' },
   { url: `${R}pareto.webp`, caption: 'Weight ablation: recall against false positives for the candidate score weightings, with the chosen setting marked.', tools: 'Weight ablation' },
-];
-
-export const luxLevels = [0, 2, 24, 48, 101, 222];
-
-const DBG = '/final-project/debug/';
-
-/** Lightbox set for the debug view: IR and RGB frames per lux level, then the live EAR/MAR trace. */
-export const debugGallery: PhotoContext[] = [
-  ...luxLevels.flatMap((lux) => [
-    { url: `${DBG}ir-${lux}.webp`, caption: `Infrared Pi camera at ${lux} lux with the debug HUD: FaceMesh overlay, eye and mouth state, live EAR and MAR.`, tools: 'Raspberry Pi 5 + IR camera' },
-    { url: `${DBG}rgb-${lux}.webp`, caption: `Standard RGB webcam at ${lux} lux, same HUD.`, tools: 'RGB webcam, same room' },
-  ]),
-  { url: `${DBG}ear-mar-trace.webp`, caption: 'Live EAR and MAR traces over time, logged during the lux test.', tools: 'EAR / MAR log' },
 ];
