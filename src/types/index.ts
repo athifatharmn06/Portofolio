@@ -18,6 +18,8 @@ export interface ProjectData {
   photos: PhotoContext[];
   githubUrl?: string;
   demoUrl?: string;
+  /** Link text for demoUrl, defaults to "Demo" */
+  demoLabel?: string;
 }
 
 export interface SkillData {

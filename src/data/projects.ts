@@ -54,7 +54,7 @@ export const projectsData: ProjectData[] = [
     thumbnail: "/projects/Aegis Defense Network/02_master_defense_dmz_canvas.webp",
     shortDesc: "A multi-zone enterprise network built in Cisco Packet Tracer: ASA perimeter firewall with DMZ and industrial OT zones, HSRPv2 redundant cores, Cisco CME VoIP, site-to-site IPsec VPN with OSPF, and Layer-2 hardening (port security, DHCP snooping, DAI, BPDU/Root Guard).",
     techStack: ["Cisco Packet Tracer", "Cisco ASA", "HSRPv2", "OSPFv2", "IPsec VPN", "Cisco CME VoIP", "DHCP Snooping & DAI", "Port Security", "Rapid-PVST+", "802.1Q VLAN", "NAT / PAT", "AAA / RADIUS"],
-    githubUrl: undefined,
+    githubUrl: "https://github.com/athifatharmn06/Aegis-Defense-Enterprise-Network",
     demoUrl: undefined,
     photos: [
       { url: "/projects/Aegis Defense Network/02_master_defense_dmz_canvas.webp", caption: "Master topology: multi-zone perimeter defense with Corporate Inside, public DMZ, secure industrial LAN and remote tactical sites behind a Cisco ASA firewall.", tools: "Cisco Packet Tracer, Cisco ASA, Multilayer Switching" },
@@ -97,7 +97,8 @@ export const projectsData: ProjectData[] = [
     shortDesc: "Comprehensive study on the performance of UAV control systems via 4G LTE networks. Published in the 2025 International Conference on Converging Technology in Electrical and Information Engineering (ICCTEIE).",
     techStack: ["Cube Orange", "4G LTE", "MAVLink", "Mission Planner", "ArduPlot", "UAV Systems"],
     githubUrl: undefined,
-    demoUrl: undefined,
+    demoUrl: "https://ieeexplore.ieee.org/document/11341803",
+    demoLabel: "IEEE Xplore",
     photos: [
       { url: "/projects/Conference Paper/1_main_photo.png", caption: "Official publication header for the IEEE Xplore conference paper.", tools: "IEEE Xplore, 2025 ICCTEIE" },
       { url: "/projects/Conference Paper/2_author.png", caption: "Published author list contributing to the research and development of the system.", tools: "Academic Publication" },

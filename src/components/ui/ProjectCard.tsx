@@ -159,10 +159,10 @@ export default function ProjectCard({ project, onExploreGallery }: ProjectCardPr
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:rounded-sm"
-                    aria-label={`View ${project.title} live demo`}
+                    aria-label={`View ${project.title}: ${project.demoLabel ?? 'live demo'}`}
                   >
                     <FaExternalLinkAlt className="text-xs" />
-                    <span>Demo</span>
+                    <span>{project.demoLabel ?? 'Demo'}</span>
                   </a>
                 )}
               </div>
