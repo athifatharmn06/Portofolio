@@ -18,7 +18,7 @@ function toGalleryItem(a: Achievement): ProjectData {
   return {
     id: a.id,
     title: a.title,
-    shortDesc: a.outcome,
+    shortDesc: a.description,
     category: a.category,
     techStack: [],
     thumbnail: a.thumbnail,
@@ -153,9 +153,13 @@ export default function AchievementsSection({ onOpenGallery }: AchievementsSecti
                 <p className="text-sm font-semibold text-gray-100">{a.role}</p>
                 <p className="mt-1 text-xs leading-relaxed text-gray-500">{a.team}</p>
 
-                <div className="mt-5 border-t border-white/10 pt-4">
-                  <p className="mb-1.5 text-[0.7rem] font-semibold uppercase tracking-wider text-gray-500">Outcome</p>
-                  <p className="text-sm leading-relaxed text-gray-300">{a.outcome}</p>
+                <p className="mt-5 mb-6 text-sm leading-relaxed text-gray-400">{a.description}</p>
+
+                <div className="mt-auto border-t border-white/10 pt-5">
+                  <p className="mb-2 text-[0.7rem] font-semibold uppercase tracking-wider text-gray-500">Outcome</p>
+                  <p className="inline-flex items-center gap-2 rounded-full border border-teal-400/40 bg-teal-400/10 px-4 py-1.5 text-sm font-semibold text-teal-300">
+                    <FiAward className="h-4 w-4" /> {a.outcome}
+                  </p>
                 </div>
               </div>
             </motion.button>

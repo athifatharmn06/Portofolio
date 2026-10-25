@@ -9,7 +9,9 @@ export interface Achievement {
   role: string;
   /** Team, division and location */
   team: string;
-  /** Result and contribution, shown at the bottom of the card */
+  /** Job description: what I was responsible for */
+  description: string;
+  /** Final result, shown as a highlighted badge at the bottom of the card */
   outcome: string;
   thumbnail: string;
   /** Short looping takeoff clip that plays on hover */
@@ -22,11 +24,12 @@ export const achievementsData: Achievement[] = [
     id: 'a3',
     title: 'TEKNOFEST 2026',
     year: '2026',
-    category: 'Fixed Wing UAV Competition',
+    category: 'International UAV Competition, Fixed Wing Category',
     role: 'Team Responsible & Lead Programmer',
     team: 'Team Avalerion APTRG, Telkom University | Malatya, Türkiye',
-    outcome:
+    description:
       "Led flight software and autonomous mission planning for Telkom University's fixed-wing UAV at the TÜBİTAK competition, and coordinated technical milestones, hardware integration and deliverables to the international committee.",
+    outcome: 'International Finalist',
     thumbnail: '/achievements/teknofest-2026/1.webp',
     clip: {
       src: '/achievements/teknofest-2026/handlaunch.mp4',
@@ -47,8 +50,9 @@ export const achievementsData: Achievement[] = [
     category: 'Racing Plane Division',
     role: 'Technical Supervisor & Lead Programmer',
     team: 'Team Frigate APTRG | KRTI, Padang, Indonesia',
-    outcome:
-      'National Top 8 finish. Led technical coordination across a 10+ member multidisciplinary team, maintained autopilot scripts, ran telemetry integration tests and resolved hardware failures in the field.',
+    description:
+      'Led technical coordination across the multidisciplinary team, maintained autopilot scripts, ran telemetry integration tests and resolved hardware failures in the field.',
+    outcome: 'National Top 8',
     thumbnail: '/achievements/krti-2025/3.webp',
     clip: {
       src: '/achievements/krti-2025/takeoff.mp4',
@@ -68,8 +72,9 @@ export const achievementsData: Achievement[] = [
     category: 'Long Endurance Low Altitude (LELA)',
     role: 'Data Systems Programmer & Telemetry',
     team: 'Team Strix APTRG | KRTI, DI Yogyakarta, Indonesia',
-    outcome:
+    description:
       'Built RF and 4G-LTE telemetry pipelines with store-and-forward cloud messaging for long-endurance autonomous flight.',
+    outcome: 'Finalist',
     thumbnail: '/achievements/krti-2024/2.webp',
     clip: {
       src: '/achievements/krti-2024/takeoff.mp4',
