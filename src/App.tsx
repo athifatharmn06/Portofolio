@@ -102,7 +102,7 @@ export default function App() {
       {/* Footer */}
       <Footer />
 
-      {/* Gallery modal — conditionally rendered with exit animation */}
+      {/* Gallery modal - conditionally rendered with exit animation */}
       <AnimatePresence>
         {selectedProject && (
           <GalleryModal

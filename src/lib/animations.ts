@@ -37,7 +37,7 @@ export const slideIn: Variants = {
 };
 
 /**
- * Reduced motion variants — opacity only, max 200ms.
+ * Reduced motion variants - opacity only, max 200ms.
  * Used when prefers-reduced-motion: reduce is active.
  */
 export const reducedMotionVariants: Variants = {

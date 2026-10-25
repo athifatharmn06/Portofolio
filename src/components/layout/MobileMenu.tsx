@@ -56,7 +56,7 @@ export default function MobileMenu({
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop — tap outside to close */}
+          {/* Backdrop - tap outside to close */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

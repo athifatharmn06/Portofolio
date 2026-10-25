@@ -7,7 +7,7 @@ import { fadeInUp, reducedMotionVariants } from '../../lib/animations';
 import SkillBadge from '../ui/SkillBadge';
 
 /**
- * SkillsSection — Filterable skill grid organized by 8 categories.
+ * SkillsSection - Filterable skill grid organized by 8 categories.
  *
  * - Category filter tabs ("All" + 8 categories) with active tab indicator
  * - Filter animation using Framer Motion layout transitions (200–400ms)

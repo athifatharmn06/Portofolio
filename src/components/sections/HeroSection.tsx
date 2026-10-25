@@ -98,7 +98,7 @@ export default function HeroSection() {
     >
       {/* ── AURORA BACKGROUND ORBS ── */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {/* Primary aurora — violet/indigo */}
+        {/* Primary aurora - violet/indigo */}
         <motion.div
           className="absolute rounded-full"
           style={{
@@ -109,7 +109,7 @@ export default function HeroSection() {
             filter: 'blur(80px)',
           }}
         />
-        {/* Secondary aurora — cyan/teal */}
+        {/* Secondary aurora - cyan/teal */}
         <motion.div
           className="absolute rounded-full"
           style={{
@@ -120,7 +120,7 @@ export default function HeroSection() {
             filter: 'blur(70px)',
           }}
         />
-        {/* Tertiary aurora — pink/rose */}
+        {/* Tertiary aurora - pink/rose */}
         <motion.div
           className="absolute rounded-full"
           style={{
@@ -188,14 +188,14 @@ export default function HeroSection() {
       {/* ── MAIN CONTENT ── */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-16 py-24">
 
-        {/* LEFT — Text content */}
+        {/* LEFT - Text content */}
         <motion.div
           className="flex flex-col items-center text-center lg:items-start lg:text-left lg:max-w-[52%]"
           initial="hidden"
           animate="visible"
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
         >
-          {/* Name — all on one line */}
+          {/* Name - all on one line */}
           <motion.div
             variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}
             className="mb-1"
@@ -227,8 +227,10 @@ export default function HeroSection() {
                       display: 'inline-block',
                       backgroundImage: 'linear-gradient(120deg, #a78bfa, #818cf8, #38bdf8, #2dd4bf, #a78bfa)',
                       backgroundSize: '300% 100%',
-                      paddingRight: '0.06em',
-                      marginRight: '-0.06em',
+                      // Padding keeps Caveat's overhanging glyphs (the f's hook and tail) inside the clip box
+                      lineHeight: 1.25,
+                      padding: '0.1em 0.18em 0.2em 0.04em',
+                      margin: '-0.1em -0.18em -0.2em -0.04em',
                       animation: prefersReducedMotion ? undefined : 'gradient-shift 6s ease-in-out infinite',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
@@ -258,7 +260,7 @@ export default function HeroSection() {
             style={{ color: 'rgba(148,163,184,0.75)' }}
           >
             Building innovative solutions at the intersection of software, hardware, and AI.
-            From embedded systems to cloud-scale applications — I engineer things that work.
+            From embedded systems to cloud-scale applications. I engineer things that work.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -351,7 +353,7 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* RIGHT — Full-body photo with interactive contour glow */}
+        {/* RIGHT - Full-body photo with interactive contour glow */}
         <motion.div
           className="relative flex-shrink-0 flex items-center justify-center"
           initial={{ opacity: 0, x: 60 }}
@@ -372,7 +374,7 @@ export default function HeroSection() {
             }}
           />
 
-          {/* Aurora behind the figure — follows mouse */}
+          {/* Aurora behind the figure - follows mouse */}
           <motion.div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -382,10 +384,10 @@ export default function HeroSection() {
             }}
           />
 
-          {/* Profile image — full body, contour glow via drop-shadow */}
+          {/* Profile image - full body, contour glow via drop-shadow */}
           <motion.img
             src="/profile.webp"
-            alt="Athif Fadheel — Professional profile photo"
+            alt="Athif Fadheel, professional profile photo"
             className="relative z-10 w-full h-auto object-contain select-none"
             style={{
               rotateY: prefersReducedMotion ? 0 : photoRotY,

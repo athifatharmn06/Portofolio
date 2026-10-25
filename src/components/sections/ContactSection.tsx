@@ -6,7 +6,7 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { fadeInUp, staggerContainer, reducedMotionVariants } from '../../lib/animations';
 
 /**
- * ContactSection — Engaging contact section with social links.
+ * ContactSection - Engaging contact section with social links.
  *
  * Features:
  * - Gradient background distinct from adjacent sections
