@@ -6,6 +6,7 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { fadeInUp, reducedMotionVariants } from '../../lib/animations';
 import {
   eventScores,
+  featuredGallery,
   finalProject,
   funding,
   outcomes,
@@ -138,12 +139,12 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
 
           <motion.div initial="hidden" animate={isInView ? 'visible' : 'hidden'} variants={variants}>
             <SlideCarousel
-              slides={hardwareGallery.map((p) => ({
+              slides={featuredGallery.map((p) => ({
                 url: p.url,
                 caption: p.caption,
                 contain: p.url.includes('/design/'),
               }))}
-              onOpen={(i) => onOpenGallery(galleryFor('Prototype and hardware', hardwareGallery, i))}
+              onOpen={(i) => onOpenGallery(galleryFor('Final project gallery', featuredGallery, i))}
             />
           </motion.div>
         </div>
@@ -395,7 +396,7 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
           </p>
 
           <div className="grid grid-cols-2 gap-3 md:auto-rows-[11rem] md:grid-cols-4">
-            {hardwareGallery.slice(0, bento.length).map((p, i) => (
+            {hardwareGallery.map((p, i) => (
               <motion.button
                 key={p.url}
                 initial="hidden"
@@ -419,12 +420,6 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
             ))}
           </div>
 
-          <button
-            onClick={() => onOpenGallery(galleryFor('Prototype and hardware', hardwareGallery, 5))}
-            className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-teal-300 hover:text-teal-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
-          >
-            <FiMaximize2 className="h-4 w-4" /> Runtime HUD screens, CAD renders, drawings, schematic and thesis defense photo
-          </button>
         </div>
       </div>
     </section>

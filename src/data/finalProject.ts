@@ -138,22 +138,22 @@ const H = '/final-project/hud/';
 const P = '/final-project/prototype/';
 const D = '/final-project/design/';
 
-/** Photos and drawings shown in the hardware gallery. Order matters: it is the lightbox order. */
-export const hardwareGallery: (PhotoContext & { span?: string })[] = [
+/** One slide per category for the intro carousel (also its lightbox order). */
+export const featuredGallery: PhotoContext[] = [
+  { url: `${P}camera.webp`, caption: 'Prototype: the Raspberry Pi camera with its infrared illuminators glowing, on a 3D-printed enclosure.', tools: 'Raspberry Pi camera with IR module' },
+  { url: `${H}yawn.webp`, caption: 'Runtime HUD: yawn detected (MENGUAP) at 0 lux. Live EAR, MAR and pitch, thresholds, PERCLOS, status and history graphs. Faces are blurred for privacy.', tools: 'Raspberry Pi 5 runtime HUD, 0 lux' },
+  { url: `${D}isometric.webp`, caption: '3D design: isometric CAD render of the enclosure.', tools: 'CAD' },
+  { url: `${D}schematic.webp`, caption: 'Schematic: Raspberry Pi 5 8GB, camera with IR module, Li-ion pack with BMS, step-up and buck converters, speaker and push button.', tools: 'System schematic' },
+  { url: `${P}defense.webp`, caption: 'Thesis defense at Telkom University.', tools: 'Final project defense' },
+];
+
+/** Photos for the hardware grid and its lightbox. */
+export const hardwareGallery: PhotoContext[] = [
   { url: `${P}camera.webp`, caption: 'The prototype with the Raspberry Pi camera and its infrared illuminators glowing, mounted on a 3D-printed enclosure.', tools: 'Raspberry Pi camera with IR module' },
   { url: `${P}internals.webp`, caption: 'Inside the enclosure: Raspberry Pi 5, wiring, speaker and battery pack.', tools: 'Raspberry Pi 5, Li-ion pack' },
   { url: `${P}side.webp`, caption: 'Side panel with the calibration push button, USB port and power switch.', tools: 'GPIO 26 calibration button' },
   { url: `${P}top.webp`, caption: 'Top view of the printed enclosure with hexagonal ventilation holes and the adjustable camera mount.', tools: '3D printed, ventilated' },
   { url: `${P}internals-top.webp`, caption: 'Component layout under the lid.', tools: 'Raspberry Pi 5, power chain' },
-  { url: `${H}safe.webp`, caption: 'Runtime debug HUD in the safe state: live EAR, MAR, pitch and thresholds on the left, the system status with a 0 to 100 drowsiness score and EAR, MAR and pitch history graphs on the right. Faces are blurred for privacy.', tools: 'Raspberry Pi 5 runtime HUD, 0 lux' },
-  { url: `${H}yawn.webp`, caption: 'Yawn detected (MENGUAP): the yawn state machine reaches CONFIRMED, the MAR graph spikes and the status rises to HATI-HATI. Recorded at 0 lux.', tools: 'Yawn state machine, 0 lux' },
-  { url: `${H}tired.webp`, caption: 'Early fatigue warning (HATI-HATI, "Mulai Lelah") as PERCLOS climbs to 14%.', tools: 'PERCLOS, drowsiness score' },
-  { url: `${H}microsleep.webp`, caption: 'Microsleep detected: EAR falls below its threshold, the status box turns red and the alarm is raised.', tools: 'Microsleep detection' },
-  { url: `${D}isometric.webp`, caption: 'Isometric CAD render of the enclosure.', tools: 'CAD' },
-  { url: `${D}cad-views.webp`, caption: 'Orthographic CAD views of the enclosure parts.', tools: 'CAD' },
-  { url: `${D}drawing.webp`, caption: '2D technical drawings of the printed parts.', tools: '2D technical drawing' },
-  { url: `${D}schematic.webp`, caption: 'Full system schematic: Raspberry Pi 5 8GB, camera with IR module, Li-ion pack with BMS, step-up and buck converters, speaker and push button.', tools: 'System schematic' },
-  { url: `${P}defense.webp`, caption: 'Thesis defense at Telkom University.', tools: 'Final project defense' },
 ];
 
 export const methodGallery: PhotoContext[] = [
