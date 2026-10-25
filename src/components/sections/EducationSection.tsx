@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FiArrowUpRight, FiAward, FiBookOpen, FiClock, FiCheckCircle, FiGithub, FiImage, FiMaximize2 } from 'react-icons/fi';
+import { FiArrowUpRight, FiAward, FiBookOpen, FiClock, FiCheckCircle, FiGithub, FiMaximize2 } from 'react-icons/fi';
 import { useInView } from '../../hooks/useInView';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { fadeInUp, reducedMotionVariants } from '../../lib/animations';
@@ -17,6 +17,7 @@ import {
 } from '../../data/finalProject';
 import CounterAnimation from '../ui/CounterAnimation';
 import ImageWithFallback from '../ui/ImageWithFallback';
+import SlideCarousel from '../ui/SlideCarousel';
 import type { PhotoContext, ProjectData } from '../../types';
 
 interface EducationSectionProps {
@@ -135,32 +136,16 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
             </div>
           </motion.div>
 
-          <motion.button
-            initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
-            variants={variants}
-            onClick={() => onOpenGallery(galleryFor('Prototype and hardware', hardwareGallery, 0))}
-            aria-label="Open the prototype photo gallery"
-            className="group relative block overflow-hidden rounded-2xl border border-white/10 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
-          >
-            <ImageWithFallback
-              src={hardwareGallery[0].url}
-              alt="The prototype with glowing infrared illuminators"
-              className="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              loading="lazy"
+          <motion.div initial="hidden" animate={isInView ? 'visible' : 'hidden'} variants={variants}>
+            <SlideCarousel
+              slides={hardwareGallery.map((p) => ({
+                url: p.url,
+                caption: p.caption,
+                contain: p.url.includes('/design/'),
+              }))}
+              onOpen={(i) => onOpenGallery(galleryFor('Prototype and hardware', hardwareGallery, i))}
             />
-            {!reduced && (
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 h-24 bg-gradient-to-b from-transparent via-cyan-300/25 to-transparent"
-                style={{ animation: 'scan 4.5s ease-in-out infinite' }}
-              />
-            )}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-            <span className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-black/55 px-3 py-1.5 text-xs text-gray-100 backdrop-blur-md">
-              <FiImage className="h-3.5 w-3.5" /> {hardwareGallery.length} photos and drawings
-            </span>
-          </motion.button>
+          </motion.div>
         </div>
 
         {/* Stats */}
