@@ -16,3 +16,10 @@ yarn-error.log*
 
 # OneDrive/Windows folder metadata
 desktop.ini
+
+# Secrets and keys must never be committed
+.env.*
+*.pem
+*.key
+*.pfx
+id_rsa*
