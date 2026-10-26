@@ -34,7 +34,7 @@
 - First-person bio, languages (ECCT and EPrT with CEFR B2 equivalence, each linked to its verification page) and the education card (Cum Laude, GPA, final project)
 
 ### Education
-- Final project case study: summary, key numbers, funding and outcomes (conference paper, copyright, journal, patent), an interactive 8-step pipeline, result charts with tabs, a swipeable carousel (prototype, runtime HUD with blurred faces, 3D design, schematic, thesis defense) and a hardware photo grid
+- Final project case study: summary with a swipeable carousel (prototype, runtime HUD with blurred faces, 3D design, schematic, thesis defense), then funding and outcomes (conference paper, copyright, journal, patent)
 - Source: https://github.com/athifatharmn06/ta-deteksi-kelelahan
 
 ### Experience and Leadership
@@ -103,7 +103,7 @@ public/
 ├── CV_Athif_Fadheel_Atharahman.pdf   Latest CV
 ├── achievements/      Competition photos and looping takeoff clips
 ├── certificates/      Redacted certificate images
-├── final-project/     Prototype, design, results and HUD images
+├── final-project/     Carousel images (prototype, HUD, design, schematic, defense)
 ├── leadership/        Leadership post image
 └── projects/          Per-project image folders
 ```

@@ -69,17 +69,6 @@ export const outcomes: Outcome[] = [
   },
 ];
 
-export const pipelineSteps = [
-  { title: 'Camera', detail: 'The Raspberry Pi camera with infrared illuminators streams frames at about 30 FPS, in daylight or total darkness.' },
-  { title: 'FaceMesh', detail: 'MediaPipe FaceMesh extracts 478 facial landmarks from each frame on the CPU.' },
-  { title: 'Metrics', detail: 'Eye aspect ratio, mouth aspect ratio, head pitch and PERCLOS are computed from the landmarks.' },
-  { title: 'Calibration', detail: 'A physical push button (GPIO 26) records a per-driver baseline so thresholds adapt to each face.' },
-  { title: 'Events', detail: 'Temporal rules detect blinks, microsleeps, yawns and head drops, with guards against oscillation and talking.' },
-  { title: 'Accumulator', detail: 'A fatigue accumulator adds weight for sustained events and decays over time, so one noisy frame never triggers an alarm.' },
-  { title: 'Score', detail: 'Ocular, oral and postural signals are fused into one weighted drowsiness score and mapped to alert levels.' },
-  { title: 'Alert', detail: 'An audio manager plays level-based voice warnings and an alarm through the speaker.' },
-];
-
 const H = '/final-project/hud/';
 const P = '/final-project/prototype/';
 const D = '/final-project/design/';
@@ -91,8 +80,4 @@ export const featuredGallery: PhotoContext[] = [
   { url: `${D}isometric.webp`, caption: '3D design: isometric CAD render of the enclosure.', tools: 'CAD' },
   { url: `${D}schematic.webp`, caption: 'Schematic: Raspberry Pi 5 8GB, camera with IR module, Li-ion pack with BMS, step-up and buck converters, speaker and push button.', tools: 'System schematic' },
   { url: `${P}defense.webp`, caption: 'Thesis defense at Telkom University.', tools: 'Final project defense' },
-];
-
-export const methodGallery: PhotoContext[] = [
-  { url: '/final-project/method/flowchart.webp', caption: 'Full system flowchart: initialization, calibration, monitoring loop, event detection, accumulator, scoring and alerts.', tools: 'System flowchart' },
 ];

@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { FiArrowUpRight, FiAward, FiBookOpen, FiClock, FiCheckCircle, FiGithub, FiMaximize2 } from 'react-icons/fi';
+import { motion } from 'framer-motion';
+import { FiArrowUpRight, FiAward, FiBookOpen, FiClock, FiCheckCircle, FiGithub } from 'react-icons/fi';
 import { useInView } from '../../hooks/useInView';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { fadeInUp, reducedMotionVariants } from '../../lib/animations';
@@ -9,8 +8,6 @@ import {
   finalProject,
   funding,
   outcomes,
-  methodGallery,
-  pipelineSteps,
 } from '../../data/finalProject';
 import SlideCarousel from '../ui/SlideCarousel';
 import type { PhotoContext, ProjectData } from '../../types';
@@ -37,16 +34,6 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
   const { ref, isInView } = useInView({ once: true, threshold: 0.06 });
   const reduced = useReducedMotion();
   const variants = reduced ? reducedMotionVariants : fadeInUp;
-
-  const [step, setStep] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  // Walk through the pipeline automatically until the visitor takes over
-  useEffect(() => {
-    if (reduced || paused || !isInView) return;
-    const id = window.setInterval(() => setStep((s) => (s + 1) % pipelineSteps.length), 2600);
-    return () => window.clearInterval(id);
-  }, [reduced, paused, isInView]);
 
   return (
     <section
@@ -126,81 +113,6 @@ export default function EducationSection({ onOpenGallery }: EducationSectionProp
               onOpen={(i) => onOpenGallery(galleryFor('Final project gallery', featuredGallery, i))}
             />
           </motion.div>
-        </div>
-
-        {/* Pipeline */}
-        <div className="mb-20">
-          <h4 className="mb-2 text-xl font-bold text-white">How it works</h4>
-          <p className="mb-8 text-sm text-gray-400">From camera frame to spoken warning, all on the device.</p>
-
-          <div
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-            className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 md:p-8"
-          >
-            <ol className="relative flex gap-2 overflow-x-auto pb-2 md:grid md:grid-cols-8 md:overflow-visible">
-              {pipelineSteps.map((s, i) => {
-                const active = i === step;
-                const done = i < step;
-                return (
-                  <li key={s.title} className="min-w-[5.5rem] flex-1 md:min-w-0">
-                    <button
-                      onClick={() => setStep(i)}
-                      aria-pressed={active}
-                      className="group relative flex w-full flex-col items-center gap-2 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
-                    >
-                      <span
-                        className={`relative z-10 flex h-11 w-11 items-center justify-center rounded-full border text-sm font-bold transition-all duration-300 ${
-                          active
-                            ? 'scale-110 border-teal-300 bg-teal-400 text-[#04101a] shadow-[0_0_24px_rgba(45,212,191,0.55)]'
-                            : done
-                              ? 'border-teal-400/60 bg-teal-400/15 text-teal-300'
-                              : 'border-white/15 bg-white/5 text-gray-400 group-hover:border-white/40'
-                        }`}
-                      >
-                        {i + 1}
-                      </span>
-                      <span className={`text-xs font-semibold transition-colors ${active ? 'text-white' : 'text-gray-400'}`}>{s.title}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ol>
-
-            {/* Progress rail */}
-            <div className="mt-6 h-1 w-full overflow-hidden rounded-full bg-white/10" aria-hidden="true">
-              <motion.div
-                className="h-full rounded-full bg-gradient-to-r from-violet-400 via-cyan-300 to-teal-300"
-                animate={{ width: `${((step + 1) / pipelineSteps.length) * 100}%` }}
-                transition={{ duration: reduced ? 0 : 0.5, ease: 'easeOut' }}
-              />
-            </div>
-
-            <div className="mt-6 min-h-[3.5rem]" aria-live="polite">
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={step}
-                  initial={reduced ? false : { opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={reduced ? undefined : { opacity: 0, y: -8 }}
-                  transition={{ duration: 0.25 }}
-                  className="max-w-3xl text-sm leading-relaxed text-gray-300 md:text-base"
-                >
-                  <span className="font-semibold text-teal-300">
-                    {String(step + 1).padStart(2, '0')} {pipelineSteps[step].title}.{' '}
-                  </span>
-                  {pipelineSteps[step].detail}
-                </motion.p>
-              </AnimatePresence>
-            </div>
-
-            <button
-              onClick={() => onOpenGallery(galleryFor('Method and analysis', methodGallery, 0))}
-              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-teal-300 hover:text-teal-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
-            >
-              <FiMaximize2 className="h-4 w-4" /> See the full system flowchart
-            </button>
-          </div>
         </div>
 
         {/* Funding and outcomes */}
