@@ -153,6 +153,7 @@ export const certificatesData: Certificate[] = [
     result: 'Presenter',
     category: 'Conference',
     image: '/certificates/icvee-2026-presenter.webp',
+    verifyUrl: 'https://ieeexplore.ieee.org/document/11766420',
   },
   {
     id: 'teknofest',
